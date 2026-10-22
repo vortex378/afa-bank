@@ -25,3 +25,6 @@ Account updates use 10/15-second polling. Salaries are staff-triggered and limit
 
 ## 2026-10-22 release
 TypeScript, production build and 15 unit tests pass. QA_CONSENT_RESULTS.json records 14 isolated API checks: pending login denial, approval, mandatory consent, unchecked acceptance denial, successful acceptance, role-independent transfer and formatted IBAN lookup. Monthly payroll results are in QA_PAYROLL_RESULTS.json. Contract and consent schema deployed to hosted D1/Worker version 29dfc11d-7376-4ae2-a76f-87342bc627b0.
+
+## Cyber Arena release
+26 unit tests and 66 local API checks passed, covering delegated instructor versus banking permissions, role/team isolation, submission replay/concurrency, score tampering, score audit, date transitions/timers, template schedule edits, answer redaction and virtual banking regressions. Browser tested instructor navigation, prepared missions, Security Center note/status save, and responsive layouts at 1440/1024/390. No horizontal document overflow at tablet/mobile; no captured runtime console errors. Migration 0006 creates Arena tables only; production fixture seeding is disabled. See QA_ARENA_RESULTS.json and CYBER_ARENA.md.

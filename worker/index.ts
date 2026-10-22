@@ -1,3 +1,4 @@
+import { arena } from "./arena";
 import { parseAmount, allows } from "./money";
 interface Env {
   DB: D1Database;
@@ -320,6 +321,15 @@ export default {
       if (user.must_change_password)
         fail("Ndryshoni fjalëkalimin fillestar për të vazhduar.", 403);
 
+      if (path === "/api/arena" || path.startsWith("/api/arena/"))
+        return await arena(
+          req,
+          env,
+          user,
+          () => body(req),
+          () => rate(env, "arena:" + user.id, 120),
+        );
+
       if (path === "/api/activity") {
         const rows = await env.DB.prepare(
           "SELECT t.*,s.name sender_name,r.name recipient_name FROM transactions t LEFT JOIN users s ON s.id=t.sender LEFT JOIN users r ON r.id=t.recipient WHERE t.sender=? OR t.recipient=? ORDER BY t.created_at DESC,t.rowid DESC LIMIT 100",
@@ -557,7 +567,7 @@ export default {
         error.status ||
         (/UNIQUE/.test(msg)
           ? 409
-          : /Insufficient balance|Account is not active|Recipient is not active/.test(
+          : /Insufficient balance|Account is not active|Recipient is not active|Arena score limit|Arena submission is not eligible|Arena membership is locked/.test(
                 msg,
               )
             ? 400

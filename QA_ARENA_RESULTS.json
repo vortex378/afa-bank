@@ -1,0 +1,269 @@
+{
+  "environment": "isolated local Wrangler / D1",
+  "results": [
+    {
+      "name": "fixture login admin",
+      "passed": true
+    },
+    {
+      "name": "fixture login finance",
+      "passed": true
+    },
+    {
+      "name": "fixture login customer",
+      "passed": true
+    },
+    {
+      "name": "fixture login customer",
+      "passed": true
+    },
+    {
+      "name": "fixture login customer",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated denied",
+      "passed": true
+    },
+    {
+      "name": "finance cannot create",
+      "passed": true
+    },
+    {
+      "name": "customer cannot create",
+      "passed": true
+    },
+    {
+      "name": "create draft",
+      "passed": true
+    },
+    {
+      "name": "draft hidden",
+      "passed": true
+    },
+    {
+      "name": "invalid state transition",
+      "passed": true
+    },
+    {
+      "name": "create Red flag",
+      "passed": true
+    },
+    {
+      "name": "create Blue report",
+      "passed": true
+    },
+    {
+      "name": "create Blue choice",
+      "passed": true
+    },
+    {
+      "name": "create Timed mission",
+      "passed": true
+    },
+    {
+      "name": "schedule edit shifts mission windows",
+      "passed": true
+    },
+    {
+      "name": "solutions never returned",
+      "passed": true
+    },
+    {
+      "name": "publish registration",
+      "passed": true
+    },
+    {
+      "name": "early activation denied",
+      "passed": true
+    },
+    {
+      "name": "join request",
+      "passed": true
+    },
+    {
+      "name": "join does not self assign",
+      "passed": true
+    },
+    {
+      "name": "unassigned security denied",
+      "passed": true
+    },
+    {
+      "name": "self assignment denied",
+      "passed": true
+    },
+    {
+      "name": "assign red",
+      "passed": true
+    },
+    {
+      "name": "team capacity",
+      "passed": true
+    },
+    {
+      "name": "assign blue",
+      "passed": true
+    },
+    {
+      "name": "delegate instructor",
+      "passed": true
+    },
+    {
+      "name": "competition role does not grant banking admin",
+      "passed": true
+    },
+    {
+      "name": "delegated instructor can manage",
+      "passed": true
+    },
+    {
+      "name": "delegated instructor cannot enumerate bank",
+      "passed": true
+    },
+    {
+      "name": "delegated instructor cannot delegate",
+      "passed": true
+    },
+    {
+      "name": "cross-team alert hidden",
+      "passed": true
+    },
+    {
+      "name": "cross-team note blocked",
+      "passed": true
+    },
+    {
+      "name": "activate within dates",
+      "passed": true
+    },
+    {
+      "name": "late join blocked",
+      "passed": true
+    },
+    {
+      "name": "cross-role mission hidden",
+      "passed": true
+    },
+    {
+      "name": "cross-role direct start blocked",
+      "passed": true
+    },
+    {
+      "name": "must start mission",
+      "passed": true
+    },
+    {
+      "name": "verified flag",
+      "passed": true
+    },
+    {
+      "name": "idempotent replay",
+      "passed": true
+    },
+    {
+      "name": "key conflict",
+      "passed": true
+    },
+    {
+      "name": "concurrent correct submissions",
+      "passed": true
+    },
+    {
+      "name": "no duplicate score / client points ignored",
+      "passed": true
+    },
+    {
+      "name": "submitted membership immutable",
+      "passed": true
+    },
+    {
+      "name": "manual review pending",
+      "passed": true
+    },
+    {
+      "name": "unauthorized scoring",
+      "passed": true
+    },
+    {
+      "name": "score maximum enforced",
+      "passed": true
+    },
+    {
+      "name": "review award",
+      "passed": true
+    },
+    {
+      "name": "manual adjustment",
+      "passed": true
+    },
+    {
+      "name": "score trail previous/new and actor",
+      "passed": true
+    },
+    {
+      "name": "submitted flag answers redacted",
+      "passed": true
+    },
+    {
+      "name": "team totals match individual awards",
+      "passed": true
+    },
+    {
+      "name": "cross-user submissions hidden",
+      "passed": true
+    },
+    {
+      "name": "cross-user emails hidden",
+      "passed": true
+    },
+    {
+      "name": "choice autograding",
+      "passed": true
+    },
+    {
+      "name": "time limit enforced",
+      "passed": true
+    },
+    {
+      "name": "banking activity preserved",
+      "passed": true
+    },
+    {
+      "name": "arena does not modify bank balance",
+      "passed": true
+    },
+    {
+      "name": "bank transfer preserved",
+      "passed": true
+    },
+    {
+      "name": "finance banking permission preserved",
+      "passed": true
+    },
+    {
+      "name": "customer still cannot bank administer",
+      "passed": true
+    },
+    {
+      "name": "close competition",
+      "passed": true
+    },
+    {
+      "name": "completed submissions denied",
+      "passed": true
+    },
+    {
+      "name": "completed cannot reopen",
+      "passed": true
+    },
+    {
+      "name": "explicit template creation",
+      "passed": true
+    },
+    {
+      "name": "template draft and four isolated missions",
+      "passed": true
+    }
+  ]
+}

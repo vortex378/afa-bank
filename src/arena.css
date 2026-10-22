@@ -1,0 +1,362 @@
+.arena {
+  --arena-line: #263c57;
+  --arena-muted: #a7b8cf;
+  background: #0b192b;
+  color: #edf4ff;
+  border-radius: 22px;
+  padding: clamp(20px, 4vw, 44px);
+  min-height: 70vh;
+}
+.arena h1,
+.arena h2,
+.arena h3,
+.arena h4 {
+  color: #edf4ff;
+}
+.arena h1 {
+  font-size: clamp(36px, 5vw, 60px);
+  margin: 12px 0;
+}
+.arena h1 span {
+  color: #70b4ff;
+}
+.arena h2 {
+  font-size: 25px;
+}
+.arena p {
+  line-height: 1.7;
+  color: #b9c9dd;
+}
+.arena small {
+  display: block;
+  color: var(--arena-muted);
+  line-height: 1.7;
+  font-size: 12px;
+}
+.arena-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.arena-hero > svg {
+  color: #78afff;
+}
+.arena .section-label {
+  color: #93bbf3;
+}
+.arena-disclaimer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 0;
+  border-top: 1px solid var(--arena-line);
+  border-bottom: 1px solid var(--arena-line);
+  font-size: 11px;
+  color: #b9cde6;
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+}
+.arena-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+.arena-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 20px 0;
+}
+.arena-block,
+.arena-competition {
+  border: 1px solid var(--arena-line);
+  border-radius: 14px;
+  background: #102137;
+  padding: 24px;
+  margin: 16px 0;
+  min-width: 0;
+}
+.arena-competition {
+  text-align: left;
+  cursor: pointer;
+  color: #edf4ff;
+  font: inherit;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  margin: 0;
+}
+.arena-competition:hover {
+  border-color: #669be5;
+  background: #152b46;
+}
+.arena-competition strong {
+  display: block;
+  color: #9ec7ff;
+  margin-top: 24px;
+}
+.arena-state,
+.arena-tags > span {
+  display: inline-block;
+  color: #a8cfff;
+  border: 1px solid #365273;
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.arena-state.active {
+  background: #123b38;
+  color: #9ee5c5;
+}
+.arena-state.draft {
+  color: #c0c8d6;
+}
+.arena-state.completed {
+  color: #c1b2ed;
+}
+.arena-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+}
+.arena-empty {
+  padding: 40px 20px;
+  text-align: center;
+  border: 1px dashed #385270;
+  border-radius: 14px;
+  margin: 24px 0;
+}
+.arena-empty > svg {
+  color: #7fb5ff;
+}
+.arena-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 26px 0;
+}
+.arena-metrics > div {
+  padding: 22px;
+  border-bottom: 1px solid #345377;
+  display: grid;
+  gap: 14px;
+}
+.arena-metrics svg {
+  color: #8ebeff;
+}
+.arena-metrics strong {
+  font-size: 28px;
+}
+.arena-metrics span {
+  color: var(--arena-muted);
+  font-size: 12px;
+}
+.arena .tabs {
+  overflow-x: auto;
+  border-color: var(--arena-line);
+  padding-bottom: 10px;
+}
+.arena .tabs button {
+  color: #b3c6e0;
+  white-space: nowrap;
+}
+.arena .tabs button[aria-current] {
+  color: #fff;
+  background: #203c5e;
+  border-radius: 7px;
+}
+.arena .button {
+  padding: 12px 18px;
+  min-height: 44px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: normal;
+}
+.arena .button.outline {
+  color: #c1d9ff;
+  border-color: #47658d;
+  background: transparent;
+}
+.arena .button.light {
+  color: #102137;
+  background: #dbeaff;
+}
+.arena button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.arena summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  line-height: 1.6;
+  font-weight: 600;
+}
+.arena summary::before {
+  content: "+";
+  color: #8ebeff;
+}
+.arena details[open] > summary {
+  margin-bottom: 20px;
+}
+.arena form {
+  display: grid;
+  gap: 18px;
+  margin: 22px 0;
+}
+.arena label {
+  display: grid;
+  gap: 8px;
+  color: #bcd0ea;
+  font-size: 12px;
+}
+.arena input,
+.arena textarea,
+.arena select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background: #0b192b;
+  color: #edf4ff;
+  border: 1px solid #3b5474;
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.arena input:focus,
+.arena textarea:focus,
+.arena select:focus {
+  outline: 2px solid #7bacff;
+  outline-offset: 2px;
+}
+.arena-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.arena-pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.arena-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--arena-line);
+  font-size: 13px;
+}
+.arena-line > b {
+  white-space: nowrap;
+}
+.arena-note {
+  border-left: 2px solid #639cea;
+  padding: 10px 18px;
+  margin: 18px 0;
+  background: #0b192b;
+}
+.arena-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #153c37;
+  color: #b9efdd;
+  border-radius: 9px;
+}
+.arena-notice > button {
+  margin-left: auto;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+.arena .error {
+  background: #3b252b;
+  color: #ffd7d7;
+}
+.arena-badge {
+  display: inline-flex;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #5a5879;
+  color: #e4c781;
+  border-radius: 8px;
+  margin: 6px;
+}
+.arena-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #020913b8;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.arena-modal > div {
+  background: #102137;
+  border: 1px solid #47658d;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 520px;
+  box-shadow: 0 30px 80px #0009;
+}
+.arena-modal button {
+  margin: 12px 12px 0 0;
+}
+.arena :focus-visible {
+  outline: 2px solid #91bfff;
+  outline-offset: 4px;
+}
+@media (max-width: 760px) {
+  .arena-grid,
+  .arena-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .arena-metrics {
+    grid-template-columns: 1fr;
+  }
+  .arena-metrics > div {
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+  .arena-metrics span {
+    grid-column: 2;
+  }
+  .arena-hero > svg {
+    width: 36px;
+  }
+  .arena-block {
+    padding: 18px;
+  }
+  .arena-title {
+    align-items: flex-start;
+  }
+  .arena-line {
+    overflow-wrap: anywhere;
+  }
+  .arena {
+    border-radius: 12px;
+  }
+  .arena-modal > div {
+    padding: 22px;
+  }
+}
+
+.app-v2 .dashboard-main .arena h1,
+.app-v2 .dashboard-main .arena h2,
+.app-v2 .dashboard-main .arena h3,
+.app-v2 .dashboard-main .arena h4 {
+  color: #edf4ff;
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+.arena h1 span {
+  -webkit-text-fill-color: #70b4ff;
+}

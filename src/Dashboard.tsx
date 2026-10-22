@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ArrowDownLeft,
@@ -28,6 +28,7 @@ import Staff from "./Staff";
 import PasswordSetup from "./PasswordSetup";
 import Terms, { TERMS_VERSION } from "./Terms";
 import Atmosphere from "./Atmosphere";
+const Arena = lazy(() => import("./Arena"));
 const demoUser: User = {
   id: "demo",
   name: "Anisa Krasniqi",
@@ -269,6 +270,15 @@ export default function Dashboard({
               Siguria
             </button>
           )}
+          {!preview && (
+            <button
+              className={view === "arena" ? "selected" : ""}
+              onClick={() => navigate("arena")}
+            >
+              <ShieldCheck size={19} />
+              Cyber Arena
+            </button>
+          )}
           {staff && (
             <button
               className={view === "staff" ? "selected" : ""}
@@ -309,15 +319,17 @@ export default function Dashboard({
             {menu ? <X /> : <Menu />}
           </button>
           <span>
-            {view === "overview"
-              ? "Përmbledhje"
-              : view === "transfer"
-                ? "Transfertë e re"
-                : view === "staff"
-                  ? "Administrimi"
-                  : view === "card"
-                    ? "Karta ime"
-                    : "Aktiviteti"}
+            {view === "arena"
+              ? "Cyber Arena"
+              : view === "overview"
+                ? "Përmbledhje"
+                : view === "transfer"
+                  ? "Transfertë e re"
+                  : view === "staff"
+                    ? "Administrimi"
+                    : view === "card"
+                      ? "Karta ime"
+                      : "Aktiviteti"}
           </span>
           <div>
             <span className="connection-status">
@@ -512,6 +524,11 @@ export default function Dashboard({
           {view === "transfer" && !preview && (
             <Transfer user={user} onComplete={load} />
           )}{" "}
+          {view === "arena" && !preview && (
+            <Suspense fallback={<p role="status">Duke hapur Arena…</p>}>
+              <Arena />
+            </Suspense>
+          )}
           {view === "staff" && staff && <Staff user={user} notify={setToast} />}
         </main>
       </div>

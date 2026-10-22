@@ -81,3 +81,7 @@ See DESIGN_DIRECTION.md for art direction.
 ## Approval and consent
 
 Administrators and owner approve pending customers. On first login, customers must explicitly accept the visible service contract before API operations are allowed. Acceptance records contain user, version and timestamp. Password wording describes salted hashing accurately; liability terms are visible before the checkbox. IBAN lookup normalizes spacing, case and common dash characters, permits every active role, and explains self-transfers explicitly.
+
+## Cyber Arena
+
+The authenticated dashboard now includes Cyber Arena. See CYBER_ARENA.md for architecture, features, permissions, local test and deployment commands, migration details and limitations. Competition roles are separate from banking roles. Production starts with an empty Arena; an instructor may explicitly create the prepared fictional template as a draft.
