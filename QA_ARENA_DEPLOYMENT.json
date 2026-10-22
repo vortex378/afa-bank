@@ -1,0 +1,29 @@
+{
+  "environment": "hosted Worker / D1",
+  "checks": [
+    {
+      "role": "admin",
+      "loginStatus": 200,
+      "arenaStatus": 200,
+      "canCreate": true,
+      "competitionCount": 0,
+      "passed": true
+    },
+    {
+      "role": "finance",
+      "loginStatus": 200,
+      "arenaStatus": 200,
+      "canCreate": false,
+      "competitionCount": 0,
+      "passed": true
+    },
+    {
+      "role": "owner",
+      "loginStatus": 200,
+      "arenaStatus": 200,
+      "canCreate": true,
+      "competitionCount": 0,
+      "passed": true
+    }
+  ]
+}

@@ -38,3 +38,7 @@ Run pnpm exec wrangler d1 migrations apply afa-bank --remote, pnpm build, then p
 ## Known limits / next work
 
 This release is a supervised prepared-evidence lab, not a deployed vulnerable application, browser exploit runner or external attack sandbox. No file attachments, external autograder, email notifications, season-wide ranking or export UI. Mission rubrics/answers are immutable after publication; draft challenges are created rather than edited/deleted. Per-competition instructor revocation and participant removal UI are not included. Leaderboards show raw aggregate points with role, membership and completion context; instructors must allocate comparable role budgets and balance team sizes. No automated statistical normalization or collaboration bonus. Lists are bounded (100 competitions, 200 instructor submissions, 100 own submissions/history); pagination is future work. Arena refresh is explicit; banking polling remains unchanged. The API integration suite checks correctness and access boundaries but is not a formal penetration test.
+
+## Hosted verification
+
+Published Worker version 541f2d01-2b21-4ca9-b50e-764b746453df. Live read-only smoke checks passed for administrator, finance and owner logins: admin/owner can create competitions; finance cannot create by default. All three see zero competitions until an instructor explicitly creates one. Recorded in QA_ARENA_DEPLOYMENT.json.
