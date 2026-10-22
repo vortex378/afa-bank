@@ -1,0 +1,130 @@
+[
+  {
+    "label": "registration pending",
+    "passed": true
+  },
+  {
+    "label": "pending account cannot sign in",
+    "passed": true
+  },
+  {
+    "label": "second registration",
+    "passed": true
+  },
+  {
+    "label": "owner approves Anisa Krasniqi",
+    "passed": true
+  },
+  {
+    "label": "owner approves Elira Hoxha",
+    "passed": true
+  },
+  {
+    "label": "customer denied staff data",
+    "passed": true
+  },
+  {
+    "label": "customer denied issuing salary",
+    "passed": true
+  },
+  {
+    "label": "salary issued",
+    "passed": true
+  },
+  {
+    "label": "monthly duplicate blocked",
+    "passed": true
+  },
+  {
+    "label": "transfer succeeds",
+    "passed": true
+  },
+  {
+    "label": "idempotent replay",
+    "passed": true
+  },
+  {
+    "label": "sender exact balance",
+    "passed": true
+  },
+  {
+    "label": "recipient exact balance",
+    "passed": true
+  },
+  {
+    "label": "overdraft blocked",
+    "passed": true
+  },
+  {
+    "label": "overdraft leaves balance intact",
+    "passed": true
+  },
+  {
+    "label": "incident created",
+    "passed": true
+  },
+  {
+    "label": "incident debits exactly",
+    "passed": true
+  },
+  {
+    "label": "incident resolved",
+    "passed": true
+  },
+  {
+    "label": "incident restores funds",
+    "passed": true
+  },
+  {
+    "label": "reversal cannot repeat",
+    "passed": true
+  },
+  {
+    "label": "anonymous access denied",
+    "passed": true
+  },
+  {
+    "label": "invalid decimal rejected as client error",
+    "passed": true
+  },
+  {
+    "label": "reused key cannot change recipient amount",
+    "passed": true
+  },
+  {
+    "label": "concurrent overspend: exactly one transfer succeeds",
+    "passed": true
+  },
+  {
+    "label": "concurrent overspend: balance remains correct",
+    "passed": true
+  },
+  {
+    "label": "cross-origin mutation rejected",
+    "passed": true
+  },
+  {
+    "label": "admin cannot issue salaries",
+    "passed": true
+  },
+  {
+    "label": "admin cannot promote own role",
+    "passed": true
+  },
+  {
+    "label": "admin cannot promote customer to finance",
+    "passed": true
+  },
+  {
+    "label": "finance cannot approve customers",
+    "passed": true
+  },
+  {
+    "label": "session follows role changes immediately",
+    "passed": true
+  },
+  {
+    "label": "suspension invalidates existing sessions",
+    "passed": true
+  }
+]
