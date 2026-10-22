@@ -88,16 +88,7 @@ export default function Terms({
             </>
           ) : (
             <>
-              <h3>5. Fjalëkalimi dhe siguria</h3>
-              <p>
-                Platforma nuk ruan fjalëkalimin tuaj në tekst të lexueshëm; ruan
-                një hash të kripëzuar për verifikimin e hyrjes. Kur ndryshoni
-                fjalëkalimin, hash-i i mëparshëm zëvendësohet dhe sesionet
-                ekzistuese mbyllen. Administratori nuk mund t’ju tregojë
-                fjalëkalimin e ri. Mos përdorni këtu fjalëkalimin e bankës suaj
-                reale dhe mos dërgoni kode bankare ose të dhëna kartash reale.
-              </p>
-              <h3>6. Kufijtë e shërbimit dhe përgjegjësia</h3>
+              <h3>5. Kufijtë e shërbimit dhe përgjegjësia</h3>
               <p>
                 Shërbimi ofrohet për trajnim dhe mund të ndërpritet ose të
                 përmbajë gabime. Operatorët nuk garantojnë funksionim të
@@ -106,6 +97,15 @@ export default function Terms({
                 ndarjes së kredencialeve nga përdoruesi. Këto kushte nuk
                 përjashtojnë përgjegjësi që nuk mund të përjashtohen sipas
                 ligjit të zbatueshëm.
+              </p>
+              <h3>6. Fjalëkalimi dhe siguria</h3>
+              <p>
+                Platforma nuk ruan fjalëkalimin tuaj në tekst të lexueshëm; ruan
+                një hash të kripëzuar për verifikimin e hyrjes. Kur ndryshoni
+                fjalëkalimin, hash-i i mëparshëm zëvendësohet dhe sesionet
+                ekzistuese mbyllen. Administratori nuk mund t’ju tregojë
+                fjalëkalimin e ri. Mos përdorni këtu fjalëkalimin e bankës suaj
+                reale dhe mos dërgoni kode bankare ose të dhëna kartash reale.
               </p>
               <h3>7. Të dhënat dhe regjistrimi i pranimit</h3>
               <p>
