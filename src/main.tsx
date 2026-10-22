@@ -14,6 +14,7 @@ const Dashboard = lazy(() => import("./Dashboard"));
 import { Intro } from "./Visuals";
 import { api, type User } from "./lib";
 import "./styles.css";
+import "./experience.css";
 function App() {
   const [route, setRoute] = useState(location.hash || "#/"),
     [user, setUser] = useState<User | undefined>(),

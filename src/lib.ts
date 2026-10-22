@@ -8,6 +8,7 @@ export type User = {
   balance: number;
   salary: number;
   must_change_password?: number;
+  terms_version?: string | null;
 };
 export type Transaction = {
   id: string;

@@ -1,0 +1,34 @@
+[
+  {
+    "email": "arkellahi81@gmail.com",
+    "role": "admin",
+    "login": 200,
+    "balanceALL": 50000,
+    "salaryALL": 50000,
+    "salaryTransactions": 1,
+    "payrollStatus": 403,
+    "passed": true
+  },
+  {
+    "email": "eneanazaj8@gmail.com",
+    "role": "finance",
+    "login": 200,
+    "balanceALL": 50000,
+    "salaryALL": 50000,
+    "salaryTransactions": 1,
+    "payrollStatus": 200,
+    "newCredits": 0,
+    "passed": true
+  },
+  {
+    "email": "maliajklodi@gmail.com",
+    "role": "owner",
+    "login": 200,
+    "balanceALL": 50000,
+    "salaryALL": 50000,
+    "salaryTransactions": 1,
+    "payrollStatus": 200,
+    "newCredits": 0,
+    "passed": true
+  }
+]

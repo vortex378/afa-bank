@@ -21,7 +21,7 @@ export default function Staff({
     [tab, setTab] = useState("overview"),
     [busy, setBusy] = useState(false),
     [selected, setSelected] = useState(""),
-    [amount, setAmount] = useState(""),
+    [amount, setAmount] = useState("50000"),
     [action, setAction] = useState("salary");
   const manage = ["owner", "admin"].includes(user.role),
     finance = ["owner", "finance"].includes(user.role);
@@ -65,6 +65,15 @@ export default function Staff({
     );
   return (
     <section className="staff-workspace">
+      <div className="staff-personal-balance">
+        <span>
+          LLOGARIA JOTE <small>PAGË VIRTUALE · 50.000 ALL / MUAJ</small>
+        </span>
+        <strong>
+          {money(user.balance)} <small>ALL</small>
+        </strong>
+        <i />
+      </div>
       <div className="section-label">
         {user.role === "owner"
           ? "OWNER / EXECUTIVE OVERVIEW"
@@ -192,7 +201,10 @@ export default function Staff({
                                     })
                                   }
                                 >
-                                  <Check size={15} /> Aktivizo
+                                  <Check size={15} />{" "}
+                                  {u.status === "pending"
+                                    ? "Prano kërkesën"
+                                    : "Aktivizo"}
                                 </button>
                               )}
                               {u.status === "active" && (
@@ -287,7 +299,7 @@ export default function Staff({
               </label>
               <p className="muted">
                 Ndani kredencialet në një kanal të sigurt. Klienti krijohet me
-                bilanc zero.
+                pagë virtuale 50.000 ALL. Kushtet pranohen në hyrjen e parë.
               </p>
               <button className="button light" disabled={busy}>
                 Krijo klientin <Plus size={16} />
@@ -303,6 +315,20 @@ export default function Staff({
               }}
             >
               <h2>Pagë virtuale.</h2>
+              <div className="payroll-fixed">
+                <strong>
+                  50.000 <small>ALL</small>
+                </strong>
+                <span>për çdo llogari aktive · çdo muaj</span>
+              </div>
+              <button
+                type="button"
+                className="button electric"
+                disabled={busy}
+                onClick={() => perform("payroll", {})}
+              >
+                Kontrollo dhe ekzekuto për të gjithë <ArrowUpRight size={17} />
+              </button>
               <p className="muted">
                 Një pagesë për klient në muaj kalendarik (UTC). Dublikatat
                 bllokohen nga databaza.
@@ -315,11 +341,13 @@ export default function Staff({
                   onChange={(e) => setSelected(e.target.value)}
                 >
                   <option value="">Zgjidh klientin</option>
-                  {customers.map((u) => (
-                    <option value={u.id} key={u.id}>
-                      {u.name}
-                    </option>
-                  ))}
+                  {users
+                    .filter((u) => u.status === "active")
+                    .map((u) => (
+                      <option value={u.id} key={u.id}>
+                        {u.name}
+                      </option>
+                    ))}
                 </select>
               </label>
               <label>
@@ -327,7 +355,8 @@ export default function Staff({
                 <input
                   required
                   inputMode="decimal"
-                  value={amount}
+                  value="50000"
+                  readOnly
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="85000.00"
                 />

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Card, Current, Logo } from "./Visuals";
 import { api, type User } from "./lib";
+import Atmosphere from "./Atmosphere";
 export default function Auth({
   register = false,
   onLogin,
@@ -35,20 +36,35 @@ export default function Auth({
     }
   }
   return (
-    <div className="auth-page">
+    <div className="auth-page auth-v2">
       <div className="auth-art">
         <Logo />
-        <Current className="auth-ribbon" />
-        <div>
-          <div className="eyebrow">PERSPEKTIVA JOTE E RE</div>
-          <h1>
-            Gjithçka fillon
-            <br />
-            me <em>ty.</em>
-          </h1>
-          <Card />
+        <div className="auth-live">
+          <span className="status-dot" /> THE AFA EXPERIENCE
         </div>
-        <p>AFA BANK / VIRTUAL BANKING EXPERIENCE</p>
+        <Atmosphere variant="auth" />
+        <div className="auth-watermark" aria-hidden="true">
+          AFA
+        </div>
+        <div className="auth-statement">
+          <span className="eyebrow">LËVIZ NDRYSHE. NDIHU NDRYSHE.</span>
+          <h1>
+            Rrjedha jote.
+            <br />
+            <em>Rregullat e tua.</em>
+          </h1>
+        </div>
+        <div className="auth-object">
+          <Card cinematic />
+          <div className="auth-object-label">
+            <span>01 / TITANIUM EDITION</span>
+            <span>DESIGNED TO FEEL DIFFERENT.</span>
+          </div>
+        </div>
+        <div className="auth-bottom">
+          <span>A NEW CURRENT IN BANKING.</span>
+          <span>↗ AFA BANK / AL</span>
+        </div>
       </div>
       <main tabIndex={-1} className="auth-form">
         <a className="back-link" href="#/">

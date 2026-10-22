@@ -1,0 +1,75 @@
+{
+  "environment": "isolated local D1",
+  "results": [
+    {
+      "name": "Create local owner",
+      "status": 201,
+      "passed": true
+    },
+    {
+      "name": "Owner login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Register pending customer",
+      "status": 201,
+      "passed": true
+    },
+    {
+      "name": "Pending customer blocked",
+      "status": 403,
+      "passed": true
+    },
+    {
+      "name": "Approve customer",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Approved customer login",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Activity blocked before terms",
+      "status": 403,
+      "passed": true
+    },
+    {
+      "name": "Unchecked terms rejected",
+      "status": 400,
+      "passed": true
+    },
+    {
+      "name": "Accept current terms",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Activity allowed after terms",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Customer can verify owner IBAN",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "Own IBAN clear rejection",
+      "status": 400,
+      "passed": true
+    },
+    {
+      "name": "Transfer customer to owner",
+      "status": 201,
+      "passed": true
+    },
+    {
+      "name": "Transfer owner to customer",
+      "status": 201,
+      "passed": true
+    }
+  ]
+}

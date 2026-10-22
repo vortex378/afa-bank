@@ -26,6 +26,8 @@ import {
 import Transfer from "./Transfer";
 import Staff from "./Staff";
 import PasswordSetup from "./PasswordSetup";
+import Terms, { TERMS_VERSION } from "./Terms";
+import Atmosphere from "./Atmosphere";
 const demoUser: User = {
   id: "demo",
   name: "Anisa Krasniqi",
@@ -142,7 +144,12 @@ export default function Dashboard({
     previousBalance = useRef(user.balance);
   const staff = user.role !== "customer";
   async function load() {
-    if (preview || user.must_change_password) return;
+    if (
+      preview ||
+      user.must_change_password ||
+      (user.role === "customer" && user.terms_version !== TERMS_VERSION)
+    )
+      return;
     try {
       const [u, t] = await Promise.all([
         api<User>("me"),
@@ -192,6 +199,20 @@ export default function Dashboard({
       setError(e.message);
     }
   }
+  if (
+    !preview &&
+    user.role === "customer" &&
+    user.terms_version !== TERMS_VERSION
+  )
+    return (
+      <Terms
+        onAccepted={(u) => {
+          setUser(u);
+          window.location.reload();
+        }}
+        onLogout={logout}
+      />
+    );
   if (user.must_change_password && !preview)
     return (
       <div className="auth-page">
@@ -213,7 +234,7 @@ export default function Dashboard({
       </div>
     );
   return (
-    <div className="app-shell">
+    <div className="app-shell app-v2">
       <aside className={"sidebar " + (menu ? "open" : "")}>
         <Logo />
         <div className="workspace-label">HAPËSIRA JOTE</div>
@@ -361,7 +382,9 @@ export default function Dashboard({
                   <div className="balance-number">
                     <Balance value={user.balance} />
                   </div>
-                  <span className="muted">Lekë shqiptare · Para virtuale</span>
+                  <span className="muted">
+                    Lekë shqiptare · Para virtuale · Pagë mujore 50.000 ALL
+                  </span>
                   <div className="money-actions">
                     <button
                       className="button light"
@@ -396,6 +419,7 @@ export default function Dashboard({
                   </div>
                 </section>
                 <section className="account-card">
+                  <Atmosphere variant="dashboard" />
                   <div className="card-section-heading">
                     <span>KARTA JOTE AFA</span>
                     <span>VIRTUAL DEBIT ↗</span>

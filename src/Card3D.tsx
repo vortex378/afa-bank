@@ -6,10 +6,12 @@ function PhysicalCard({
   name,
   flipped,
   reduced,
+  cinematic = false,
 }: {
   name: string;
   flipped: boolean;
   reduced: boolean;
+  cinematic?: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
   const viewport = useThree((s) => s.viewport);
@@ -19,7 +21,12 @@ function PhysicalCard({
     c.width = 1024;
     c.height = 640;
     const x = c.getContext("2d")!;
-    x.fillStyle = "#9ca6b1";
+    const surface = x.createLinearGradient(0, 0, 1024, 640);
+    surface.addColorStop(0, "#cbd5e2");
+    surface.addColorStop(0.42, "#e6edf3");
+    surface.addColorStop(0.62, "#a3afc2");
+    surface.addColorStop(1, "#d0dae6");
+    x.fillStyle = surface;
     x.fillRect(0, 0, 1024, 640);
     for (let i = 0; i < 640; i++) {
       x.strokeStyle = "rgba(255,255,255," + (0.015 + (i % 7) / 200) + ")";
@@ -28,7 +35,14 @@ function PhysicalCard({
       x.lineTo(1024, i);
       x.stroke();
     }
-    x.fillStyle = "#17212d";
+    x.strokeStyle = "rgba(50,75,115,.08)";
+    x.lineWidth = 1.2;
+    for (let i = 0; i < 18; i++) {
+      x.beginPath();
+      x.ellipse(820, 335, 160 + i * 19, 95 + i * 11, -0.65, 0, Math.PI * 2);
+      x.stroke();
+    }
+    x.fillStyle = "#182b45";
     x.font = "bold 51px Arial";
     x.fillText("AFA", 78, 105);
     x.font = "20px Arial";
@@ -49,16 +63,25 @@ function PhysicalCard({
   }, [name]);
   useFrame((s, dt) => {
     if (!group.current) return;
-    const target = flipped ? Math.PI : 0;
+    const target = flipped ? Math.PI : cinematic ? -0.27 : 0;
+    group.current.position.y = reduced
+      ? 0
+      : Math.sin(s.clock.elapsedTime * 0.72) * (cinematic ? 0.18 : 0.055);
+    group.current.rotation.z = THREE.MathUtils.damp(
+      group.current.rotation.z,
+      cinematic ? -0.18 + Math.sin(s.clock.elapsedTime * 0.3) * 0.035 : -0.07,
+      4,
+      dt,
+    );
     group.current.rotation.y = THREE.MathUtils.damp(
       group.current.rotation.y,
-      target + (reduced ? 0 : s.pointer.x * 0.18),
+      target + (reduced ? 0 : s.pointer.x * 0.28),
       7,
       dt,
     );
     group.current.rotation.x = THREE.MathUtils.damp(
       group.current.rotation.x,
-      reduced ? 0 : -0.12 - s.pointer.y * 0.12,
+      reduced ? 0 : (cinematic ? 0.27 : -0.12) - s.pointer.y * 0.2,
       7,
       dt,
     );
@@ -69,13 +92,13 @@ function PhysicalCard({
         <meshPhysicalMaterial
           color="#9da9b8"
           metalness={0.92}
-          roughness={0.27}
+          roughness={0.2}
           clearcoat={0.35}
         />
       </RoundedBox>
       <mesh position={[0, 0, 0.035]}>
         <planeGeometry args={[5.18, 3.2]} />
-        <meshPhysicalMaterial map={texture} metalness={0.65} roughness={0.35} />
+        <meshPhysicalMaterial map={texture} metalness={0.72} roughness={0.28} />
       </mesh>
       <RoundedBox
         args={[0.62, 0.48, 0.025]}
@@ -104,9 +127,11 @@ function PhysicalCard({
 export default function Card3D({
   name = "AFA MEMBER",
   reduced = false,
+  cinematic = false,
 }: {
   name?: string;
   reduced?: boolean;
+  cinematic?: boolean;
 }) {
   const [flipped, setFlipped] = useState(false);
   return (
@@ -119,7 +144,17 @@ export default function Card3D({
       >
         <ambientLight intensity={0.6} />
         <directionalLight position={[2, 4, 5]} intensity={3} />
-        <PhysicalCard name={name} flipped={flipped} reduced={reduced} />
+        <PhysicalCard
+          name={name}
+          flipped={flipped}
+          reduced={reduced}
+          cinematic={cinematic}
+        />
+        <pointLight
+          position={[-4, -1, 3]}
+          color="#83aaff"
+          intensity={cinematic ? 20 : 5}
+        />
         <Environment resolution={128}>
           <Lightformer intensity={3} position={[0, 5, 2]} scale={[10, 3, 1]} />
           <Lightformer

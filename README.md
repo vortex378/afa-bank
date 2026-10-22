@@ -21,7 +21,7 @@ Open http://localhost:8787. The public preview works without an account. For liv
 
 - Customer: approval-based registration, session login, account, activity, recipient verification, exact-value transfers, downloadable text receipts.
 - Administrator: review registrations, create customers, activate/suspend/reject customer accounts. Cannot issue money or promote roles.
-- Finance manager: customer activity, one virtual salary per customer/month (UTC), educational incident debit and audited reversal. Cannot manage accounts.
+- Finance manager: customer activity, one virtual salary per active account/month (UTC), educational incident debit and audited reversal. Cannot manage accounts.
 - Owner: operational overview, all staff actions, assign administrator/finance roles. The database permits exactly one owner.
 
 ## Security and integrity
@@ -32,7 +32,7 @@ Sessions are random, hashed in the database, HttpOnly/SameSite=Strict, Secure ov
 
 ## Initial owner
 
-The three staff accounts requested by the owner were provisioned in the new hosted D1 database. Each account has a unique random temporary password and must set a personal password before operational access. Initial credentials are in a private local deliverable outside this repository; they are never committed.
+The three staff accounts requested by the owner were provisioned in the new hosted D1 database. Passwords were set privately at the owner’s request; credential values are excluded from source control. Initial credentials are in a private local deliverable outside this repository; they are never committed.
 
 | Email | Role |
 |---|---|
@@ -69,11 +69,15 @@ See QA_API_RESULTS.json and VERIFICATION.md. Screenshots are saved locally in qa
 ## Phase 1 boundaries
 
 - Account updates poll every 10 seconds; staff data polls every 15 seconds while visible. This is near-real-time refresh, not WebSocket push.
-- Salaries are deliberately staff-triggered and limited to once per UTC month. No automatic salary scheduler.
+- Every active role receives a virtual 50,000 ALL monthly salary. A daily scheduled check and activation triggers issue missing payments once per UTC month; finance/owner can also run the check.
 - Forgot-password recovery, email delivery, MFA, formal penetration testing, automatic backups/export UI and persistent notification inbox are future work.
 - Card details are fictional; simulated identifiers deliberately use AL-DEMO rather than valid IBANs.
-- The intro is a short skippable logo reveal, followed by the physical card hero. A continuous 3D camera intro/shared card route transition remains a future visual enhancement.
+- The skippable cinematic intro reveals the interactive metal card; orbital canvas light, pointer response and editorial page transitions form the visual system.
 - Currency precision is exact at the API/database boundary; animated values settle to the confirmed balance.
 - Reduced-motion users get an accessible static card. WebGL is lazy loaded and unmounted offscreen; DPR is capped at 1.5.
 
 See DESIGN_DIRECTION.md for art direction.
+
+## Approval and consent
+
+Administrators and owner approve pending customers. On first login, customers must explicitly accept the visible service contract before API operations are allowed. Acceptance records contain user, version and timestamp. Password wording describes salted hashing accurately; liability terms are visible before the checkbox. IBAN lookup normalizes spacing, case and common dash characters, permits every active role, and explains self-transfers explicitly.

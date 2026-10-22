@@ -3,6 +3,7 @@ import {
   lazy,
   Suspense,
   useEffect,
+  useId,
   useRef,
   useState,
   type ReactNode,
@@ -26,6 +27,7 @@ export function Logo() {
   );
 }
 export function Current({ className = "" }: { className?: string }) {
+  const id = useId().replace(/:/g, "");
   return (
     <svg
       className={"current " + className}
@@ -34,24 +36,24 @@ export function Current({ className = "" }: { className?: string }) {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id={"ribbon" + className}>
-          <stop stopColor="#355d8b" stopOpacity="0" />
-          <stop offset=".3" stopColor="#8fbfff" />
-          <stop offset=".6" stopColor="#d7e5fb" />
-          <stop offset="1" stopColor="#598eff" stopOpacity="0" />
+        <linearGradient id={"ribbon" + id}>
+          <stop stopColor="#4266c0" stopOpacity="0" />
+          <stop offset=".35" stopColor="#6d9aff" />
+          <stop offset=".58" stopColor="#eff8ff" />
+          <stop offset="1" stopColor="#6a8fff" stopOpacity="0" />
         </linearGradient>
-        <filter id={"glow" + className}>
+        <filter id={"glow" + id}>
           <feGaussianBlur stdDeviation="8" />
         </filter>
       </defs>
       <path
         d="M-150 750C240 800 110 95 660 180S1160 700 1540 10"
-        stroke={"url(#ribbon" + className + ")"}
+        stroke={"url(#ribbon" + id + ")"}
         strokeWidth="22"
-        opacity=".17"
-        filter={"url(#glow" + className + ")"}
+        opacity=".2"
+        filter={"url(#glow" + id + ")"}
       />
-      {[0, 1, 2, 3].map((i) => (
+      {[0, 1, 2, 3, 4, 5].map((i) => (
         <path
           key={i}
           d={
@@ -63,11 +65,28 @@ export function Current({ className = "" }: { className?: string }) {
             (180 + i * 6) +
             "S1160 700 1540 10"
           }
-          stroke={"url(#ribbon" + className + ")"}
-          strokeWidth={i === 0 ? 1.7 : 0.55}
-          opacity={1 - i * 0.2}
+          stroke={"url(#ribbon" + id + ")"}
+          strokeWidth={i === 0 ? 1.7 : 0.5}
+          opacity={1 - i * 0.12}
         />
       ))}
+      <path
+        className="current-flow"
+        pathLength="1"
+        d="M-150 750C240 800 110 95 660 180S1160 700 1540 10"
+        stroke="#d7ecff"
+        strokeWidth="2"
+        strokeDasharray=".09 .91"
+        filter={"url(#glow" + id + ")"}
+      />
+      <path
+        className="current-flow"
+        pathLength="1"
+        d="M-150 750C240 800 110 95 660 180S1160 700 1540 10"
+        stroke="#d7ecff"
+        strokeWidth="1.5"
+        strokeDasharray=".04 .96"
+      />
     </svg>
   );
 }
@@ -111,9 +130,11 @@ class CardBoundary extends Component<
 export function Card({
   name,
   className = "",
+  cinematic = false,
 }: {
   name?: string;
   className?: string;
+  cinematic?: boolean;
 }) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -134,7 +155,7 @@ export function Card({
       {supported && visible && !reduced ? (
         <CardBoundary name={name}>
           <Suspense fallback={<StaticCard name={name} />}>
-            <ThreeCard name={name} />
+            <ThreeCard name={name} cinematic={cinematic} />
           </Suspense>
         </CardBoundary>
       ) : (
@@ -150,34 +171,55 @@ export function Intro({ onDone }: { onDone: () => void }) {
       onDone();
       return;
     }
-    const t = setTimeout(onDone, 2900);
-    return () => clearTimeout(t);
+    const timer = setTimeout(onDone, 3400);
+    return () => clearTimeout(timer);
   }, [onDone, reduced]);
   return (
     <motion.div
-      className="intro"
+      className="intro intro-cinematic"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.4 } }}
+      exit={{
+        opacity: 0,
+        scale: 1.04,
+        filter: "blur(8px)",
+        transition: { duration: 0.65 },
+      }}
     >
-      <button onClick={onDone}>Kalo hyrjen ↗</button>
-      <svg viewBox="0 0 180 110" fill="none">
-        <motion.path
-          d="M10 100 55 10 100 100M34 65h43M100 10h65M110 10v90M110 48h45"
-          stroke="#b4d2ff"
-          strokeWidth="3"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.4, ease: "easeInOut" }}
-        />
-      </svg>
-      <motion.p
-        initial={{ opacity: 0, letterSpacing: ".6em" }}
-        animate={{ opacity: 1, letterSpacing: ".3em" }}
-        transition={{ delay: 0.8, duration: 1 }}
+      <button onClick={onDone}>
+        Kalo hyrjen <span>↗</span>
+      </button>
+      <div className="intro-light" />
+      <motion.div
+        className="intro-logo"
+        initial={{ opacity: 1, scale: 1 }}
+        animate={{ opacity: [0, 1, 1, 0], scale: [0.85, 1, 1, 0.75] }}
+        transition={{ duration: 2.25, times: [0, 0.2, 0.65, 1] }}
       >
-        AFA BANK
-      </motion.p>
-      <span>Një perspektivë e re.</span>
+        <svg viewBox="0 0 180 110" fill="none">
+          <motion.path
+            d="M10 100 55 10 100 100M34 65h43M100 10h65M110 10v90M110 48h45"
+            stroke="#c8e4ff"
+            strokeWidth="2"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.25, ease: "easeInOut" }}
+          />
+        </svg>
+        <span>AFA BANK</span>
+      </motion.div>
+      <motion.div
+        className="intro-card"
+        initial={{ opacity: 0, y: 75, scale: 1.3, rotate: 12 }}
+        animate={{ opacity: [0, 1, 1], y: 0, scale: 1, rotate: 0 }}
+        transition={{ duration: 1.8, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Card cinematic />
+        <p>Një dimension i ri.</p>
+      </motion.div>
+      <div className="intro-loading">
+        <span />
+        <small>AFA EXPERIENCE / 01</small>
+      </div>
     </motion.div>
   );
 }

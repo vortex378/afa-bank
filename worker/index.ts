@@ -15,7 +15,15 @@ type User = {
   salary: number;
   password?: string;
   must_change_password: number;
+  terms_version: string | null;
 };
+const TERMS_VERSION = "2026-10-22";
+const normalizeIban = (value: unknown) =>
+  String(value || "")
+    .normalize("NFKC")
+    .replace(/\s/g, "")
+    .replace(/[‐‑‒–—−]/g, "-")
+    .toUpperCase();
 const enc = new TextEncoder();
 const hex = (a: ArrayBuffer) =>
   Array.from(new Uint8Array(a), (v) => v.toString(16).padStart(2, "0")).join(
@@ -135,14 +143,37 @@ async function createUser(
   ).join("");
   const iban = "AL-DEMO-" + digits;
   await env.DB.prepare(
-    "INSERT INTO users(id,name,email,password,role,status,iban) VALUES(?,?,?,?,?,?,?)",
+    "INSERT INTO users(id,name,email,password,role,status,iban,salary) VALUES(?,?,?,?,?,?,?,5000000)",
   )
     .bind(id, name, email, await password(pass), role, status, iban)
     .run();
   return id;
 }
+const MONTHLY_SALARY = 5000000; // Integer hundredths: 50,000 ALL, educational payroll.
+async function payroll(env: Env, actor: string | null = null) {
+  const period = new Date().toISOString().slice(0, 7);
+  const result = await env.DB.batch([
+    env.DB.prepare(
+      "INSERT INTO transactions(id,recipient,amount,kind,note,idempotency) SELECT lower(hex(randomblob(16))),u.id,?,'salary',?,'salary:'||u.id||':'||? FROM users u WHERE u.status='active' AND NOT EXISTS(SELECT 1 FROM transactions t WHERE t.idempotency='salary:'||u.id||':'||?)",
+    ).bind(MONTHLY_SALARY, "Pagë virtuale mujore · " + period, period, period),
+    env.DB.prepare("UPDATE users SET salary=? WHERE salary!=?").bind(
+      MONTHLY_SALARY,
+      MONTHLY_SALARY,
+    ),
+    env.DB.prepare(
+      "INSERT INTO audit(id,actor,action,target) VALUES(?,?,?,?)",
+    ).bind(crypto.randomUUID(), actor, "payroll.monthly", period),
+  ]);
+  return {
+    ok: true,
+    credited: result[0].meta.changes,
+    amount: MONTHLY_SALARY,
+    period,
+  };
+}
 export default {
   async scheduled(_event: ScheduledController, env: Env) {
+    await payroll(env);
     await env.DB.batch([
       env.DB.prepare("DELETE FROM sessions WHERE expires<?").bind(Date.now()),
       env.DB.prepare("DELETE FROM rate_limits WHERE expires<?").bind(
@@ -240,6 +271,22 @@ export default {
         });
       }
       if (path === "/api/me") return json(clean(user));
+      if (path === "/api/terms/accept" && req.method === "POST") {
+        const b = await body(req);
+        if (b.version !== TERMS_VERSION || b.agree !== true)
+          fail("Pranoni versionin aktual të kushteve.");
+        await env.DB.batch([
+          env.DB.prepare(
+            "UPDATE users SET terms_version=?,terms_accepted_at=datetime('now') WHERE id=? AND COALESCE(terms_version,'')!=?",
+          ).bind(TERMS_VERSION, user.id, TERMS_VERSION),
+          env.DB.prepare(
+            "INSERT INTO terms_acceptances(id,user_id,version) VALUES(?,?,?) ON CONFLICT(user_id,version) DO NOTHING",
+          ).bind(crypto.randomUUID(), user.id, TERMS_VERSION),
+        ]);
+        return json({ ok: true, version: TERMS_VERSION });
+      }
+      if (user.role === "customer" && user.terms_version !== TERMS_VERSION)
+        fail("Pranoni kushtet e përdorimit për të vazhduar.", 403);
       if (path === "/api/password" && req.method === "POST") {
         await rate(env, "password:" + user.id, 10);
         const b = await body(req),
@@ -284,11 +331,15 @@ export default {
       if (path === "/api/recipient") {
         await rate(env, "recipient:" + user.id, 60);
         const r = await env.DB.prepare(
-          "SELECT id,name,iban FROM users WHERE iban=? AND status='active' AND id!=?",
+          "SELECT id,name,iban,role FROM users WHERE iban=? AND status='active'",
         )
-          .bind(url.searchParams.get("iban"), user.id)
+          .bind(normalizeIban(url.searchParams.get("iban")))
           .first();
-        if (!r) fail("Llogaria nuk u gjet.", 404);
+        if (!r) fail("Llogaria nuk u gjet ose nuk është aktive.", 404);
+        if (r.id === user.id)
+          fail(
+            "Ky është IBAN-i i llogarisë suaj. Zgjidhni një përfitues tjetër.",
+          );
         return json(r);
       }
       if (path === "/api/transfers" && req.method === "POST") {
@@ -308,16 +359,23 @@ export default {
           )
             .bind(previous.recipient)
             .first<{ iban: string }>();
-          if (previous.amount !== amount || target?.iban !== b.iban)
+          if (
+            previous.amount !== amount ||
+            target?.iban !== normalizeIban(b.iban)
+          )
             fail("Çelësi është përdorur për një transfertë tjetër.", 409);
           return json(previous);
         }
         const recipient = await env.DB.prepare(
-          "SELECT id FROM users WHERE iban=? AND status='active' AND id!=?",
+          "SELECT id FROM users WHERE iban=? AND status='active'",
         )
-          .bind(b.iban, user.id)
+          .bind(normalizeIban(b.iban))
           .first<{ id: string }>();
-        if (!recipient) fail("Përfitues i pavlefshëm.");
+        if (!recipient) fail("Përfituesi nuk u gjet ose nuk është aktiv.");
+        if (recipient.id === user.id)
+          fail(
+            "Ky është IBAN-i i llogarisë suaj. Zgjidhni një përfitues tjetër.",
+          );
         const id = crypto.randomUUID();
         await env.DB.batch([
           env.DB.prepare(
@@ -406,37 +464,39 @@ export default {
         ]);
         return json({ ok: true });
       }
+      if (path === "/api/staff/payroll" && req.method === "POST") {
+        need(user, "finance");
+        return json(await payroll(env, user.id));
+      }
       if (path === "/api/staff/salary" && req.method === "POST") {
         need(user, "finance");
-        const b = await body(req),
-          amount = parseAmount(b.amount);
+        const b = await body(req);
         const target = await env.DB.prepare(
-          "SELECT id FROM users WHERE id=? AND role='customer' AND status='active'",
+          "SELECT id FROM users WHERE id=? AND status='active'",
         )
           .bind(b.id)
           .first();
-        if (!target) fail("Klient i pavlefshëm.");
-        const period = new Date().toISOString().slice(0, 7),
-          id = crypto.randomUUID();
+        if (!target) fail("Llogari e pavlefshme.");
+        const period = new Date().toISOString().slice(0, 7);
         await env.DB.batch([
           env.DB.prepare(
             "INSERT INTO transactions(id,recipient,amount,kind,note,idempotency) VALUES(?,?,?,'salary',?,?)",
           ).bind(
-            id,
+            crypto.randomUUID(),
             b.id,
-            amount,
-            "Pagë virtuale · " + period,
+            MONTHLY_SALARY,
+            "Pagë virtuale mujore · " + period,
             "salary:" + b.id + ":" + period,
           ),
           env.DB.prepare("UPDATE users SET salary=? WHERE id=?").bind(
-            amount,
+            MONTHLY_SALARY,
             b.id,
           ),
           env.DB.prepare(
             "INSERT INTO audit(id,actor,action,target) VALUES(?,?,?,?)",
           ).bind(crypto.randomUUID(), user.id, "salary." + period, b.id),
         ]);
-        return json({ ok: true });
+        return json({ ok: true, amount: MONTHLY_SALARY, period });
       }
       if (path === "/api/staff/incident" && req.method === "POST") {
         need(user, "finance");

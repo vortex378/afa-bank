@@ -22,3 +22,6 @@ The landing page and real WebGL metal card were inspected in desktop and mobile 
 ## Phase 1 boundaries
 
 Account updates use 10/15-second polling. Salaries are staff-triggered and limited to once per UTC month. Receipts are downloadable text. The intro is skippable and simplified; continuous 3D intro/shared route-card choreography, forgot-password email recovery, MFA, persistent notifications and a formal security audit are future work.
+
+## 2026-10-22 release
+TypeScript, production build and 15 unit tests pass. QA_CONSENT_RESULTS.json records 14 isolated API checks: pending login denial, approval, mandatory consent, unchecked acceptance denial, successful acceptance, role-independent transfer and formatted IBAN lookup. Monthly payroll results are in QA_PAYROLL_RESULTS.json. Contract and consent schema deployed to hosted D1/Worker version 29dfc11d-7376-4ae2-a76f-87342bc627b0.
