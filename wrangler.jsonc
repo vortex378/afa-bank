@@ -1,5 +1,5 @@
 {
-  "name": "afa-bank",
+  "name": "afa-bank-next",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {
@@ -12,7 +12,7 @@
     {
       "binding": "DB",
       "database_name": "afa-bank",
-      "database_id": "REPLACE_AFTER_PROVISIONING",
+      "database_id": "1298557f-dfe3-4d2e-80dd-b83bdd333236",
       "migrations_dir": "migrations",
     },
   ],

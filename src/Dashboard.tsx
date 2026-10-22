@@ -25,6 +25,7 @@ import {
 } from "./lib";
 import Transfer from "./Transfer";
 import Staff from "./Staff";
+import PasswordSetup from "./PasswordSetup";
 const demoUser: User = {
   id: "demo",
   name: "Anisa Krasniqi",
@@ -129,7 +130,9 @@ export default function Dashboard({
     [transactions, setTransactions] = useState<Transaction[]>(
       preview ? demoTransactions : [],
     ),
-    [view, setView] = useState("overview"),
+    [view, setView] = useState(
+      initialUser && initialUser.role !== "customer" ? "staff" : "overview",
+    ),
     [toast, setToast] = useState(""),
     [error, setError] = useState(""),
     [copied, setCopied] = useState(false),
@@ -139,7 +142,7 @@ export default function Dashboard({
     previousBalance = useRef(user.balance);
   const staff = user.role !== "customer";
   async function load() {
-    if (preview) return;
+    if (preview || user.must_change_password) return;
     try {
       const [u, t] = await Promise.all([
         api<User>("me"),
@@ -189,6 +192,26 @@ export default function Dashboard({
       setError(e.message);
     }
   }
+  if (user.must_change_password && !preview)
+    return (
+      <div className="auth-page">
+        <div className="auth-art">
+          <Logo />
+          <h1>
+            Siguri,
+            <br />
+            nga hapi i parë.
+          </h1>
+          <p>AKTIVIZIMI I LLOGARISË</p>
+        </div>
+        <main tabIndex={-1} className="auth-form">
+          <PasswordSetup required onDone={onLogout} />
+          <button className="text-link" onClick={logout}>
+            Dil nga llogaria
+          </button>
+        </main>
+      </div>
+    );
   return (
     <div className="app-shell">
       <aside className={"sidebar " + (menu ? "open" : "")}>
@@ -216,6 +239,15 @@ export default function Dashboard({
             <CreditCard size={19} />
             Karta ime
           </button>
+          {!preview && (
+            <button
+              className={view === "security" ? "selected" : ""}
+              onClick={() => navigate("security")}
+            >
+              <ShieldCheck size={19} />
+              Siguria
+            </button>
+          )}
           {staff && (
             <button
               className={view === "staff" ? "selected" : ""}
@@ -449,6 +481,9 @@ export default function Dashboard({
                 <dd>Vetëm edukativ · Nuk përdoret për blerje</dd>
               </dl>
             </section>
+          )}
+          {view === "security" && !preview && (
+            <PasswordSetup onDone={onLogout} />
           )}
           {view === "transfer" && !preview && (
             <Transfer user={user} onComplete={load} />

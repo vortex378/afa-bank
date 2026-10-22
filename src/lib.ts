@@ -7,6 +7,7 @@ export type User = {
   iban: string;
   balance: number;
   salary: number;
+  must_change_password?: number;
 };
 export type Transaction = {
   id: string;
@@ -19,7 +20,17 @@ export type Transaction = {
   sender_name?: string;
   recipient_name?: string;
 };
-export const money = (n: number) => { const value=Math.abs(n);return (n<0?'−':'')+Math.floor(value/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+String(value%100).padStart(2,'0'); };
+export const money = (n: number) => {
+  const value = Math.abs(n);
+  return (
+    (n < 0 ? "−" : "") +
+    Math.floor(value / 100)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".") +
+    "," +
+    String(value % 100).padStart(2, "0")
+  );
+};
 export async function api<T = any>(path: string, body?: unknown): Promise<T> {
   const r = await fetch("/api/" + path, {
     method: body === undefined ? "GET" : "POST",

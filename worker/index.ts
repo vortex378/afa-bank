@@ -14,6 +14,7 @@ type User = {
   balance: number;
   salary: number;
   password?: string;
+  must_change_password: number;
 };
 const enc = new TextEncoder();
 const hex = (a: ArrayBuffer) =>
@@ -239,6 +240,39 @@ export default {
         });
       }
       if (path === "/api/me") return json(clean(user));
+      if (path === "/api/password" && req.method === "POST") {
+        await rate(env, "password:" + user.id, 10);
+        const b = await body(req),
+          next = String(b.newPassword || "");
+        if (next.length < 12 || next.length > 128)
+          fail("Fjalëkalimi i ri duhet të ketë 12–128 karaktere.");
+        const current = await password(
+          String(b.currentPassword || "").slice(0, 128),
+          user.password!.split(":")[0],
+        );
+        if (!equal(current, user.password!))
+          fail("Fjalëkalimi aktual është i pasaktë.", 401);
+        if (String(b.currentPassword) === next)
+          fail("Zgjidhni një fjalëkalim të ri.");
+        const changed = await env.DB.batch([
+          env.DB.prepare(
+            "UPDATE users SET password=?,must_change_password=0 WHERE id=? AND password=?",
+          ).bind(await password(next), user.id, user.password),
+          env.DB.prepare("DELETE FROM sessions WHERE user_id=?").bind(user.id),
+          env.DB.prepare(
+            "INSERT INTO audit(id,actor,action,target) VALUES(?,?,?,?)",
+          ).bind(crypto.randomUUID(), user.id, "password.change", user.id),
+        ]);
+        if (changed[0].meta.changes !== 1)
+          fail("Sesioni ndryshoi. Identifikohuni përsëri.", 409);
+        return json({ ok: true }, 200, {
+          "Set-Cookie":
+            "afa_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0",
+        });
+      }
+      if (user.must_change_password)
+        fail("Ndryshoni fjalëkalimin fillestar për të vazhduar.", 403);
+
       if (path === "/api/activity") {
         const rows = await env.DB.prepare(
           "SELECT t.*,s.name sender_name,r.name recipient_name FROM transactions t LEFT JOIN users s ON s.id=t.sender LEFT JOIN users r ON r.id=t.recipient WHERE t.sender=? OR t.recipient=? ORDER BY t.created_at DESC,t.rowid DESC LIMIT 100",

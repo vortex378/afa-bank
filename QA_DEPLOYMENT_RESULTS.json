@@ -1,0 +1,49 @@
+[
+  {
+    "email": "arkellahi81@gmail.com",
+    "expectedRole": "admin",
+    "actualRole": "admin",
+    "loginStatus": 200,
+    "status": "active",
+    "firstLoginRequired": true,
+    "operationalAccessBlockedUntilPasswordSet": true,
+    "passed": true
+  },
+  {
+    "email": "eneanazaj8@gmail.com",
+    "expectedRole": "finance",
+    "actualRole": "finance",
+    "loginStatus": 200,
+    "status": "active",
+    "firstLoginRequired": true,
+    "operationalAccessBlockedUntilPasswordSet": true,
+    "passed": true
+  },
+  {
+    "email": "maliajklodi@gmail.com",
+    "expectedRole": "owner",
+    "actualRole": "owner",
+    "loginStatus": 200,
+    "status": "active",
+    "firstLoginRequired": true,
+    "operationalAccessBlockedUntilPasswordSet": true,
+    "passed": true
+  },
+  {
+    "check": "live frontend",
+    "status": 200,
+    "passed": true
+  },
+  {
+    "check": "live API health",
+    "passed": true
+  },
+  {
+    "check": "anonymous staff denied",
+    "passed": true
+  },
+  {
+    "check": "bootstrap disabled",
+    "passed": true
+  }
+]

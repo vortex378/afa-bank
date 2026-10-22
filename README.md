@@ -1,5 +1,7 @@
 # AFA BANK
 
+Live app: https://afa-bank-next.cobra-public-community.workers.dev
+
 A private, educational virtual-banking platform. React + TypeScript + Three.js frontend; Cloudflare Workers API; D1 transactional ledger. No real money, payment network, or genuine bank account integration.
 
 ## Run locally
@@ -30,7 +32,17 @@ Sessions are random, hashed in the database, HttpOnly/SameSite=Strict, Secure ov
 
 ## Initial owner
 
-There are no default production credentials. Set a random temporary BOOTSTRAP_SECRET using Wrangler secrets. POST /api/bootstrap with the matching secret, name, email, and password (12–128 characters), from the same origin. After owner creation, remove BOOTSTRAP_SECRET. The endpoint is disabled when the secret is absent and rejects initialization when an owner exists. Local .dev.vars and all credentials are ignored by Git.
+The three staff accounts requested by the owner were provisioned in the new hosted D1 database. Each account has a unique random temporary password and must set a personal password before operational access. Initial credentials are in a private local deliverable outside this repository; they are never committed.
+
+| Email | Role |
+|---|---|
+| arkellahi81@gmail.com | Administrator |
+| eneanazaj8@gmail.com | Finance manager |
+| maliajklodi@gmail.com | Owner (full access) |
+
+The previous afa-bank Worker and its separate database were preserved. This build is deployed as afa-bank-next.
+
+There are no hardcoded or publicly documented production passwords. Set a random temporary BOOTSTRAP_SECRET using Wrangler secrets. POST /api/bootstrap with the matching secret, name, email, and password (12–128 characters), from the same origin. After owner creation, remove BOOTSTRAP_SECRET. The endpoint is disabled when the secret is absent and rejects initialization when an owner exists. Local .dev.vars and all credentials are ignored by Git.
 
 ## Deployment
 
@@ -58,7 +70,7 @@ See QA_API_RESULTS.json and VERIFICATION.md. Screenshots are saved locally in qa
 
 - Account updates poll every 10 seconds; staff data polls every 15 seconds while visible. This is near-real-time refresh, not WebSocket push.
 - Salaries are deliberately staff-triggered and limited to once per UTC month. No automatic salary scheduler.
-- Password reset, email delivery, MFA, formal penetration testing, automatic backups/export UI and persistent notification inbox are future work.
+- Forgot-password recovery, email delivery, MFA, formal penetration testing, automatic backups/export UI and persistent notification inbox are future work.
 - Card details are fictional; simulated identifiers deliberately use AL-DEMO rather than valid IBANs.
 - The intro is a short skippable logo reveal, followed by the physical card hero. A continuous 3D camera intro/shared card route transition remains a future visual enhancement.
 - Currency precision is exact at the API/database boundary; animated values settle to the confirmed balance.
