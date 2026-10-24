@@ -125,10 +125,12 @@ export function Activity({
 export default function Dashboard({
   initialUser,
   preview = false,
+  initialLaunch = false,
   onLogout,
 }: {
   initialUser?: User;
   preview?: boolean;
+  initialLaunch?: boolean;
   onLogout: () => void;
 }) {
   const director = useLaunchDirector(
@@ -140,7 +142,11 @@ export default function Dashboard({
       preview ? demoTransactions : [],
     ),
     [view, setView] = useState(
-      initialUser && initialUser.role !== "customer" ? "staff" : "overview",
+      initialLaunch
+        ? "launch"
+        : initialUser && initialUser.role !== "customer"
+          ? "staff"
+          : "overview",
     ),
     [toast, setToast] = useState(""),
     [error, setError] = useState(""),
@@ -150,6 +156,15 @@ export default function Dashboard({
   const first = useRef(true),
     previousBalance = useRef(user.balance);
   const staff = user.role !== "customer";
+  useEffect(() => {
+    setView(
+      initialLaunch
+        ? "launch"
+        : user.role !== "customer"
+          ? "staff"
+          : "overview",
+    );
+  }, [initialLaunch]);
   const gameActive = useRef(false);
   gameActive.current =
     !preview &&

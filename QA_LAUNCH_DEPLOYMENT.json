@@ -1,0 +1,42 @@
+{
+  "version": "d8271f79-2443-42cb-9dfb-a61bc9c9c968",
+  "checks": [
+    {
+      "role": "admin",
+      "status": 200,
+      "manager": true,
+      "round": null,
+      "passed": true
+    },
+    {
+      "role": "finance",
+      "status": 200,
+      "manager": false,
+      "round": null,
+      "passed": true
+    },
+    {
+      "name": "live finance create denied",
+      "passed": true
+    },
+    {
+      "role": "owner",
+      "status": 200,
+      "manager": true,
+      "round": null,
+      "passed": true
+    },
+    {
+      "name": "hosted authenticated WebSocket",
+      "passed": true
+    },
+    {
+      "name": "final public game entry assets",
+      "passed": true
+    },
+    {
+      "name": "game requires authentication",
+      "passed": true
+    }
+  ]
+}

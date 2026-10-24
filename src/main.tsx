@@ -42,7 +42,7 @@ function App() {
   }, []);
   function signedIn(u: User) {
     setUser(u);
-    location.hash = "/account";
+    location.hash = route === "#/launch" ? "/launch" : "/account";
   }
   return (
     <MotionConfig reducedMotion="user">
@@ -67,13 +67,14 @@ function App() {
         <AnimatePresence>{intro && <Intro onDone={finish} />}</AnimatePresence>
         {route === "#/preview" ? (
           <Dashboard preview onLogout={() => (location.hash = "/")} />
-        ) : route === "#/account" ? (
+        ) : route === "#/account" || route === "#/launch" ? (
           loading ? (
             <div className="loading" role="status">
               Duke hapur hapësirën tuaj…
             </div>
           ) : user ? (
             <Dashboard
+              initialLaunch={route === "#/launch"}
               initialUser={user}
               onLogout={() => {
                 setUser(undefined);

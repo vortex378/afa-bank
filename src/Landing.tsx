@@ -47,6 +47,9 @@ export default function Landing({ replay }: { replay: () => void }) {
           <button className="header-replay" onClick={replay}>
             <Play size={11} /> Hyrja
           </button>
+          <a className="header-launch" href="#/launch">
+            AFA-LAUNCH <ArrowUpRight size={13} />
+          </a>
           <a className="login-link" href="#/login">
             Hyr në llogari <ArrowUpRight size={15} />
           </a>

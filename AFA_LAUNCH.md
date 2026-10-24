@@ -33,3 +33,7 @@ Production: pnpm exec wrangler d1 migrations apply afa-bank --remote; pnpm build
 
 ## Boundaries for later phases
 Single cohort/live round, Red and Blue roles only for Level 1. Existing Arena keeps SOC/Auditor separately. No real exploit execution, file uploads, voice chat, external logs, external financial integrations or automatic Level 2. Authentication events in the case are prepared evidence, not a real breach. Notes/history are bounded for this cohort (80 notebook entries, 100 wallet transactions, 20 round summaries); multi-cohort/pagination/export are future work. Reports are manual academic assessment with a common rubric, not an NLP grader. Mobile uses stacked panels and swipeable case navigation. Workers/D1/Durable Objects free quotas still apply to actual classroom traffic; no paid plan is enabled by code.
+
+## Release evidence
+
+Published version d8271f79-2443-42cb-9dfb-a61bc9c9c968. QA_LAUNCH_RESULTS.json records 81 local integration assertions; 37 unit tests and 66 existing Arena checks also passed. Hosted QA_LAUNCH_DEPLOYMENT.json records staff-role boundaries, empty initial production lobby, authenticated WebSocket handshake and final asset/auth checks. CI passed for the main game implementation. Direct entry: https://afa-bank-next.cobra-public-community.workers.dev/#/launch; login preserves the game destination. Public homepage includes an AFA-LAUNCH entry. Browser proof screenshots are saved locally in qa/.

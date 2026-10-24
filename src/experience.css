@@ -2986,3 +2986,5 @@
 }
 
 .terms-page{min-height:100vh;background:#eef2f7;color:#142b49;padding:60px 24px}.terms-document{max-width:760px;margin:auto}.terms-document .section-label{margin-top:48px}.terms-document h1{font-size:clamp(36px,6vw,64px);letter-spacing:-.05em}.terms-document article{background:white;padding:32px;margin:32px 0;line-height:1.8;border:1px solid #d4deeb;border-radius:16px}.terms-document .checkbox-label{margin:24px 0}.terms-document>.text-link{margin-left:24px}
+
+.experience-v2 .site-header .header-launch{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.08em;color:#aed5ff;border:1px solid #405d7c;border-radius:5px;padding:9px 12px;text-decoration:none}.experience-v2 .site-header .header-launch:hover{background:#153450}@media(max-width:620px){.experience-v2 .site-header .header-launch{font-size:8px;padding:7px 8px}.experience-v2 .site-header nav{gap:10px}}
