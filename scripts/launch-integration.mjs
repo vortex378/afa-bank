@@ -568,8 +568,8 @@ try {
     bank.data.balance,
   );
   check(
-    "ordinary bank activity preserved",
-    (await call("activity", undefined, red1.cookie)).status === 200,
+    "student ordinary bank bypass blocked",
+    (await call("activity", undefined, red1.cookie)).status === 403,
   );
   check(
     "finance bank permissions retained",

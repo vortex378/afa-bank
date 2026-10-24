@@ -1,0 +1,20 @@
+# AFA LAUNCH instructor guide
+
+Open https://afa-bank-next.cobra-public-community.workers.dev/ . Students see AFA LAUNCH, not a public banking dashboard.
+
+1. Students choose Request access. The administrator signs in, opens Bank administration → Administrimi, and approves pending accounts (or creates student accounts).
+2. Administrator or owner opens AFA LAUNCH and creates a Level 1 lobby with the desired team capacity.
+3. Approved students sign in, acknowledge the simulation, choose Red or Blue and mark ready. Both teams need at least one player; every enrolled student must be ready.
+4. Administrator or owner chooses Launch Level 1 and confirms. Connected students automatically receive a five-second countdown and the two-page contract.
+5. Each student chooses Next, reads page 2, checks the agreement and accepts. The owner checks all contracts are accepted, then chooses Open the bank and confirms. Each round wallet starts at 50,000 DEMO ALL.
+6. Students may transfer virtual funds using another enrolled student's Demo IBAN.
+7. Only the owner releases the incident. Check eligible headcount, 10,000 ALL per student and the total before confirming. Staff and unenrolled accounts are excluded. A student with insufficient funds blocks the incident atomically.
+8. Students receive an incident briefing and investigate the case records. They pin at least three relevant records, discuss private team notes and submit a report explaining beneficiary, service, credential, root cause, timeline and remediation.
+9. The owner opens Reports & verdict, freezes reports, assesses both teams with the rubric, selects a winner and publishes a reasoned verdict. A justified explicit override is required if the decision differs from the totals.
+10. Everyone sees the debrief. Phase 2 remains locked; create a fresh round for a new exercise.
+
+## Instructor-only solution (source repository is public)
+
+CRED-017 predates password rotation EVT-219. BATCH-041 / REQ-041 accepted the older credential using legacy-transfer-service. LEGACY-01 demonstrates missing revocation and generation validation. Correlate the actual round TX records with the beneficiary AnOnYmOuS-RuSsIa. Password storage on the live application remains salted hashing; the prepared case illustrates a fictional legacy defect.
+
+Round funds are isolated from ordinary bank balances. No real money is processed. Owner verdicts are human assessments, not an automatic claim that a report is correct.

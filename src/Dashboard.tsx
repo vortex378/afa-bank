@@ -252,7 +252,7 @@ export default function Dashboard({
   if (
     !preview &&
     !user.must_change_password &&
-    (view === "launch" || autoLaunch)
+    (view === "launch" || autoLaunch || user.role === "customer")
   )
     return (
       <Suspense fallback={<div className="loading">Opening AFA-LAUNCH…</div>}>
@@ -261,6 +261,10 @@ export default function Dashboard({
           director={director}
           onLogout={logout}
           onExit={async () => {
+            if (user.role === "customer") {
+              location.hash = "/";
+              return;
+            }
             try {
               setUser(await api<User>("me"));
             } catch {}

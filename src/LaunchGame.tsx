@@ -519,13 +519,16 @@ export default function LaunchGame({
       setTransfer(false);
       seenBrief.current = "";
     }
+    if (r.stage === "completed") setBriefing(false);
     if (lastStage.current !== r.stage) {
       lastStage.current = r.stage;
       setTab(r.stage === "completed" ? "reports" : "overview");
       window.scrollTo(0, 0);
     }
-    if (p && r.incident_at && seenBrief.current !== r.id) {
-      const stored = sessionStorage.getItem("launch-brief:" + r.id);
+    if (p && r.stage !== "completed" && r.incident_at && seenBrief.current !== r.id) {
+      const stored = sessionStorage.getItem(
+        "launch-brief:" + user.id + ":" + r.id,
+      );
       if (!stored) setBriefing(true);
       seenBrief.current = r.id;
     }
@@ -565,7 +568,7 @@ export default function LaunchGame({
   }
   function closeBrief() {
     setBriefing(false);
-    if (r) sessionStorage.setItem("launch-brief:" + r.id, "1");
+    if (r) sessionStorage.setItem("launch-brief:" + user.id + ":" + r.id, "1");
   }
   function ask(title: string, description: string, run: () => Promise<void>) {
     setConfirm({ title, description, run });
@@ -714,7 +717,9 @@ export default function LaunchGame({
           </div>
           <button onClick={onExit} disabled={!!p && r?.stage !== "completed"}>
             <ArrowLeft size={16} />{" "}
-            {manager ? "Return to AFA Bank" : "Leave completed exercise"}
+            {user.role !== "customer"
+              ? "Bank administration"
+              : "AFA LAUNCH homepage"}
           </button>
           <button onClick={onLogout}>
             <LogOut size={16} /> Sign out
@@ -791,9 +796,22 @@ export default function LaunchGame({
             ) : (
               <Pill>Waiting for the owner to open Level 1</Pill>
             )}
-            <button className="lr-link" onClick={onExit}>
-              Continue to ordinary AFA Bank <ArrowRight size={15} />
-            </button>
+            {user.role !== "customer" && (
+              <button className="lr-link" onClick={onExit}>
+                Bank administration <ArrowRight size={15} />
+              </button>
+            )}
+            <section className="lr-next-level">
+              <Lock size={24} />
+              <div>
+                <span className="lr-eyebrow">PHASE 1 / AFA BANK</span>
+                <h2>Await your live deployment.</h2>
+                <p>
+                  Your instructor opens the lobby. Choose a team, get ready,
+                  then enter the bank together after launch.
+                </p>
+              </div>
+            </section>
           </section>
         ) : (
           <>
@@ -1555,7 +1573,7 @@ export default function LaunchGame({
                   This round is already underway. The next lobby will appear
                   when the owner opens it.
                 </p>
-                {button("Return to ordinary bank", onExit, "ghost")}
+                {button("Return to AFA LAUNCH", onExit, "ghost")}
               </section>
             )}
             {tab === "overview" && !manager && r.stage === "completed" && p && (
@@ -1969,7 +1987,7 @@ export default function LaunchGame({
                         </p>
                       </div>
                     </section>
-                    {button("Return to ordinary bank", onExit, "ghost")}
+                    {button("Return to AFA LAUNCH", onExit, "ghost")}
                   </section>
                 ) : manager ? (
                   <>

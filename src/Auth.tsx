@@ -6,9 +6,12 @@ import {
   CheckCircle2,
   ArrowLeft,
 } from "lucide-react";
-import { Card, Current, Logo } from "./Visuals";
+import { lazy, Suspense } from "react";
+import { LaunchBrand } from "./Landing";
+import "./portal.css";
+const LaunchScene = lazy(() => import("./LaunchScene"));
 import { api, type User } from "./lib";
-import Atmosphere from "./Atmosphere";
+
 export default function Auth({
   register = false,
   onLogin,
@@ -36,34 +39,26 @@ export default function Auth({
     }
   }
   return (
-    <div className="auth-page auth-v2">
+    <div className="auth-page auth-v2 launch-auth">
       <div className="auth-art">
-        <Logo />
+        <LaunchBrand />
         <div className="auth-live">
-          <span className="status-dot" /> THE AFA EXPERIENCE
+          <span className="status-dot" /> ACADEMIC CYBER ARENA
         </div>
-        <Atmosphere variant="auth" />
-        <div className="auth-watermark" aria-hidden="true">
-          AFA
-        </div>
+        <Suspense fallback={null}>
+          <LaunchScene />
+        </Suspense>
         <div className="auth-statement">
-          <span className="eyebrow">LËVIZ NDRYSHE. NDIHU NDRYSHE.</span>
+          <span className="eyebrow">YOUR NEXT DEPLOYMENT</span>
           <h1>
-            Rrjedha jote.
+            Choose a side.
             <br />
-            <em>Rregullat e tua.</em>
+            <em>Find the truth.</em>
           </h1>
         </div>
-        <div className="auth-object">
-          <Card cinematic />
-          <div className="auth-object-label">
-            <span>01 / TITANIUM EDITION</span>
-            <span>DESIGNED TO FEEL DIFFERENT.</span>
-          </div>
-        </div>
         <div className="auth-bottom">
-          <span>A NEW CURRENT IN BANKING.</span>
-          <span>↗ AFA BANK / AL</span>
+          <span>AFA LAUNCH / SEASON 01</span>
+          <span>LEARN. INVESTIGATE. DEFEND.</span>
         </div>
       </div>
       <main tabIndex={-1} className="auth-form">
@@ -90,8 +85,8 @@ export default function Auth({
             <h1>{register ? "Një fillim i ri." : "Mirë se u ktheve."}</h1>
             <p>
               {register
-                ? "Kërko akses në përvojën e bankingut virtual."
-                : "Identifikohu për të vazhduar në llogarinë tënde."}
+                ? "Kërko akses në AFA LAUNCH. Administratori miraton kërkesën përpara se të zgjedhësh ekipin."
+                : "Hyr në AFA LAUNCH. Faza 1 hapet kur administratori ose owner nis lojën."}
             </p>
             <form onSubmit={submit}>
               {register && (
@@ -171,9 +166,6 @@ export default function Auth({
                 {register ? "Identifikohu" : "Kërko akses"}
               </a>
             </div>
-            <a className="preview-access" href="#/preview">
-              Shiko demonstrimin pa llogari →
-            </a>
           </div>
         )}
         <small className="auth-foot">

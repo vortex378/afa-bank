@@ -6,3 +6,6 @@ dist/
 *.local
 *.tsbuildinfo
 qa/
+
+*.private
+*.private.*

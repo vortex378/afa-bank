@@ -302,7 +302,19 @@ export default {
           () => rate(env, "launch:" + user.id, 180),
         );
       }
-      if (user.role === "customer" && user.terms_version !== TERMS_VERSION)
+      if (
+        user.role === "customer" &&
+        ["/api/activity", "/api/recipient", "/api/transfers"].includes(path)
+      )
+        fail(
+          "Student banking is available only inside a launched AFA-LAUNCH round.",
+          403,
+        );
+      if (
+        path !== "/api/password" &&
+        user.role === "customer" &&
+        user.terms_version !== TERMS_VERSION
+      )
         fail("Pranoni kushtet e përdorimit për të vazhduar.", 403);
       if (path === "/api/password" && req.method === "POST") {
         await rate(env, "password:" + user.id, 10);

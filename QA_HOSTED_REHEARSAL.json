@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-24",
+  "environment": "hosted Cloudflare Workers / D1 / authenticated realtime sessions",
+  "temporaryUsers": 5,
+  "participants": {
+    "red": 2,
+    "blue": 2
+  },
+  "approvalCheckUsers": 1,
+  "results": {
+    "administratorAccountVerified": true,
+    "ownerAccountVerified": true,
+    "financeAccountVerified": true,
+    "administratorCreatesUsersAndRound": true,
+    "pendingLoginRejected": true,
+    "administratorApprovalEnablesLogin": true,
+    "studentOrdinaryBankBypassDenied": true,
+    "fourAuthenticatedRealtimeConnections": true,
+    "administratorBrowserStartsGame": true,
+    "contractGate": true,
+    "twoPageContractBrowserAcceptance": true,
+    "startingBalancesALL": [
+      50000,
+      50000,
+      50000,
+      50000
+    ],
+    "demoIbanTransferAndReturn": true,
+    "ownerBrowserIncident": true,
+    "afterIncidentBalancesALL": [
+      40000,
+      40000,
+      40000,
+      40000
+    ],
+    "beneficiaryCreditALL": 40000,
+    "incidentReplayNoSecondDebit": true,
+    "originalAccountsUnchanged": true,
+    "unenrolledStudentExcluded": true,
+    "evidenceChainDiscoverable": true,
+    "opponentNotesAndReportsPrivate": true,
+    "redAndBlueBrowserReportSubmission": true,
+    "ownerBrowserJudgingAndCompletion": true,
+    "verdict": {
+      "winner": "red",
+      "red": 100,
+      "blue": 94
+    },
+    "allFourStudentsReceiveDebrief": true
+  },
+  "automated": {
+    "unitTests": 37,
+    "localLaunchIntegrationAssertions": 81,
+    "typecheck": true,
+    "build": true
+  },
+  "limitations": [
+    "No 100–200 concurrent-user load test",
+    "No formal penetration test"
+  ],
+  "cleanup": {
+    "temporaryAccountsDeleted": 5,
+    "testRoundRemoved": true,
+    "originalAccountsPreserved": 4,
+    "staffAccountsPreserved": 3,
+    "preexistingStudentPreserved": true,
+    "deletedSessionsRejected": true,
+    "foreignKeyCheck": "passed"
+  },
+  "deploymentVersion": "1a89e0c1-fa24-41d6-90b6-351a75fec028"
+}

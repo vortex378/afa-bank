@@ -31,3 +31,8 @@ TypeScript, production build and 15 unit tests pass. QA_CONSENT_RESULTS.json rec
 
 ## AFA-LAUNCH Level 1
 37 unit tests, 81 Level 1 API/WebSocket checks and 66 existing Arena API regressions passed locally. Browser verified student auto-routing, live owner countdown, two-page contract gating, bank opening, live incident briefing, evidence pinning and team notebook. Desktop/phone/tablet screenshots in qa/; mobile and tablet document width matched scroll width. No captured browser console errors in the student investigation. Scenario authentication/code is fabricated; transaction evidence comes from actual virtual round entries. Test accounts exist only in local D1.
+
+
+## AFA LAUNCH public entrance and hosted rehearsal — 24 October 2026
+
+The current product begins with the AFA LAUNCH 3D portal; previous public bank/preview descriptions above are historical. See HOSTED_REHEARSAL.md and QA_HOSTED_REHEARSAL.json for the browser/API rehearsal, exact cleanup and remaining limits. Final release unit tests/typecheck/build passed; updated local Launch integration passed 81 assertions.

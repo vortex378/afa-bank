@@ -1,8 +1,8 @@
-# AFA BANK
+# AFA LAUNCH
 
 Live app: https://afa-bank-next.cobra-public-community.workers.dev
 
-A private, educational virtual-banking platform. React + TypeScript + Three.js frontend; Cloudflare Workers API; D1 transactional ledger. No real money, payment network, or genuine bank account integration.
+An academic multiplayer cybersecurity platform. AFA LAUNCH is the public entrance; AFA BANK is the world inside Phase 1. React + TypeScript + Three.js frontend; Cloudflare Workers API; D1 transactional ledger. No real money, payment network, or genuine bank account integration.
 
 ## Run locally
 
@@ -15,11 +15,11 @@ pnpm build
 pnpm exec wrangler dev
 ```
 
-Open http://localhost:8787. The public preview works without an account. For live frontend development run Wrangler and then pnpm dev (Vite proxies /api).
+Open http://localhost:8787. The public homepage is a procedural 3D AFA LAUNCH portal. Registration requires administrator approval. Students enter the player hub; bank access is available only inside a launched round. For live frontend development run Wrangler and then pnpm dev (Vite proxies /api).
 
 ## Roles and flows
 
-- Customer: approval-based registration, session login, account, activity, recipient verification, exact-value transfers, downloadable text receipts.
+- Student/customer: approval-based registration → AFA LAUNCH hub → Red/Blue selection → ready → instructor launch → two-page contract → Phase 1 bank and investigation. Ordinary bank APIs cannot bypass the game.
 - Administrator: review registrations, create customers, activate/suspend/reject customer accounts. Cannot issue money or promote roles.
 - Finance manager: customer activity, one virtual salary per active account/month (UTC), educational incident debit and audited reversal. Cannot manage accounts.
 - Owner: operational overview, all staff actions, assign administrator/finance roles. The database permits exactly one owner.
@@ -72,7 +72,7 @@ See QA_API_RESULTS.json and VERIFICATION.md. Screenshots are saved locally in qa
 - Every active role receives a virtual 50,000 ALL monthly salary. A daily scheduled check and activation triggers issue missing payments once per UTC month; finance/owner can also run the check.
 - Forgot-password recovery, email delivery, MFA, formal penetration testing, automatic backups/export UI and persistent notification inbox are future work.
 - Card details are fictional; simulated identifiers deliberately use AL-DEMO rather than valid IBANs.
-- The skippable cinematic intro reveals the interactive metal card; orbital canvas light, pointer response and editorial page transitions form the visual system.
+- The AFA LAUNCH entrance uses a lazy-loaded procedural Three.js scene, bounded pixel ratio, reduced-motion support and a static fallback; the bank stays inside Phase 1. Historical bank visual components remain available for staff. form the visual system.
 - Currency precision is exact at the API/database boundary; animated values settle to the confirmed balance.
 - Reduced-motion users get an accessible static card. WebGL is lazy loaded and unmounted offscreen; DPR is capped at 1.5.
 
@@ -89,3 +89,8 @@ The authenticated dashboard now includes Cyber Arena. See CYBER_ARENA.md for arc
 ## AFA-LAUNCH Level 1
 
 The new AFA-LAUNCH director provides Red/Blue team selection, live owner/admin launch, round contract and bank, one-time owner incident, correlated forensic evidence, team notebooks/reports and owner verdict. See AFA_LAUNCH.md for permissions, case answer, testing, local setup, migration, deployment and replay instructions. The ordinary bank and original Arena remain independent.
+
+
+## Current entry and instructor workflow
+
+Start at the root AFA LAUNCH homepage or #/launch. See [INSTRUCTOR_GUIDE.md](INSTRUCTOR_GUIDE.md) for running Level 1, [AI_HANDOFF.md](AI_HANDOFF.md) for project intent, and [HOSTED_REHEARSAL.md](HOSTED_REHEARSAL.md) for the latest live rehearsal evidence. Earlier validation sections describe historical releases and are superseded by these current records. No production credentials or database contents are needed to read the source.

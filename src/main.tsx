@@ -1,33 +1,17 @@
-import {
-  StrictMode,
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { StrictMode, lazy, Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { AnimatePresence, MotionConfig } from "motion/react";
+import { MotionConfig } from "motion/react";
 import Landing from "./Landing";
 const Auth = lazy(() => import("./Auth"));
 const Dashboard = lazy(() => import("./Dashboard"));
-import { Intro } from "./Visuals";
+
 import { api, type User } from "./lib";
 import "./styles.css";
 import "./experience.css";
 function App() {
   const [route, setRoute] = useState(location.hash || "#/"),
     [user, setUser] = useState<User | undefined>(),
-    [loading, setLoading] = useState(true),
-    [intro, setIntro] = useState(
-      () =>
-        !sessionStorage.getItem("afa-intro") &&
-        (!location.hash || location.hash === "#/"),
-    );
-  const finish = useCallback(() => {
-    setIntro(false);
-    sessionStorage.setItem("afa-intro", "1");
-  }, []);
+    [loading, setLoading] = useState(true);
   useEffect(() => {
     const changed = () => {
       setRoute(location.hash || "#/");
@@ -42,7 +26,7 @@ function App() {
   }, []);
   function signedIn(u: User) {
     setUser(u);
-    location.hash = route === "#/launch" ? "/launch" : "/account";
+    location.hash = "/launch";
   }
   return (
     <MotionConfig reducedMotion="user">
@@ -64,10 +48,8 @@ function App() {
         >
           Kalo te përmbajtja
         </a>
-        <AnimatePresence>{intro && <Intro onDone={finish} />}</AnimatePresence>
-        {route === "#/preview" ? (
-          <Dashboard preview onLogout={() => (location.hash = "/")} />
-        ) : route === "#/account" || route === "#/launch" ? (
+
+        {route === "#/account" || route === "#/launch" ? (
           loading ? (
             <div className="loading" role="status">
               Duke hapur hapësirën tuaj…
@@ -89,7 +71,7 @@ function App() {
         ) : route === "#/register" ? (
           <Auth register onLogin={signedIn} />
         ) : (
-          <Landing replay={() => setIntro(true)} />
+          <Landing />
         )}
       </Suspense>
     </MotionConfig>
