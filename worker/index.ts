@@ -1,7 +1,10 @@
+import { launch } from "./launch";
+export { LaunchHub } from "./launch-hub";
 import { arena } from "./arena";
 import { parseAmount, allows } from "./money";
 interface Env {
   DB: D1Database;
+  LAUNCH_HUB: DurableObjectNamespace;
   ASSETS: Fetcher;
   BOOTSTRAP_SECRET?: string;
 }
@@ -193,7 +196,7 @@ export default {
       headers.set("X-Frame-Options", "DENY");
       headers.set(
         "Content-Security-Policy",
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' " + url.origin.replace(/^http/, "ws") + "; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
       );
       return new Response(res.body, { status: res.status, headers });
     }
@@ -285,6 +288,17 @@ export default {
           ).bind(crypto.randomUUID(), user.id, TERMS_VERSION),
         ]);
         return json({ ok: true, version: TERMS_VERSION });
+      }
+      if (path.startsWith("/api/launch/")) {
+        if (user.must_change_password)
+          fail("Change the initial password first.", 403);
+        return await launch(
+          req,
+          env,
+          user,
+          () => body(req),
+          () => rate(env, "launch:" + user.id, 180),
+        );
       }
       if (user.role === "customer" && user.terms_version !== TERMS_VERSION)
         fail("Pranoni kushtet e përdorimit për të vazhduar.", 403);
@@ -567,7 +581,7 @@ export default {
         error.status ||
         (/UNIQUE/.test(msg)
           ? 409
-          : /Insufficient balance|Account is not active|Recipient is not active|Arena score limit|Arena submission is not eligible|Arena membership is locked/.test(
+          : /Insufficient balance|Account is not active|Recipient is not active|Arena score limit|Arena submission is not eligible|Arena membership is locked|Launch /.test(
                 msg,
               )
             ? 400

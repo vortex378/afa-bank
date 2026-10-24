@@ -16,6 +16,8 @@
       "migrations_dir": "migrations",
     },
   ],
+  "durable_objects": {"bindings":[{"name":"LAUNCH_HUB","class_name":"LaunchHub"}]},
+  "migrations": [{"tag":"launch-hub-v1","new_sqlite_classes":["LaunchHub"]}],
   "triggers": {
     "crons": ["17 3 * * *"],
   },

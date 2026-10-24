@@ -28,3 +28,6 @@ TypeScript, production build and 15 unit tests pass. QA_CONSENT_RESULTS.json rec
 
 ## Cyber Arena release
 26 unit tests and 66 local API checks passed, covering delegated instructor versus banking permissions, role/team isolation, submission replay/concurrency, score tampering, score audit, date transitions/timers, template schedule edits, answer redaction and virtual banking regressions. Browser tested instructor navigation, prepared missions, Security Center note/status save, and responsive layouts at 1440/1024/390. No horizontal document overflow at tablet/mobile; no captured runtime console errors. Migration 0006 creates Arena tables only; production fixture seeding is disabled. See QA_ARENA_RESULTS.json and CYBER_ARENA.md.
+
+## AFA-LAUNCH Level 1
+37 unit tests, 81 Level 1 API/WebSocket checks and 66 existing Arena API regressions passed locally. Browser verified student auto-routing, live owner countdown, two-page contract gating, bank opening, live incident briefing, evidence pinning and team notebook. Desktop/phone/tablet screenshots in qa/; mobile and tablet document width matched scroll width. No captured browser console errors in the student investigation. Scenario authentication/code is fabricated; transaction evidence comes from actual virtual round entries. Test accounts exist only in local D1.

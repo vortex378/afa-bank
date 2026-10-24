@@ -85,3 +85,7 @@ Administrators and owner approve pending customers. On first login, customers mu
 ## Cyber Arena
 
 The authenticated dashboard now includes Cyber Arena. See CYBER_ARENA.md for architecture, features, permissions, local test and deployment commands, migration details and limitations. Competition roles are separate from banking roles. Production starts with an empty Arena; an instructor may explicitly create the prepared fictional template as a draft.
+
+## AFA-LAUNCH Level 1
+
+The new AFA-LAUNCH director provides Red/Blue team selection, live owner/admin launch, round contract and bank, one-time owner incident, correlated forensic evidence, team notebooks/reports and owner verdict. See AFA_LAUNCH.md for permissions, case answer, testing, local setup, migration, deployment and replay instructions. The ordinary bank and original Arena remain independent.

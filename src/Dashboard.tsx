@@ -28,6 +28,8 @@ import Staff from "./Staff";
 import PasswordSetup from "./PasswordSetup";
 import Terms, { TERMS_VERSION } from "./Terms";
 import Atmosphere from "./Atmosphere";
+import { useLaunchDirector } from "./useLaunchDirector";
+const LaunchGame = lazy(() => import("./LaunchGame"));
 const Arena = lazy(() => import("./Arena"));
 const demoUser: User = {
   id: "demo",
@@ -129,6 +131,10 @@ export default function Dashboard({
   preview?: boolean;
   onLogout: () => void;
 }) {
+  const director = useLaunchDirector(
+    !preview && !initialUser?.must_change_password,
+  );
+  const [dismissedRound, setDismissedRound] = useState("");
   const [user, setUser] = useState(initialUser || demoUser),
     [transactions, setTransactions] = useState<Transaction[]>(
       preview ? demoTransactions : [],
@@ -144,9 +150,19 @@ export default function Dashboard({
   const first = useRef(true),
     previousBalance = useRef(user.balance);
   const staff = user.role !== "customer";
+  const gameActive = useRef(false);
+  gameActive.current =
+    !preview &&
+    (view === "launch" ||
+      (user.role === "customer" &&
+        director.snapshot?.round &&
+        (director.snapshot.player ||
+          director.snapshot.round.stage === "lobby") &&
+        dismissedRound !== director.snapshot.round.id));
   async function load() {
     if (
       preview ||
+      gameActive.current ||
       user.must_change_password ||
       (user.role === "customer" && user.terms_version !== TERMS_VERSION)
     )
@@ -200,6 +216,45 @@ export default function Dashboard({
       setError(e.message);
     }
   }
+  if (
+    !preview &&
+    director.loading &&
+    !director.snapshot &&
+    !user.must_change_password
+  )
+    return (
+      <div className="loading" role="status">
+        Connecting to AFA-LAUNCH…
+      </div>
+    );
+  const round = director.snapshot?.round;
+  const autoLaunch =
+    !preview &&
+    user.role === "customer" &&
+    round &&
+    (director.snapshot?.player || round.stage === "lobby") &&
+    dismissedRound !== round.id;
+  if (
+    !preview &&
+    !user.must_change_password &&
+    (view === "launch" || autoLaunch)
+  )
+    return (
+      <Suspense fallback={<div className="loading">Opening AFA-LAUNCH…</div>}>
+        <LaunchGame
+          user={user}
+          director={director}
+          onLogout={logout}
+          onExit={async () => {
+            try {
+              setUser(await api<User>("me"));
+            } catch {}
+            setDismissedRound(round?.id || "");
+            setView("overview");
+          }}
+        />
+      </Suspense>
+    );
   if (
     !preview &&
     user.role === "customer" &&
@@ -268,6 +323,15 @@ export default function Dashboard({
             >
               <ShieldCheck size={19} />
               Siguria
+            </button>
+          )}
+          {!preview && (
+            <button
+              className={view === "launch" ? "selected" : ""}
+              onClick={() => navigate("launch")}
+            >
+              <ShieldCheck size={19} />
+              AFA-LAUNCH
             </button>
           )}
           {!preview && (
@@ -352,6 +416,19 @@ export default function Dashboard({
           </div>
         </header>
         <main tabIndex={-1} className="dashboard-main">
+          {!preview && staff && (
+            <div className="preview-banner">
+              <span>
+                AFA-LAUNCH ·{" "}
+                {round ? round.stage.toUpperCase() : "LEVEL 1 MISSION CONTROL"}
+              </span>
+              <button className="text-link" onClick={() => navigate("launch")}>
+                {user.role === "owner" && round?.stage === "banking"
+                  ? "Release the 10,000 ALL incident →"
+                  : "Open Mission Control →"}
+              </button>
+            </div>
+          )}
           {preview && (
             <div className="preview-banner">
               <span>

@@ -1,0 +1,329 @@
+{
+  "environment": "isolated local D1 and Durable Object",
+  "results": [
+    {
+      "name": "login Consent QA Owner",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA admin",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA finance",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA red1",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA red2",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA blue1",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA blue2",
+      "passed": true
+    },
+    {
+      "name": "login Launch QA spare",
+      "passed": true
+    },
+    {
+      "name": "anonymous denied",
+      "passed": true
+    },
+    {
+      "name": "finance cannot create",
+      "passed": true
+    },
+    {
+      "name": "customer cannot create",
+      "passed": true
+    },
+    {
+      "name": "owner creates round",
+      "passed": true
+    },
+    {
+      "name": "only one live round",
+      "passed": true
+    },
+    {
+      "name": "launch lobby available before bank terms",
+      "passed": true
+    },
+    {
+      "name": "finance excluded from student teams",
+      "passed": true
+    },
+    {
+      "name": "training notice required",
+      "passed": true
+    },
+    {
+      "name": "join Launch QA red1",
+      "passed": true
+    },
+    {
+      "name": "join Launch QA red2",
+      "passed": true
+    },
+    {
+      "name": "join Launch QA blue1",
+      "passed": true
+    },
+    {
+      "name": "join Launch QA blue2",
+      "passed": true
+    },
+    {
+      "name": "team capacity enforced",
+      "passed": true
+    },
+    {
+      "name": "starting balance exactly 50000",
+      "passed": true
+    },
+    {
+      "name": "rejoining does not reallocate",
+      "passed": true
+    },
+    {
+      "name": "unready launch blocked",
+      "passed": true
+    },
+    {
+      "name": "realtime presence",
+      "passed": true
+    },
+    {
+      "name": "admin can start round",
+      "passed": true
+    },
+    {
+      "name": "late join blocked",
+      "passed": true
+    },
+    {
+      "name": "roster locks",
+      "passed": true
+    },
+    {
+      "name": "countdown enforced",
+      "passed": true
+    },
+    {
+      "name": "unchecked contract rejected",
+      "passed": true
+    },
+    {
+      "name": "owner cannot skip contract stage",
+      "passed": true
+    },
+    {
+      "name": "contract Launch QA red1",
+      "passed": true
+    },
+    {
+      "name": "contract Launch QA red2",
+      "passed": true
+    },
+    {
+      "name": "contract Launch QA blue1",
+      "passed": true
+    },
+    {
+      "name": "contract Launch QA blue2",
+      "passed": true
+    },
+    {
+      "name": "bank opens",
+      "passed": true
+    },
+    {
+      "name": "clients receive realtime stage events",
+      "passed": true
+    },
+    {
+      "name": "no premature evidence or answer",
+      "passed": true
+    },
+    {
+      "name": "round transfer works",
+      "passed": true
+    },
+    {
+      "name": "round transfer replay safe",
+      "passed": true
+    },
+    {
+      "name": "round overdraft blocked",
+      "passed": true
+    },
+    {
+      "name": "recipient normalization",
+      "passed": true
+    },
+    {
+      "name": "incident aborts on insufficient student funds",
+      "passed": true
+    },
+    {
+      "name": "failed incident is atomic",
+      "passed": true
+    },
+    {
+      "name": "preflight retry restores baseline",
+      "passed": true
+    },
+    {
+      "name": "student cannot release incident",
+      "passed": true
+    },
+    {
+      "name": "admin cannot release incident",
+      "passed": true
+    },
+    {
+      "name": "incident confirmation required",
+      "passed": true
+    },
+    {
+      "name": "only four students eligible",
+      "passed": true
+    },
+    {
+      "name": "concurrent first release debits once",
+      "passed": true
+    },
+    {
+      "name": "owner releases incident",
+      "passed": true
+    },
+    {
+      "name": "exact 10000 debit",
+      "passed": true
+    },
+    {
+      "name": "beneficiary receives exact total",
+      "passed": true
+    },
+    {
+      "name": "phase switches to investigation",
+      "passed": true
+    },
+    {
+      "name": "evidence and actual ledger correlate",
+      "passed": true
+    },
+    {
+      "name": "student cannot get answer key",
+      "passed": true
+    },
+    {
+      "name": "owner has academic key",
+      "passed": true
+    },
+    {
+      "name": "incident replay is idempotent",
+      "passed": true
+    },
+    {
+      "name": "replay did not debit again",
+      "passed": true
+    },
+    {
+      "name": "concurrent replays safe",
+      "passed": true
+    },
+    {
+      "name": "one incident debit per wallet",
+      "passed": true
+    },
+    {
+      "name": "unenrolled user cannot investigate",
+      "passed": true
+    },
+    {
+      "name": "teammates share pins",
+      "passed": true
+    },
+    {
+      "name": "opposing pins hidden",
+      "passed": true
+    },
+    {
+      "name": "opposing notes hidden",
+      "passed": true
+    },
+    {
+      "name": "report needs evidence",
+      "passed": true
+    },
+    {
+      "name": "red report accepted",
+      "passed": true
+    },
+    {
+      "name": "report replay safe",
+      "passed": true
+    },
+    {
+      "name": "opposing reports hidden",
+      "passed": true
+    },
+    {
+      "name": "blue report accepted",
+      "passed": true
+    },
+    {
+      "name": "student cannot judge",
+      "passed": true
+    },
+    {
+      "name": "owner freezes reports",
+      "passed": true
+    },
+    {
+      "name": "late report blocked",
+      "passed": true
+    },
+    {
+      "name": "rubric tampering rejected",
+      "passed": true
+    },
+    {
+      "name": "owner verdict",
+      "passed": true
+    },
+    {
+      "name": "completed debrief available",
+      "passed": true
+    },
+    {
+      "name": "verdict cannot be replayed",
+      "passed": true
+    },
+    {
+      "name": "ordinary bank untouched",
+      "passed": true
+    },
+    {
+      "name": "ordinary bank activity preserved",
+      "passed": true
+    },
+    {
+      "name": "finance bank permissions retained",
+      "passed": true
+    },
+    {
+      "name": "fresh round supported",
+      "passed": true
+    }
+  ]
+}
