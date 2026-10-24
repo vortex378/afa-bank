@@ -62,6 +62,9 @@ export default function Auth({
         </div>
       </div>
       <main tabIndex={-1} className="auth-form">
+        <div className="auth-mobile-brand">
+          <LaunchBrand />
+        </div>
         <a className="back-link" href="#/">
           <ArrowLeft size={16} /> Kryefaqja
         </a>

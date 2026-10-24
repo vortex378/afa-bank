@@ -126,13 +126,13 @@ function Brand() {
     <span className="lr-brand">
       <svg viewBox="0 0 40 40" aria-hidden="true">
         <path
-          d="M3 33 15 6l12 27M9 23h16M17 33 29 6l8 27M23 23h11"
+          d="M20 3 37 34H3L20 3Z M20 14l9 16H11l9-16Z M20 3v11M3 34l8-4m26 4-8-4"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.5"
+          strokeWidth="1.5"
         />
       </svg>
-      AFA<span>—</span>LAUNCH
+      AFA LAUNCH
     </span>
   );
 }
@@ -474,6 +474,7 @@ export default function LaunchGame({
   onExit: () => void;
   onLogout: () => void;
 }) {
+  const reducedMotion = useReducedMotion();
   const {
     snapshot: data,
     connected,
@@ -525,7 +526,12 @@ export default function LaunchGame({
       setTab(r.stage === "completed" ? "reports" : "overview");
       window.scrollTo(0, 0);
     }
-    if (p && r.stage !== "completed" && r.incident_at && seenBrief.current !== r.id) {
+    if (
+      p &&
+      r.stage !== "completed" &&
+      r.incident_at &&
+      seenBrief.current !== r.id
+    ) {
       const stored = sessionStorage.getItem(
         "launch-brief:" + user.id + ":" + r.id,
       );
@@ -635,7 +641,7 @@ export default function LaunchGame({
   if (r?.stage === "contract" && p && rawRemaining > 0)
     return <Countdown remaining={rawRemaining} />;
   return (
-    <div className="lr-shell" lang="en">
+    <div className="lr-shell" lang="en" data-team={p?.team || "control"}>
       <header className="lr-top">
         <button
           className="lr-menu lr-icon"
@@ -731,7 +737,14 @@ export default function LaunchGame({
           </small>
         </div>
       </aside>
-      <main className="lr-main" tabIndex={-1}>
+      <motion.main
+        className="lr-main"
+        tabIndex={-1}
+        key={(r?.id || "hub") + ":" + (r?.stage || "waiting") + ":" + tab}
+        initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
         {(error || syncError) && (
           <div className="lr-error" role="alert">
             {error || syncError}
@@ -2267,7 +2280,7 @@ export default function LaunchGame({
             )}
           </>
         )}
-      </main>
+      </motion.main>
       {transfer && r && (
         <RoundTransfer
           id={r.id}

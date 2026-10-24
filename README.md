@@ -94,3 +94,8 @@ The new AFA-LAUNCH director provides Red/Blue team selection, live owner/admin l
 ## Current entry and instructor workflow
 
 Start at the root AFA LAUNCH homepage or #/launch. See [INSTRUCTOR_GUIDE.md](INSTRUCTOR_GUIDE.md) for running Level 1, [AI_HANDOFF.md](AI_HANDOFF.md) for project intent, and [HOSTED_REHEARSAL.md](HOSTED_REHEARSAL.md) for the latest live rehearsal evidence. Earlier validation sections describe historical releases and are superseded by these current records. No production credentials or database contents are needed to read the source.
+
+
+## Kinetic presentation edition
+
+The current frontend adds a chrome 3D simulation sculpture, desktop scroll choreography, section reveals, interactive team previews, an architectural mission reveal and transitions through login and game views. See KINETIC_DESIGN.md for implementation, accessibility/fallback behavior and visual verification scope.

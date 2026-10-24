@@ -1,6 +1,6 @@
 import { StrictMode, lazy, Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { MotionConfig } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import Landing from "./Landing";
 const Auth = lazy(() => import("./Auth"));
 const Dashboard = lazy(() => import("./Dashboard"));
@@ -49,30 +49,47 @@ function App() {
           Kalo te përmbajtja
         </a>
 
-        {route === "#/account" || route === "#/launch" ? (
-          loading ? (
-            <div className="loading" role="status">
-              Duke hapur hapësirën tuaj…
-            </div>
-          ) : user ? (
-            <Dashboard
-              initialLaunch={route === "#/launch"}
-              initialUser={user}
-              onLogout={() => {
-                setUser(undefined);
-                location.hash = "/login";
-              }}
-            />
-          ) : (
-            <Auth onLogin={signedIn} />
-          )
-        ) : route === "#/login" ? (
-          <Auth onLogin={signedIn} />
-        ) : route === "#/register" ? (
-          <Auth register onLogin={signedIn} />
-        ) : (
-          <Landing />
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            className="route-surface"
+            key={
+              route === "#/account" || route === "#/launch"
+                ? "workspace"
+                : route === "#/login" || route === "#/register"
+                  ? route
+                  : "landing"
+            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            {route === "#/account" || route === "#/launch" ? (
+              loading ? (
+                <div className="loading" role="status">
+                  Duke hapur hapësirën tuaj…
+                </div>
+              ) : user ? (
+                <Dashboard
+                  initialLaunch={route === "#/launch"}
+                  initialUser={user}
+                  onLogout={() => {
+                    setUser(undefined);
+                    location.hash = "/login";
+                  }}
+                />
+              ) : (
+                <Auth onLogin={signedIn} />
+              )
+            ) : route === "#/login" ? (
+              <Auth onLogin={signedIn} />
+            ) : route === "#/register" ? (
+              <Auth register onLogin={signedIn} />
+            ) : (
+              <Landing />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </Suspense>
     </MotionConfig>
   );
