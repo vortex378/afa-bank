@@ -4,16 +4,16 @@ The public entrance is now a scroll-driven editorial sequence rather than a stat
 
 ## Motion
 
-- A locally generated chrome torus-knot sculpture, segmented orbital shell, illuminated rings and particles use Three.js. Pointer input changes orientation. Scroll changes camera/scene composition without trapping normal scrolling. No external model or image download is required.
-- Desktop hero pins for a short scroll passage; text moves/fades as the sculpture advances. Mobile uses a natural stacked layout without pinned scrolling.
+- A procedural Three.js network physically assembles into a bank: connected server nodes become columns, foundations and a roof. Moving packets and links fade as the building resolves. Pointer input changes orientation; desktop scroll drives the transformation. No external model or image download is required.
+- Desktop hero pins for a short scroll passage; text moves/fades as the network assembles. Mobile uses a natural stacked layout without pinned scrolling.
 - Header section buttons scroll to real sections without changing the hash router. A progress line tracks document movement. A moving signal strip leads into Red/Blue previews.
 - Team previews are accessible pressed-state buttons and explicitly do not enroll the visitor. Hover, orbit and selected treatments explain the two perspectives.
 - Phase 1 reveal includes a CSS architectural sculpture, scan line and floating movement. Later phases remain locked.
-- Section reveals, magnetic primary links, route crossfades, game-view entry transitions, modal entry, button feedback and countdown rings make the flow cohesive.
+- Section reveals, magnetic primary links, route crossfades, game-view entry transitions, modal entry, button feedback and the live network-to-bank countdown make the flow cohesive.
 
 ## Restraint and fallback
 
-System reduced-motion preferences disable the continuous CSS animation, long pinned sequence and custom 3D movement; the static WebGL scene redraws only when necessary. Hidden/offscreen scenes skip rendering; pixel ratio is bounded at 1.5. Small scenes target at most 30 FPS, larger scenes 60. Geometry, shared materials, environment textures, observers and listeners are disposed on unmount. WebGL-unavailable/context-loss states retain a CSS orbital fallback. No audio, forced scroll hijacking or new external dependencies were added.
+System reduced-motion preferences disable the continuous CSS animation, long pinned sequence and custom 3D movement; the static WebGL scene redraws only when necessary. Hidden/offscreen scenes skip rendering; pixel ratio is bounded at 1.5. Small scenes target at most 30 FPS, larger scenes 60. Geometry, shared materials, environment textures, observers and listeners are disposed on unmount. WebGL-unavailable/context-loss states retain a static SVG network-to-bank fallback. No audio, forced scroll hijacking or new external dependencies were added.
 
 ## Verification — 24 October 2026
 
@@ -22,3 +22,9 @@ System reduced-motion preferences disable the continuous CSS animation, long pin
 Narrow-view reviews used same-origin Vite review frames with real internal viewport widths (320px and 390px outer frame widths). Landing and login had no document horizontal overflow; the compact login displayed its brand and usable form. The ignored qa/ harness is not in the production build or GitHub. Production CSP was not relaxed for testing.
 
 Backend endpoints, game rules, transaction logic, accounts and permissions were not changed by this design release. The earlier hosted five-account rehearsal remains documented separately in HOSTED_REHEARSAL.md; it was not repeated against production for these visual changes. No 100–200-player load test or formal cross-browser certification is claimed.
+
+## Network deployment update — 24 October 2026
+
+The homepage includes **Preview the launch** and **Replay transformation**. These run a five-second visual preview without creating or starting a game; **Follow scroll** returns control to normal scrolling. The instructor-started student countdown uses the same scene and the existing server-issued `launch_at` timestamp. It lasts five seconds, then opens contract page 1. Late arrivals proceed to the current stage; animation does not bypass contract acceptance or start banking. Reduced-motion users receive a static scene.
+
+Validation for this update: 37 unit tests, 81 local full-game integration assertions, TypeScript and the production build passed. Browser review observed the real local start countdown, followed by contract page 1, and checked homepage replay/reset and the completed bank geometry. A 320px local review frame displayed the stacked landing layout. The existing hosted rehearsal was not repeated for this visual-only update. No new production users or rounds were created.

@@ -98,4 +98,4 @@ Start at the root AFA LAUNCH homepage or #/launch. See [INSTRUCTOR_GUIDE.md](INS
 
 ## Kinetic presentation edition
 
-The current frontend adds a chrome 3D simulation sculpture, desktop scroll choreography, section reveals, interactive team previews, an architectural mission reveal and transitions through login and game views. See KINETIC_DESIGN.md for implementation, accessibility/fallback behavior and visual verification scope.
+The current frontend adds a 3D network that transforms into AFA BANK during scrolling and the live launch countdown, desktop scroll choreography, section reveals, interactive team previews, an architectural mission reveal and transitions through login and game views. See KINETIC_DESIGN.md for implementation, accessibility/fallback behavior and visual verification scope.

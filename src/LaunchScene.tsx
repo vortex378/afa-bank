@@ -2,11 +2,80 @@ import { useEffect, useRef } from "react";
 import { useReducedMotion, type MotionValue } from "motion/react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-/** Procedural simulation engine: no downloaded assets or external services. */
+type Part = { position: THREE.Vector3; scale: THREE.Vector3 };
+function bankParts() {
+  const parts: Part[] = [];
+  const add = (
+    x: number,
+    y: number,
+    z: number,
+    w: number,
+    h: number,
+    d: number,
+  ) =>
+    parts.push({
+      position: new THREE.Vector3(x, y, z),
+      scale: new THREE.Vector3(w, h, d),
+    });
+  for (let i = 0; i < 3; i++)
+    add(0, -1.02 + i * 0.13, 0, 3.9 - i * 0.25, 0.13, 1.35 - i * 0.12);
+  for (let col = 0; col < 5; col++) {
+    const x = (col - 2) * 0.66;
+    add(x, -0.65, 0.16, 0.42, 0.12, 0.64);
+    for (let j = 0; j < 6; j++)
+      add(x, -0.48 + j * 0.22, 0.16, 0.25, 0.205, 0.43);
+    add(x, 0.79, 0.16, 0.42, 0.12, 0.64);
+  }
+  add(0, 0.93, 0, 3.55, 0.18, 0.96);
+  add(0, 1.065, 0, 3.72, 0.09, 1.07);
+  for (let row = 0; row < 11; row++)
+    add(0, 1.15 + row * 0.072, 0, 3.35 - row * 0.3, 0.075, 0.72);
+  for (let i = 0; i < 7; i++) add((i - 3) * 0.43, -0.05, -0.38, 0.41, 1.6, 0.1);
+  return parts;
+}
+function StaticNetwork() {
+  return (
+    <div className="network-fallback">
+      <svg viewBox="0 0 520 330" fill="none">
+        <g stroke="currentColor" opacity=".45">
+          <path d="m38 96 80 48 27-89 83 63-45 114-65-88-65 115m65-115 110-26 58 75m-103 39 103-39 35 72" />
+          {[
+            [38, 96],
+            [118, 144],
+            [145, 55],
+            [228, 118],
+            [183, 232],
+            [53, 259],
+            [286, 193],
+          ].map(([x, y], i) => (
+            <rect key={i} x={x - 8} y={y - 8} width="16" height="16" />
+          ))}
+        </g>
+        <g stroke="currentColor" strokeWidth="2">
+          <path d="m340 120 65-40 65 40H340Zm4 11h122m-115 82h110m-118 9h126m-132 10h138M355 136v71m25-71v71m25-71v71m25-71v71m25-71v71" />
+        </g>
+        <path d="M260 135h55m-8-8 8 8-8 8" stroke="currentColor" />
+        <text
+          x="362"
+          y="262"
+          fill="currentColor"
+          stroke="none"
+          fontSize="12"
+          letterSpacing="3"
+        >
+          AFA BANK
+        </text>
+      </svg>
+    </div>
+  );
+}
+/** The same server nodes physically assemble into the Phase 1 bank. */
 export default function LaunchScene({
   progress,
+  launchAt,
 }: {
   progress?: MotionValue<number>;
+  launchAt?: number;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -26,141 +95,162 @@ export default function LaunchScene({
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     renderer.setClearColor(0x050a10, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.35;
-    renderer.domElement.setAttribute("aria-hidden", "true");
+    renderer.toneMappingExposure = 1.25;
     el.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 80);
-    camera.position.set(0, 0.35, 8.4);
+    const camera = new THREE.PerspectiveCamera(39, 1, 0.1, 80);
+    camera.position.set(0, 0.3, 8.1);
+    camera.lookAt(0, 0.15, 0);
     const pmrem = new THREE.PMREMGenerator(renderer);
     const room = new RoomEnvironment();
     const env = pmrem.fromScene(room, 0.04);
     scene.environment = env.texture;
     room.dispose();
     pmrem.dispose();
+    scene.add(new THREE.AmbientLight(0xb5d7e7, 1.5));
+    const blue = new THREE.PointLight(0x6bddff, 65);
+    blue.position.set(3, 3, 4);
+    scene.add(blue);
+    const red = new THREE.PointLight(0xfe607b, 38);
+    red.position.set(-3, 0, 2);
+    scene.add(red);
     const world = new THREE.Group();
     scene.add(world);
-    scene.add(new THREE.AmbientLight(0xbdd9f9, 1.5));
-    const lights = [
-      new THREE.PointLight(0x7ddcfa, 90),
-      new THREE.PointLight(0xff496e, 65),
-      new THREE.PointLight(0xd4ffc0, 45),
-    ];
-    lights[0].position.set(3, 2, 4);
-    lights[1].position.set(-3, -1, 2);
-    lights[2].position.set(0, 4, -2);
-    lights.forEach((l) => scene.add(l));
-    const metal = new THREE.MeshStandardMaterial({
-      color: 0xb0c5d1,
-      metalness: 1,
-      roughness: 0.18,
-    });
-    const sculpture = new THREE.Mesh(
-      new THREE.TorusKnotGeometry(0.93, 0.29, 200, 24, 2, 3),
-      metal,
-    );
-    world.add(sculpture);
-    const shell = new THREE.Group();
-    world.add(shell);
-    const plateGeometry = new THREE.BoxGeometry(0.15, 0.045, 0.46);
-    const plateMaterial = new THREE.MeshStandardMaterial({
-      color: 0x7795a9,
-      metalness: 0.9,
-      roughness: 0.3,
-    });
-    for (let i = 0; i < 54; i++) {
-      const a = (i / 54) * Math.PI * 2;
-      const plate = new THREE.Mesh(plateGeometry, plateMaterial);
-      plate.position.set(Math.cos(a) * 1.75, Math.sin(a) * 1.75, 0);
-      plate.rotation.z = a;
-      plate.rotation.x = 0.3;
-      shell.add(plate);
-    }
-    shell.rotation.set(0.45, 0.25, 0.3);
-    const rings: THREE.Mesh[] = [];
-    [1.8, 2.08, 2.48].forEach((r, i) => {
-      const m = new THREE.Mesh(
-        new THREE.TorusGeometry(r, i === 0 ? 0.013 : 0.008, 6, 160),
-        new THREE.MeshBasicMaterial({
-          color: [0xd5f5ef, 0x6bc4ff, 0xeb6c89][i],
-          transparent: true,
-          opacity: i === 0 ? 0.9 : 0.5,
-        }),
+    const parts = bankParts();
+    const n = parts.length;
+    const origins = parts.map((_, i) => {
+      const angle = i * 2.39996;
+      const radius = 1.25 + (i % 5) * 0.34;
+      return new THREE.Vector3(
+        Math.cos(angle) * radius,
+        Math.sin(i * 1.73) * 1.48,
+        Math.sin(angle) * radius * 0.7,
       );
-      m.rotation.set(0.4 + i * 0.4, 0.25 + i * 0.6, i * 0.5);
-      rings.push(m);
-      world.add(m);
     });
-    const paths: THREE.Line[] = [];
-    for (let i = 0; i < 10; i++) {
-      const pts = [];
-      for (let j = 0; j <= 80; j++) {
-        const a = (j / 80) * Math.PI * 2;
-        const r = 2.65 + Math.sin(a * 3 + i) * 0.08;
-        pts.push(
-          new THREE.Vector3(
-            Math.cos(a) * r,
-            Math.sin(a) * r * 0.78,
-            Math.sin(a * 2 + i * 0.4) * 0.45,
-          ),
-        );
-      }
-      const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      const line = new THREE.Line(
-        geo,
-        new THREE.LineBasicMaterial({
-          color: i % 2 ? 0x54abcb : 0x95b0c9,
-          transparent: true,
-          opacity: 0.035,
-        }),
-      );
-      line.rotation.y = i * 0.1;
-      paths.push(line);
-      world.add(line);
+    const cube = new THREE.BoxGeometry(1, 1, 1);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color: 0x93b6c8,
+      metalness: 0.8,
+      roughness: 0.24,
+    });
+    const edgeMat = new THREE.MeshBasicMaterial({
+      color: 0x8bdbef,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const bodies = new THREE.InstancedMesh(cube, bodyMat, n);
+    const outlines = new THREE.InstancedMesh(cube, edgeMat, n);
+    bodies.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    outlines.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    world.add(bodies, outlines);
+    const shade = new THREE.Color();
+    const cool = new THREE.Color(0x8ee7f3),
+      hot = new THREE.Color(0xff718c),
+      white = new THREE.Color(0xdcece8);
+    for (let i = 0; i < n; i++) {
+      outlines.setColorAt(i, i % 6 === 0 ? hot : cool);
+      bodies.setColorAt(i, i % 6 === 0 ? new THREE.Color(0xa58b9b) : white);
     }
-    const pointsGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(240 * 3);
-    for (let i = 0; i < 240; i++) {
-      positions[i * 3] = Math.sin(i * 127.1) * 8;
-      positions[i * 3 + 1] = Math.cos(i * 311.7) * 5;
-      positions[i * 3 + 2] = Math.sin(i * 74.7) * 5 - 2;
+    const edges: Array<[number, number]> = [];
+    for (let i = 0; i < n; i++) {
+      edges.push([i, (i + 1) % n]);
+      if (i % 2 === 0) edges.push([i, (i + 11) % n]);
     }
-    pointsGeometry.setAttribute(
+    const linePositions = new Float32Array(edges.length * 6);
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute(
       "position",
-      new THREE.BufferAttribute(positions, 3),
+      new THREE.BufferAttribute(linePositions, 3).setUsage(
+        THREE.DynamicDrawUsage,
+      ),
     );
-    const dust = new THREE.Points(
-      pointsGeometry,
-      new THREE.PointsMaterial({
-        color: 0xb3d7e7,
-        size: 0.017,
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x73c4df,
+      transparent: true,
+      opacity: 0.3,
+    });
+    const links = new THREE.LineSegments(lineGeo, lineMat);
+    world.add(links);
+    const packetGeo = new THREE.SphereGeometry(0.035, 8, 6);
+    const packetMat = new THREE.MeshBasicMaterial({
+      color: 0xd0efff,
+      transparent: true,
+    });
+    const packets = new THREE.InstancedMesh(packetGeo, packetMat, 16);
+    world.add(packets);
+    const roofGeometry = new THREE.BufferGeometry();
+    const vertices = new Float32Array([
+      -1.75, 1.12, 0.49, 1.75, 1.12, 0.49, 0, 1.94, 0.49, -1.75, 1.12, -0.49, 0,
+      1.94, -0.49, 1.75, 1.12, -0.49,
+    ]);
+    roofGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(vertices, 3),
+    );
+    roofGeometry.setIndex([
+      0, 1, 2, 3, 4, 5, 0, 2, 4, 0, 4, 3, 1, 5, 4, 1, 4, 2, 0, 3, 5, 0, 5, 1,
+    ]);
+    roofGeometry.computeVertexNormals();
+    const roofMat = new THREE.MeshStandardMaterial({
+      color: 0xb5cdc8,
+      metalness: 0.72,
+      roughness: 0.27,
+      transparent: true,
+      opacity: 0,
+    });
+    const roof = new THREE.Mesh(roofGeometry, roofMat);
+    world.add(roof);
+    const baseRing = new THREE.Mesh(
+      new THREE.TorusGeometry(2.65, 0.008, 6, 160),
+      new THREE.MeshBasicMaterial({
+        color: 0x7bdcca,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.15,
+      }),
+    );
+    baseRing.rotation.x = Math.PI / 2;
+    baseRing.position.y = -1.23;
+    world.add(baseRing);
+    const dustGeo = new THREE.BufferGeometry();
+    const dustPos = new Float32Array(180 * 3);
+    for (let i = 0; i < 180; i++) {
+      dustPos[i * 3] = Math.sin(i * 127.1) * 7;
+      dustPos[i * 3 + 1] = Math.cos(i * 311.7) * 4;
+      dustPos[i * 3 + 2] = Math.sin(i * 74.7) * 5 - 2;
+    }
+    dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
+    const dust = new THREE.Points(
+      dustGeo,
+      new THREE.PointsMaterial({
+        color: 0xa8d7dd,
+        size: 0.016,
+        transparent: true,
+        opacity: 0.4,
       }),
     );
     scene.add(dust);
-    const satelliteGeometry = new THREE.SphereGeometry(0.034, 8, 8);
-    const satellites: THREE.Mesh[] = [];
-    for (let i = 0; i < 5; i++) {
-      const m = new THREE.Mesh(
-        satelliteGeometry,
-        new THREE.MeshBasicMaterial({ color: i % 2 ? 0xa2eaff : 0xff728d }),
-      );
-      world.add(m);
-      satellites.push(m);
-    }
+    const positions = origins.map((v) => v.clone());
+    const dummy = new THREE.Object3D();
+    const a = new THREE.Vector3();
+    const b = new THREE.Vector3();
+    const unit = new THREE.Vector3();
+    const smooth = (v: number) => {
+      v = THREE.MathUtils.clamp(v, 0, 1);
+      return v * v * (3 - 2 * v);
+    };
     let x = 0,
       y = 0,
       time = 0,
       frame = 0,
-      visible = true,
       lastDraw = 0,
+      visible = true,
       lost = false,
       dirty = true;
     const move = (e: PointerEvent) => {
-      const b = el.getBoundingClientRect();
-      x = (e.clientX - b.left) / Math.max(b.width, 1) - 0.5;
-      y = (e.clientY - b.top) / Math.max(b.height, 1) - 0.5;
+      const r = el.getBoundingClientRect();
+      x = (e.clientX - r.left) / Math.max(r.width, 1) - 0.5;
+      y = (e.clientY - r.top) / Math.max(r.height, 1) - 0.5;
     };
     const leave = () => {
       x = 0;
@@ -169,19 +259,19 @@ export default function LaunchScene({
     el.addEventListener("pointermove", move, { passive: true });
     el.addEventListener("pointerleave", leave);
     const resize = new ResizeObserver(() => {
-      const { width, height } = el.getBoundingClientRect();
-      renderer.setSize(width, height, false);
-      dirty = true;
-      camera.aspect = width / Math.max(height, 1);
+      const r = el.getBoundingClientRect();
+      renderer.setSize(r.width, r.height, false);
+      camera.aspect = r.width / Math.max(r.height, 1);
       camera.updateProjectionMatrix();
+      dirty = true;
     });
     resize.observe(el);
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
     });
     observer.observe(el);
-    const contextLost = (e: Event) => {
-      e.preventDefault();
+    const contextLost = (event: Event) => {
+      event.preventDefault();
       lost = true;
       el.classList.remove("webgl-ready");
     };
@@ -194,36 +284,85 @@ export default function LaunchScene({
       lastDraw = now;
       dirty = false;
       if (!reduced) time += delta;
-      const p = reduced ? 0 : Math.min(1, Math.max(0, progress?.get() || 0));
-      const targetX = reduced ? 0.12 : y * 0.2 + 0.12;
-      const targetY = reduced ? -0.2 : x * 0.32 - 0.2 + p * 0.7;
-      world.rotation.x = reduced
-        ? targetX
-        : world.rotation.x + (targetX - world.rotation.x) * 0.045;
-      world.rotation.y = reduced
-        ? targetY
-        : world.rotation.y + (targetY - world.rotation.y) * 0.045;
-      world.position.y = Math.sin(time * 0.6) * 0.08;
-      sculpture.rotation.set(time * 0.12 + 0.4, time * 0.15 - 0.4, time * 0.08);
-      sculpture.scale.setScalar(1 + Math.sin(time * 0.8) * 0.025);
-      shell.rotation.z = time * 0.06 + 0.3;
-      shell.rotation.y = 0.3 + Math.sin(time * 0.25) * 0.15 + p * 0.5;
-      rings.forEach((r, i) => {
-        r.rotation.z = time * (i % 2 ? -0.09 : 0.07) + i * 0.5;
-        r.rotation.y = 0.3 + i * 0.6 + Math.sin(time * 0.3 + i) * 0.12;
-      });
-      satellites.forEach((m, i) => {
-        const a = time * 0.18 + i * 1.256;
-        m.position.set(
-          Math.cos(a) * 2.48,
-          Math.sin(a) * 1.95,
-          Math.sin(a * 2) * 0.45,
+      const p = reduced
+        ? launchAt
+          ? 1
+          : 0
+        : THREE.MathUtils.clamp(
+            launchAt
+              ? 1 - (launchAt - Date.now()) / 5000
+              : progress?.get() || 0,
+            0,
+            1,
+          );
+      const assembly = smooth((p - 0.12) / 0.77);
+      for (let i = 0; i < n; i++) {
+        const t = smooth((p - 0.12 - ((i % n) / n) * 0.1) / 0.68);
+        const origin = origins[i];
+        a.set(
+          origin.x + Math.sin(time * 0.5 + i) * 0.055,
+          origin.y + Math.cos(time * 0.4 + i) * 0.05,
+          origin.z,
         );
-      });
-      camera.position.z = 8.4 - p * 0.65;
-      dust.rotation.y = time * 0.012;
+        positions[i].lerpVectors(a, parts[i].position, t);
+        dummy.position.copy(positions[i]);
+        unit.set(
+          0.16 + (i % 3) * 0.035,
+          0.2 + (i % 4) * 0.045,
+          0.15 + (i % 2) * 0.04,
+        );
+        dummy.scale.lerpVectors(unit, parts[i].scale, t);
+        dummy.rotation.set(
+          (1 - t) * Math.sin(time * 0.15 + i) * 0.2,
+          (1 - t) * (time * 0.08 + i * 0.3),
+          0,
+        );
+        dummy.updateMatrix();
+        bodies.setMatrixAt(i, dummy.matrix);
+        shade.set(i % 6 === 0 ? 0xa58b9b : 0xdcece8).lerp(white, assembly);
+        bodies.setColorAt(i, shade);
+        dummy.scale.multiplyScalar(1.015);
+        dummy.updateMatrix();
+        outlines.setMatrixAt(i, dummy.matrix);
+      }
+      bodies.instanceMatrix.needsUpdate = true;
+      if (bodies.instanceColor) bodies.instanceColor.needsUpdate = true;
+      outlines.instanceMatrix.needsUpdate = true;
+      edgeMat.opacity = 0.8 - assembly * 0.65;
+      lineMat.opacity = 0.33 * (1 - assembly);
+      roofMat.opacity = smooth((p - 0.78) / 0.2);
+      roof.visible = p > 0.78;
+      for (let i = 0; i < edges.length; i++) {
+        const [s, e] = edges[i];
+        positions[s].toArray(linePositions, i * 6);
+        positions[e].toArray(linePositions, i * 6 + 3);
+      }
+      lineGeo.attributes.position.needsUpdate = true;
+      lineGeo.computeBoundingSphere();
+      for (let i = 0; i < 16; i++) {
+        const [s, e] = edges[(i * 7) % edges.length];
+        a.copy(positions[s]);
+        b.copy(positions[e]);
+        dummy.position.lerpVectors(a, b, (time * 0.28 + i * 0.071) % 1);
+        dummy.scale.setScalar(1 - assembly);
+        dummy.rotation.set(0, 0, 0);
+        dummy.updateMatrix();
+        packets.setMatrixAt(i, dummy.matrix);
+      }
+      packets.instanceMatrix.needsUpdate = true;
+      world.rotation.y =
+        (1 - assembly) * Math.sin(time * 0.12) * 0.15 -
+        0.28 * assembly +
+        (reduced ? 0 : x * 0.18);
+      world.rotation.x = 0.08 + (reduced ? 0 : y * 0.12);
+      world.position.y = -0.16 * assembly;
+      camera.position.z = 8.1 - assembly * 0.4;
+      dust.rotation.y = time * 0.009;
       renderer.render(scene, camera);
       el.classList.add("webgl-ready");
+      const stage =
+        assembly > 0.98 ? "bank" : assembly > 0.02 ? "assembling" : "network";
+      if (el.dataset.assembly !== stage) el.dataset.assembly = stage;
     };
     frame = requestAnimationFrame(draw);
     return () => {
@@ -245,6 +384,7 @@ export default function LaunchScene({
           (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) =>
             materials.add(m),
           );
+          if (o instanceof THREE.InstancedMesh) o.dispose();
         }
       });
       geometries.forEach((g) => g.dispose());
@@ -253,15 +393,16 @@ export default function LaunchScene({
       renderer.dispose();
       renderer.domElement.remove();
       el.classList.remove("webgl-ready");
+      delete el.dataset.assembly;
     };
-  }, [reduced, progress]);
+  }, [reduced, progress, launchAt]);
   return (
-    <div className="portal-scene" ref={host} aria-hidden="true">
-      <div className="portal-scene-fallback">
-        <i />
-        <i />
-        <i />
-      </div>
+    <div
+      className="portal-scene network-bank-scene"
+      ref={host}
+      aria-hidden="true"
+    >
+      <StaticNetwork />
     </div>
   );
 }

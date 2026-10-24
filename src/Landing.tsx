@@ -8,7 +8,7 @@ import {
   Lock,
   Fingerprint,
   Radio,
-  Layers,
+  Play,
   Crosshair,
   ScanLine,
   Check,
@@ -46,6 +46,7 @@ export default function Landing() {
   const reduced = useReducedMotion();
   const hero = useRef<HTMLElement>(null);
   const [team, setTeam] = useState<"red" | "blue">("red");
+  const [previewLaunchAt, setPreviewLaunchAt] = useState<number>();
   const { scrollYProgress } = useScroll();
   const pageProgress = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -161,11 +162,14 @@ export default function Landing() {
               >
                 <div className="portal-world-halo" />
                 <Suspense fallback={<div className="portal-scene-fallback" />}>
-                  <LaunchScene progress={heroProgress} />
+                  <LaunchScene
+                    progress={heroProgress}
+                    launchAt={previewLaunchAt}
+                  />
                 </Suspense>
                 <div className="portal-coordinate top">
-                  <span>OBJECT / A—01</span>
-                  <span>SIMULATION ENGINE</span>
+                  <span>NETWORK / A—01</span>
+                  <span>SCROLL PREVIEW</span>
                 </div>
                 <div className="portal-orbit-tag red">
                   <span />
@@ -174,6 +178,23 @@ export default function Landing() {
                 <div className="portal-orbit-tag blue">
                   <span />
                   <Shield size={13} /> DEFENSE / BLUE
+                </div>
+                <div className="portal-network-controls">
+                  <button
+                    onClick={() => setPreviewLaunchAt(Date.now() + 5000)}
+                    aria-label="Preview the network-to-bank transformation"
+                  >
+                    <Play size={11} />
+                    {previewLaunchAt
+                      ? "Replay transformation"
+                      : "Preview the launch"}
+                  </button>
+                  {previewLaunchAt && (
+                    <button onClick={() => setPreviewLaunchAt(undefined)}>
+                      Follow scroll
+                    </button>
+                  )}
+                  <small>VISUAL PREVIEW / NO GAME STARTS</small>
                 </div>
                 <div className="portal-world-cross x-one">+</div>
                 <div className="portal-world-cross x-two">+</div>
@@ -191,8 +212,8 @@ export default function Landing() {
                 }
                 aria-hidden="true"
               >
-                <span>THE FIRST WORLD IS WAITING.</span>
-                <strong>Follow the signal.</strong>
+                <span>THE NETWORK BECOMES THE BANK.</span>
+                <strong>AFA BANK. Level 01.</strong>
               </motion.div>
               <div className="portal-hero-footer">
                 <span>

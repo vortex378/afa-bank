@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useRef,
   useState,
@@ -42,6 +44,7 @@ import {
 import { api, money, type User } from "./lib";
 import type { useLaunchDirector, GameData } from "./useLaunchDirector";
 import "./launch.css";
+const LaunchScene = lazy(() => import("./LaunchScene"));
 type Director = ReturnType<typeof useLaunchDirector>;
 type Row = Record<string, any>;
 const ROUND_TERMS = "launch-level-1-v1";
@@ -152,27 +155,92 @@ function TeamEmblem({ team }: { team: string }) {
 function Pill({ children, tone = "" }: { children: ReactNode; tone?: string }) {
   return <span className={"lr-pill " + tone}>{children}</span>;
 }
-function Countdown({ remaining }: { remaining: number }) {
+function Countdown({
+  remaining,
+  launchAt,
+}: {
+  remaining: number;
+  launchAt: number;
+}) {
   const reduced = useReducedMotion();
   return (
-    <div className="lr-countdown" lang="en">
+    <div
+      className="lr-countdown lr-deployment"
+      lang="en"
+      role="status"
+      aria-label="Phase 1 is launching"
+    >
       <Brand />
-      <span className="lr-eyebrow">THE OWNER HAS LAUNCHED LEVEL 01</span>
-      <AnimatePresence mode="wait">
-        <motion.strong
-          key={remaining}
-          initial={reduced ? {} : { opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={reduced ? {} : { opacity: 0, scale: 1.1 }}
+      <div className="lr-deploy-scene">
+        <Suspense
+          fallback={
+            <div className="lr-deploy-fallback">
+              AFA BANK / PREPARING ENVIRONMENT
+            </div>
+          }
         >
-          {remaining}
-        </motion.strong>
-      </AnimatePresence>
-      <h1>Your next move matters.</h1>
-      <p>Preparing the bank. Team assignments are now locked.</p>
+          <LaunchScene launchAt={launchAt} />
+        </Suspense>
+      </div>
+      <div className="lr-deploy-copy">
+        <span className="lr-eyebrow">LIVE DEPLOYMENT / PHASE 01</span>
+        <div className="lr-deploy-count">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.strong
+              key={remaining}
+              initial={reduced ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? {} : { opacity: 0, y: -12 }}
+              transition={{ duration: 0.2 }}
+            >
+              {remaining}
+            </motion.strong>
+          </AnimatePresence>
+          <span>
+            SECONDS TO
+            <br />
+            AFA BANK
+          </span>
+        </div>
+        <h1>
+          The network.
+          <br />
+          <em>Now your world.</em>
+        </h1>
+        <p>
+          Connected systems assemble into AFA BANK.
+          <br />
+          Your contract opens when deployment completes.
+        </p>
+        <div className="lr-deploy-steps">
+          <span className={remaining >= 4 ? "active" : "done"}>01 NETWORK</span>
+          <i />
+          <span
+            className={
+              remaining < 4 && remaining > 1
+                ? "active"
+                : remaining <= 1
+                  ? "done"
+                  : ""
+            }
+          >
+            02 ASSEMBLY
+          </span>
+          <i />
+          <span className={remaining <= 1 ? "active" : ""}>03 AFA BANK</span>
+        </div>
+        <small>
+          Teams locked · virtual environment · contract acceptance required
+        </small>
+      </div>
+      <div className="lr-deploy-footer">
+        <span>AFA LAUNCH / THE SILENT TRANSFER</span>
+        <span>ALL CONNECTED PLAYERS · ONE LIVE START</span>
+      </div>
     </div>
   );
 }
+
 function Contract({ busy, onAccept }: { busy: boolean; onAccept: () => void }) {
   const [page, setPage] = useState(1),
     [agree, setAgree] = useState(false);
@@ -639,7 +707,7 @@ export default function LaunchGame({
       </div>
     );
   if (r?.stage === "contract" && p && rawRemaining > 0)
-    return <Countdown remaining={rawRemaining} />;
+    return <Countdown remaining={rawRemaining} launchAt={r.launch_at} />;
   return (
     <div className="lr-shell" lang="en" data-team={p?.team || "control"}>
       <header className="lr-top">
