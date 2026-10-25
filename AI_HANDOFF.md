@@ -1,5 +1,10 @@
 # AFA LAUNCH — project intent and continuation
 
+## Current security model
+
+Active classroom assessments now live in a private D1 vault and are assigned separately for each round. The old CRED/EVT fixed case in historical documentation is retired and must not be restored as a production default. Never commit live case templates, answers, private test artifacts or credentials. See [SECURITY_HARDENING.md](SECURITY_HARDENING.md) and [tests/security/README.md](tests/security/README.md) for provisioning and reproducible regression tests.
+
+
 This is an existing bachelor-level academic cybersecurity app. Preserve the working bank and Cyber Arena. The public product is AFA LAUNCH, a cinematic 3D multiplayer learning portal. AFA BANK belongs inside Level 1, not as the public homepage or an unrestricted student account destination.
 
 ## Required journey

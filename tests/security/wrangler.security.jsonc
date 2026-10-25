@@ -1,0 +1,25 @@
+{
+  "name": "afa-launch-security-local",
+  "main": "../../worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "../../dist",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+    "run_worker_first": true,
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "afa-launch-security-local",
+      "database_id": "00000000-0000-4000-8000-000000008811",
+      "migrations_dir": "../../migrations",
+    },
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "LAUNCH_HUB", "class_name": "LaunchHub" }],
+  },
+  "migrations": [
+    { "tag": "launch-hub-v1", "new_sqlite_classes": ["LaunchHub"] },
+  ],
+}

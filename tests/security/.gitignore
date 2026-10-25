@@ -1,0 +1,7 @@
+artifacts/
+.state/
+tools/
+REPORT.md
+SUMMARY.md
+BASELINE_REPORT.md
+BASELINE_SUMMARY.md

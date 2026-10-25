@@ -5,8 +5,8 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"],
+    "not_found_handling": "none",
+    "run_worker_first": true,
   },
   "d1_databases": [
     {
@@ -16,8 +16,12 @@
       "migrations_dir": "migrations",
     },
   ],
-  "durable_objects": {"bindings":[{"name":"LAUNCH_HUB","class_name":"LaunchHub"}]},
-  "migrations": [{"tag":"launch-hub-v1","new_sqlite_classes":["LaunchHub"]}],
+  "durable_objects": {
+    "bindings": [{ "name": "LAUNCH_HUB", "class_name": "LaunchHub" }],
+  },
+  "migrations": [
+    { "tag": "launch-hub-v1", "new_sqlite_classes": ["LaunchHub"] },
+  ],
   "triggers": {
     "crons": ["17 3 * * *"],
   },

@@ -73,9 +73,11 @@ function StaticNetwork() {
 export default function LaunchScene({
   progress,
   launchAt,
+  now: serverClock = Date.now,
 }: {
   progress?: MotionValue<number>;
   launchAt?: number;
+  now?: () => number;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -290,7 +292,7 @@ export default function LaunchScene({
           : 0
         : THREE.MathUtils.clamp(
             launchAt
-              ? 1 - (launchAt - Date.now()) / 5000
+              ? 1 - (launchAt - serverClock()) / 5000
               : progress?.get() || 0,
             0,
             1,
@@ -395,7 +397,7 @@ export default function LaunchScene({
       el.classList.remove("webgl-ready");
       delete el.dataset.assembly;
     };
-  }, [reduced, progress, launchAt]);
+  }, [reduced, progress, launchAt, serverClock]);
   return (
     <div
       className="portal-scene network-bank-scene"

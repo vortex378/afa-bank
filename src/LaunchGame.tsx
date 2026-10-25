@@ -158,9 +158,11 @@ function Pill({ children, tone = "" }: { children: ReactNode; tone?: string }) {
 function Countdown({
   remaining,
   launchAt,
+  serverNow,
 }: {
   remaining: number;
   launchAt: number;
+  serverNow: () => number;
 }) {
   const reduced = useReducedMotion();
   return (
@@ -179,7 +181,7 @@ function Countdown({
             </div>
           }
         >
-          <LaunchScene launchAt={launchAt} />
+          <LaunchScene launchAt={launchAt} now={serverNow} />
         </Suspense>
       </div>
       <div className="lr-deploy-copy">
@@ -560,7 +562,7 @@ export default function LaunchGame({
     [training, setTraining] = useState(Boolean(director.snapshot?.player)),
     [transfer, setTransfer] = useState(false),
     [briefing, setBriefing] = useState(false),
-    [clock, setClock] = useState(Date.now()),
+    [, setTick] = useState(0),
     [menu, setMenu] = useState(false),
     [confirm, setConfirm] = useState<{
       title: string;
@@ -571,12 +573,13 @@ export default function LaunchGame({
     lastStage = useRef(""),
     lastRound = useRef(""),
     seenBrief = useRef("");
+  const clock = director.now();
   const r = data?.round,
     p = data?.player,
     manager = data?.manager,
     owner = data?.owner;
   useEffect(() => {
-    const timer = setInterval(() => setClock(Date.now()), 1000);
+    const timer = setInterval(() => setTick((v) => v + 1), 200);
     return () => clearInterval(timer);
   }, []);
   useEffect(() => {
@@ -707,7 +710,13 @@ export default function LaunchGame({
       </div>
     );
   if (r?.stage === "contract" && p && rawRemaining > 0)
-    return <Countdown remaining={rawRemaining} launchAt={r.launch_at} />;
+    return (
+      <Countdown
+        remaining={rawRemaining}
+        launchAt={r.launch_at}
+        serverNow={director.now}
+      />
+    );
   return (
     <div className="lr-shell" lang="en" data-team={p?.team || "control"}>
       <header className="lr-top">
@@ -1512,7 +1521,8 @@ export default function LaunchGame({
                       </motion.div>
                       {caseOpen && (
                         <span className="lr-negative">
-                          −10,000.00 ALL incident debit · BATCH-041
+                          −10,000.00 ALL incident debit ·{" "}
+                          {r.incident_ref || "See ledger reference"}
                         </span>
                       )}
                       <div className="lr-bank-actions">
@@ -2382,7 +2392,7 @@ export default function LaunchGame({
             <div className="lr-brief-ref">
               <span>
                 <small>BATCH REFERENCE</small>
-                <code>BATCH-041</code>
+                <code>{r.incident_ref || "See ledger reference"}</code>
               </span>
               <span>
                 <small>INCIDENT TIME</small>

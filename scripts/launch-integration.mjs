@@ -5,6 +5,7 @@ import { pathToFileURL } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { randomUUID, pbkdf2Sync } from "node:crypto";
+import { createTestCase } from "../tests/security/test-case.mjs";
 const exec = promisify(execFile),
   root = process.cwd(),
   origin = process.env.LAUNCH_TEST_ORIGIN || "http://127.0.0.1:8791";
@@ -75,6 +76,11 @@ const pass = "Launch-QA-" + randomUUID(),
 let owner,
   sockets = [];
 try {
+  await sql(
+    "INSERT INTO launch_casepacks(id,payload) VALUES('local-integration-only','" +
+      JSON.stringify(createTestCase()).replaceAll("'", "''") +
+      "') ON CONFLICT(id) DO UPDATE SET payload=excluded.payload,active=1;",
+  );
   await sql(
     "DELETE FROM rate_limits WHERE key LIKE 'login:%'; UPDATE launch_rounds SET stage='completed' WHERE stage!='completed';",
   );
@@ -396,6 +402,8 @@ try {
   check("owner releases incident", incident.status === 200, incident);
   const after = await state(red1),
     ow = await state(owner);
+  const [credentialRef, rotationRef, batchRef, legacyRef] =
+    ow.answerKey.requiredEvidence;
   check(
     "exact 10000 debit",
     after.wallet.balance === redBefore.wallet.balance - 100 - 1000000,
@@ -412,18 +420,18 @@ try {
   );
   check(
     "evidence and actual ledger correlate",
-    after.evidence.some((e) => e.ref === "BATCH-041") &&
+    after.evidence.some((e) => e.ref === batchRef) &&
       after.evidence.some(
         (e) =>
           e.category === "transactions" &&
-          JSON.parse(e.body).batch_ref === "BATCH-041",
+          JSON.parse(e.body).batch_ref === batchRef,
       ),
   );
   check(
     "student cannot get answer key",
     after.answerKey === null && after.debrief === null,
   );
-  check("owner has academic key", ow.answerKey?.credential === "CRED-017");
+  check("owner has academic key", ow.answerKey?.credential === credentialRef);
   check(
     "incident replay is idempotent",
     (await call(base + "/incident", { confirm: true }, owner.cookie)).data
@@ -450,7 +458,7 @@ try {
     "unenrolled user cannot investigate",
     (await state(spare)).evidence.length === 0,
   );
-  for (const ref of ["CRED-017", "EVT-219", "BATCH-041", "LEGACY-01"])
+  for (const ref of [credentialRef, rotationRef, batchRef, legacyRef])
     await call(base + "/pin", { ref, team: "blue" }, red1.cookie);
   await call(
     base + "/note",
@@ -465,15 +473,15 @@ try {
   );
   const report = {
     beneficiary: "AnOnYmOuS-RuSsIa",
-    service: "legacy-transfer-service",
-    credential: "CRED-017",
+    service: ow.answerKey.service,
+    credential: credentialRef,
     root_cause:
       "Password rotation left an old service credential active; its generation was not checked.",
     timeline:
       "CRED-017 was issued before EVT-219. BATCH-041 used that credential afterward.",
     remediation:
       "Revoke old service credentials and validate their generation on every privileged request.",
-    refs: ["CRED-017", "EVT-219", "BATCH-041", "LEGACY-01"],
+    refs: [credentialRef, rotationRef, batchRef, legacyRef],
     key: randomUUID(),
   };
   check(

@@ -1,4 +1,5 @@
 import { launch } from "./launch";
+import { secured } from "./security";
 export { LaunchHub } from "./launch-hub";
 import { arena } from "./arena";
 import { parseAmount, allows } from "./money";
@@ -107,13 +108,10 @@ async function body(req: Request) {
 }
 async function rate(env: Env, key: string, limit: number) {
   const now = Math.floor(Date.now() / 1000);
-  await env.DB.prepare(
-    "INSERT INTO rate_limits(key,count,expires) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET count=CASE WHEN expires<? THEN 1 ELSE count+1 END,expires=CASE WHEN expires<? THEN excluded.expires ELSE expires END",
+  const r = await env.DB.prepare(
+    "INSERT INTO rate_limits(key,count,expires) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET count=CASE WHEN expires<? THEN 1 ELSE count+1 END,expires=CASE WHEN expires<? THEN excluded.expires ELSE expires END RETURNING count",
   )
     .bind(key, now + 900, now, now)
-    .run();
-  const r = await env.DB.prepare("SELECT count FROM rate_limits WHERE key=?")
-    .bind(key)
     .first<{ count: number }>();
   if (r && r.count > limit)
     fail("Shumë tentativa. Provoni pas 15 minutash.", 429);
@@ -175,7 +173,7 @@ async function payroll(env: Env, actor: string | null = null) {
     period,
   };
 }
-export default {
+const worker = {
   async scheduled(_event: ScheduledController, env: Env) {
     await payroll(env);
     await env.DB.batch([
@@ -189,6 +187,17 @@ export default {
     const url = new URL(req.url),
       path = url.pathname;
     if (!path.startsWith("/api/")) {
+      // Routes use hashes; only / and actual asset URLs are server routes.
+      if (
+        path !== "/" &&
+        path !== "/index.html" &&
+        !path.startsWith("/assets/") &&
+        !["/favicon.ico", "/robots.txt"].includes(path)
+      )
+        return new Response("Page not found", {
+          status: 404,
+          headers: { "Content-Type": "text/plain; charset=utf-8" },
+        });
       const res = await env.ASSETS.fetch(req);
       const headers = new Headers(res.headers);
       headers.set("X-Content-Type-Options", "nosniff");
@@ -207,8 +216,22 @@ export default {
         fail("Origjinë e palejuar.", 403);
       if (path === "/api/health") return json({ ok: true, simulation: true });
       if (path === "/api/register" && req.method === "POST") {
-        await rate(env, "register:" + req.headers.get("CF-Connecting-IP"), 5);
-        await createUser(env, await body(req));
+        const b = await body(req),
+          email = String(b.email || "")
+            .trim()
+            .toLowerCase();
+        await rate(
+          env,
+          "register-ip:" + (req.headers.get("CF-Connecting-IP") || "local"),
+          250,
+        );
+        await rate(env, "register-account:" + (await digest(email)), 5);
+        // Validate and perform the same password work for new and duplicate registrations.
+        try {
+          await createUser(env, b);
+        } catch (error: any) {
+          if (!/UNIQUE/.test(error.message || "")) throw error;
+        }
         return json({ ok: true }, 201);
       }
       if (path === "/api/bootstrap" && req.method === "POST") {
@@ -225,8 +248,16 @@ export default {
         return json({ ok: true }, 201);
       }
       if (path === "/api/login" && req.method === "POST") {
-        await rate(env, "login:" + req.headers.get("CF-Connecting-IP"), 20);
         const b = await body(req);
+        const email = String(b.email || "")
+          .toLowerCase()
+          .trim();
+        await rate(
+          env,
+          "login-ip:" + (req.headers.get("CF-Connecting-IP") || "local"),
+          500,
+        );
+        await rate(env, "login-account:" + (await digest(email)), 20);
         const u = await env.DB.prepare("SELECT * FROM users WHERE email=?")
           .bind(
             String(b.email || "")
@@ -500,6 +531,13 @@ export default {
             b.id,
           ),
         ]);
+        try {
+          await env.LAUNCH_HUB.get(
+            env.LAUNCH_HUB.idFromName("afa-launch-director"),
+          ).fetch("https://launch.internal/notify", { method: "POST" });
+        } catch {
+          // Authentication is uncached; read snapshots also expire after five seconds.
+        }
         return json({ ok: true });
       }
       if (path === "/api/staff/payroll" && req.method === "POST") {
@@ -612,5 +650,11 @@ export default {
         safe,
       );
     }
+  },
+};
+export default {
+  scheduled: worker.scheduled,
+  async fetch(request: Request, env: Env) {
+    return secured(await worker.fetch(request, env), request);
   },
 };

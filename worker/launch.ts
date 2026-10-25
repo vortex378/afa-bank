@@ -1,4 +1,5 @@
 import { parseAmount } from "./money";
+import { assignCase, incidentEvidence } from "./launch-cases";
 import {
   BANK_TERMS,
   ROUND_TERMS,
@@ -54,9 +55,12 @@ export async function launch(
   const hub = env.LAUNCH_HUB.get(
     env.LAUNCH_HUB.idFromName("afa-launch-director"),
   );
-  const notify = async () => {
+  const notify = async (event?: Record<string, unknown>) => {
     try {
-      await hub.fetch("https://launch.internal/notify", { method: "POST" });
+      await hub.fetch("https://launch.internal/notify", {
+        method: "POST",
+        body: JSON.stringify(event || {}),
+      });
     } catch {
       /* Polling recovers if realtime notification is unavailable. */
     }
@@ -78,174 +82,41 @@ export async function launch(
   if (path === "/live") {
     if (req.method !== "GET" || req.headers.get("Origin") !== url.origin)
       problem("Invalid realtime origin.", 403);
+    if (req.headers.get("Upgrade")?.toLowerCase() !== "websocket")
+      return new Response("WebSocket required", { status: 426 });
     await rate();
     return hub.fetch("https://launch.internal/connect", {
-      headers: { Upgrade: "websocket", "X-Launch-User": user.id },
+      headers: {
+        Upgrade: "websocket",
+        "X-Launch-User": user.id,
+        "X-Launch-Role": user.role,
+      },
     });
   }
   if (!["GET", "POST"].includes(req.method))
     problem("Method not allowed.", 405);
   if (post) await rate();
   if (path === "/state" && !post) {
-    const wanted = url.searchParams.get("round");
-    const r = wanted
-      ? await one("SELECT * FROM launch_rounds WHERE id=?", wanted)
-      : await one(
-          "SELECT * FROM launch_rounds ORDER BY created_at DESC,rowid DESC LIMIT 1",
-        );
-    if (!r) return json({ round: null, manager, owner, serverNow: Date.now() });
-    const p = await one(
-      "SELECT * FROM launch_players WHERE round_id=? AND user_id=?",
-      r.id,
-      user.id,
-    );
-    const permitted = manager || !!p || r.stage === "lobby";
-    const players = permitted
-      ? await all(
-          "SELECT p.user_id,p.team,p.ready,p.terms_at,u.name,u.status,u.role FROM launch_players p JOIN users u ON u.id=p.user_id WHERE p.round_id=? ORDER BY p.joined_at",
-          r.id,
-        )
-      : [];
-    const wallet = p
-      ? await one(
-          "SELECT * FROM launch_wallets WHERE round_id=? AND user_id=?",
-          r.id,
-          user.id,
-        )
-      : null;
-    const tx = wallet
-      ? await all(
-          "SELECT t.*,s.name AS sender_name,r.name AS recipient_name FROM launch_transactions t LEFT JOIN launch_wallets s ON s.id=t.sender JOIN launch_wallets r ON r.id=t.recipient WHERE t.round_id=? AND (t.sender=? OR t.recipient=?) ORDER BY t.created_at DESC,t.rowid DESC LIMIT 100",
-          r.id,
-          wallet.id,
-          wallet.id,
-        )
-      : [];
-    const caseOpen =
-      ["investigation", "review", "completed"].includes(r.stage) &&
-      (manager || !!p);
-    const evidence = caseOpen
-      ? await all(
-          "SELECT * FROM launch_evidence WHERE round_id=? ORDER BY occurred_at,ref",
-          r.id,
-        )
-      : [];
-    const pins =
-      p && caseOpen
-        ? await all(
-            "SELECT * FROM launch_pins WHERE round_id=? AND team=?",
-            r.id,
-            p.team,
-          )
-        : [];
-    const notes =
-      p && caseOpen
-        ? await all(
-            "SELECT n.id,n.body,n.created_at,u.name FROM launch_notes n JOIN users u ON u.id=n.actor WHERE n.round_id=? AND n.team=? ORDER BY n.created_at DESC LIMIT 80",
-            r.id,
-            p.team,
-          )
-        : [];
-    const reports = manager
-      ? await all(
-          "SELECT * FROM launch_reports WHERE round_id=? ORDER BY submitted_at DESC,rowid DESC",
-          r.id,
-        )
-      : p
-        ? await all(
-            "SELECT * FROM launch_reports WHERE round_id=? AND team=? ORDER BY submitted_at DESC,rowid DESC",
-            r.id,
-            p.team,
-          )
-        : [];
-    const verdict =
-      manager || r.stage === "completed"
-        ? await one("SELECT * FROM launch_verdicts WHERE round_id=?", r.id)
-        : null;
-    const eligible = manager
-      ? await all(
-          "SELECT w.id,w.name,w.balance,p.team FROM launch_wallets w JOIN launch_players p ON p.round_id=w.round_id AND p.user_id=w.user_id JOIN users u ON u.id=p.user_id WHERE w.round_id=? AND u.role='customer' AND u.status='active' AND p.terms_at IS NOT NULL",
-          r.id,
-        )
-      : [];
-    let connected: string[] = [];
-    if (manager || permitted) {
-      try {
-        connected = await (
-          await hub.fetch("https://launch.internal/presence")
-        ).json();
-      } catch {}
-    }
-    return json({
-      round: r,
-      manager,
-      owner,
-      player: p,
-      players,
-      connected,
-      wallet,
-      transactions: tx,
-      evidence,
-      pins,
-      notes,
-      reports: reports.map((v) => ({ ...v, payload: JSON.parse(v.payload) })),
-      verdict: verdict
-        ? { ...verdict, grades: JSON.parse(verdict.grades) }
-        : null,
-      eligible,
-      beneficiary:
-        manager || caseOpen
-          ? await one(
-              "SELECT id,name,iban,balance FROM launch_wallets WHERE round_id=? AND user_id IS NULL",
-              r.id,
-            )
-          : null,
-      events: manager
-        ? await all(
-            "SELECT e.id,e.event,e.created_at,u.name FROM launch_events e LEFT JOIN users u ON u.id=e.actor WHERE round_id=? ORDER BY e.id DESC LIMIT 50",
-            r.id,
-          )
-        : [],
-      debrief:
-        r.stage === "completed" && (manager || !!p)
-          ? {
-              mechanism:
-                "A pre-change service credential, CRED-017, remained valid after password rotation EVT-219. The legacy validation routine did not compare credential and current password generations. BATCH-041 used the old credential to transfer 10,000 DEMO ALL per eligible participant to AnOnYmOuS-RuSsIa.",
-              lesson:
-                "Revoke or invalidate old service credentials when rotating a password. Contract wording is not a security control.",
-              refs: ["CRED-017", "EVT-219", "BATCH-041", "LEGACY-01"],
-            }
-          : null,
-      answerKey:
-        owner && caseOpen
-          ? {
-              beneficiary: "AnOnYmOuS-RuSsIa",
-              service: "legacy-transfer-service",
-              credential: "CRED-017",
-              mechanism:
-                "A pre-change service credential remained valid because password rotation did not revoke existing service credentials. BATCH-041 used CRED-017 after EVT-219 to debit the participants.",
-              requiredEvidence: [
-                "CRED-017",
-                "EVT-219",
-                "BATCH-041",
-                "LEGACY-01",
-              ],
-              lesson:
-                "Contract wording does not authorize transfers or replace technical security controls.",
-            }
-          : null,
-      history: manager
-        ? await all(
-            "SELECT id,title,stage,created_at FROM launch_rounds ORDER BY created_at DESC LIMIT 20",
-          )
-        : [],
-      serverNow: Date.now(),
+    const target = new URL("https://launch.internal/snapshot");
+    target.searchParams.set("round", url.searchParams.get("round") || "");
+    return hub.fetch(target.toString(), {
+      headers: { "X-Launch-User": user.id, "X-Launch-Role": user.role },
+    });
+  }
+  const recipientPath = path.match(/^\/([^/]+)\/recipient$/);
+  if (recipientPath && !post) {
+    const target = new URL("https://launch.internal/recipient");
+    target.searchParams.set("round", recipientPath[1]);
+    target.searchParams.set("iban", normalize(url.searchParams.get("iban")));
+    return hub.fetch(target.toString(), {
+      headers: { "X-Launch-User": user.id, "X-Launch-Role": user.role },
     });
   }
   if (path === "/create" && post) {
     if (!manager) problem("Administrator or owner required.", 403);
     const b = await body(),
       id = uuid();
+    const assessment = await assignCase(db, id);
     await db.batch([
       db
         .prepare(
@@ -263,6 +134,7 @@ export async function launch(
           "INSERT INTO launch_wallets(id,round_id,name,iban) VALUES(?,?,?,?)",
         )
         .bind(uuid(), id, "AnOnYmOuS-RuSsIa", "AL-DEMO-000000000000009999"),
+      assessment,
       event(id, "Round created · Level 1 lobby open"),
       audit(id, "round.create"),
     ]);
@@ -345,8 +217,8 @@ export async function launch(
         "Both teams need active students, and every enrolled student must be ready.",
         409,
       );
-    await notify();
-    return json({ ok: true, launchAt });
+    await notify({ type: "start", roundId: id, launchAt });
+    return json({ ok: true, launchAt, serverNow: Date.now() });
   }
   if (action === "accept" && post) {
     student();
@@ -396,24 +268,6 @@ export async function launch(
       );
     await notify();
     return json({ ok: true });
-  }
-  if (action === "recipient" && !post) {
-    student();
-    stage("banking", "investigation");
-    const target = await one(
-      "SELECT w.id,w.name,w.iban FROM launch_wallets w JOIN launch_players p ON p.round_id=w.round_id AND p.user_id=w.user_id JOIN users u ON u.id=p.user_id WHERE w.round_id=? AND w.iban=? AND u.status='active' AND u.role='customer' AND p.terms_at IS NOT NULL",
-      id,
-      normalize(url.searchParams.get("iban")),
-    );
-    if (!target)
-      problem("No active participant found for that Demo IBAN.", 404);
-    const me = await one(
-      "SELECT id FROM launch_wallets WHERE round_id=? AND user_id=?",
-      id,
-      user.id,
-    );
-    if (target.id === me?.id) problem("That is your own account.");
-    return json(target);
   }
   if (action === "transfer" && post) {
     student();
@@ -481,133 +335,33 @@ export async function launch(
     const b = await body();
     if (b.confirm !== true) problem("Confirm the incident preview first.");
     const now = Date.now();
+    const assessment = await incidentEvidence(db, id, now);
     const statements: D1PreparedStatement[] = [
       db
         .prepare(
-          "INSERT INTO launch_incidents(round_id,actor,created_at) VALUES(?,?,?)",
+          "INSERT INTO launch_incidents(round_id,actor,created_at,ref) VALUES(?,?,?,?)",
         )
-        .bind(id, user.id, now),
-      event(id, "Simulated incident released · BATCH-041"),
+        .bind(id, user.id, now, assessment.batch),
+      event(id, "Simulated incident released"),
       audit(id, "incident.release"),
     ];
-    const evidence = [
-      [
-        "CRED-017",
-        "authentication",
-        "Service credential issued",
-        now - 720000,
-        {
-          event: "credential.issued",
-          service: "legacy-transfer-service",
-          credential_ref: "CRED-017",
-          credential_generation: 1,
-          detail:
-            "Reference only. No usable credential or password is included.",
-        },
-      ],
-      [
-        "EVT-219",
-        "authentication",
-        "Service password changed",
-        now - 360000,
-        {
-          event: "service.password.changed",
-          service: "legacy-transfer-service",
-          new_password_generation: 2,
-          existing_credentials_revoked: 0,
-          request_id: "REQ-219",
-        },
-      ],
-      [
-        "BATCH-041",
-        "requests",
-        "Batch transfer accepted",
-        now,
-        {
-          event: "batch.transfer.accepted",
-          service: "legacy-transfer-service",
-          credential_ref: "CRED-017",
-          credential_generation: 1,
-          current_password_generation: 2,
-          recipient: "AnOnYmOuS-RuSsIa",
-          amount_per_account: "10000.00 DEMO ALL",
-          request_id: "REQ-041",
-          batch_ref: "BATCH-041",
-        },
-      ],
-      [
-        "LEGACY-01",
-        "code",
-        "Prepared legacy service excerpt",
-        now - 86400000,
-        {
-          artifact: "Fictional training code; not the live bank implementation",
-          code: "function rotateServicePassword(service, newHash) {\n  service.passwordHash = newHash;\n  service.passwordGeneration += 1;\n  // Existing service credentials are not revoked here.\n}\nfunction validateServiceCredential(record) {\n  return record.active && record.expiresAt > now();\n  // No comparison with service.passwordGeneration.\n}",
-        },
-      ],
-      [
-        "AUTH-104",
-        "authentication",
-        "Routine student login",
-        now - 480000,
-        {
-          event: "login.success",
-          account: "demo-student-04",
-          source: "192.0.2.44",
-          request_id: "REQ-104",
-        },
-      ],
-      [
-        "REQ-220",
-        "requests",
-        "Ordinary account read",
-        now - 180000,
-        {
-          event: "account.read",
-          status: 200,
-          request_id: "REQ-220",
-          batch_ref: null,
-        },
-      ],
-      [
-        "AUTH-105",
-        "authentication",
-        "Rejected login attempt",
-        now - 420000,
-        {
-          event: "login.failed",
-          account: "demo-student-07",
-          source: "198.51.100.19",
-          request_id: "REQ-105",
-        },
-      ],
-      [
-        "NOTICE-01",
-        "policy",
-        "Contract excerpt",
-        now - 600000,
-        {
-          excerpt:
-            "Passwords are stored as salted hashes. Changing a password replaces its hash. Contract wording does not authorize transfers or replace technical security controls.",
-        },
-      ],
-    ];
-    for (const [ref, category, title, at, details] of evidence)
-      statements.push(
-        db
-          .prepare(
-            "INSERT INTO launch_evidence(round_id,ref,category,title,occurred_at,body) VALUES(?,?,?,?,?,?)",
-          )
-          .bind(id, ref, category, title, at, JSON.stringify(details)),
-      ); // These are records of the actual virtual ledger entries; authentication artifacts are fictional.
+    statements.push(...assessment.statements);
     statements.push(
       db
         .prepare(
-          "INSERT INTO launch_evidence(round_id,ref,category,title,occurred_at,body) SELECT round_id,'TX-'||substr(id,1,8),'transactions','Incident transfer · '||substr(id,1,8),created_at,json_object('transaction_id',id,'sender_iban',(SELECT iban FROM launch_wallets WHERE id=sender),'recipient','AnOnYmOuS-RuSsIa','amount','10000.00 DEMO ALL','batch_ref',batch_ref,'request_id','REQ-041') FROM launch_transactions WHERE round_id=? AND kind='incident' ON CONFLICT DO NOTHING",
+          "INSERT INTO launch_evidence(round_id,ref,category,title,occurred_at,body) SELECT round_id,'TX-'||substr(id,1,8),'transactions','Incident transfer · '||substr(id,1,8),created_at,json_object('transaction_id',id,'sender_iban',(SELECT iban FROM launch_wallets WHERE id=sender),'recipient','AnOnYmOuS-RuSsIa','amount','10000.00 DEMO ALL','batch_ref',batch_ref) FROM launch_transactions WHERE round_id=? AND kind='incident' ON CONFLICT DO NOTHING",
         )
         .bind(id),
     );
-    await db.batch(statements);
+    try {
+      await db.batch(statements);
+    } catch (error) {
+      if (
+        await one("SELECT round_id FROM launch_incidents WHERE round_id=?", id)
+      )
+        return json({ ok: true, replayed: true });
+      throw error;
+    }
     await notify();
     return json({ ok: true });
   }

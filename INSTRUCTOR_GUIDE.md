@@ -1,5 +1,10 @@
 # AFA LAUNCH instructor guide
 
+## Current security model
+
+Active classroom assessments now live in a private D1 vault and are assigned separately for each round. The old CRED/EVT fixed case in historical documentation is retired and must not be restored as a production default. Never commit live case templates, answers, private test artifacts or credentials. See [SECURITY_HARDENING.md](SECURITY_HARDENING.md) and [tests/security/README.md](tests/security/README.md) for provisioning and reproducible regression tests.
+
+
 Open https://afa-bank-next.cobra-public-community.workers.dev/ . Students see AFA LAUNCH, not a public banking dashboard.
 
 1. Students choose Request access. The administrator signs in, opens Bank administration → Administrimi, and approves pending accounts (or creates student accounts).
