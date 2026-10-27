@@ -298,6 +298,16 @@ const worker = {
         .bind(hash, Date.now())
         .first<User>();
       if (!user) fail("Sesioni ka skaduar.", 401);
+      const displayedUser = req.headers.get("X-AFA-User");
+      if (displayedUser && displayedUser !== user.id)
+        return json(
+          {
+            error:
+              "Llogaria ndryshoi në një dritare tjetër. Rifreskoni për të parë llogarinë aktive.",
+            code: "SESSION_ACCOUNT_CHANGED",
+          },
+          409,
+        );
       if (path === "/api/logout" && req.method === "POST") {
         await env.DB.prepare("DELETE FROM sessions WHERE token=?")
           .bind(hash)

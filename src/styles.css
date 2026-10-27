@@ -1796,6 +1796,30 @@ dd {
   font-size: 9px;
   color: #607896;
 }
+.session-conflict {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px 24px;
+  background: #081625;
+  color: #e8eefb;
+}
+.session-conflict section {
+  max-width: 660px;
+}
+.session-conflict h1 {
+  margin: 24px 0;
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.15;
+}
+.session-conflict p {
+  color: #aabbd0;
+  line-height: 1.7;
+  margin: 20px 0;
+}
+.session-conflict button {
+  margin: 12px 0;
+}
 .loading {
   height: 100svh;
   display: grid;

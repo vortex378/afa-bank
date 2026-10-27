@@ -7,6 +7,8 @@ Active classroom assessments now live in a private D1 vault and are assigned sep
 
 Open https://afa-bank-next.cobra-public-community.workers.dev/ . Students see AFA LAUNCH, not a public banking dashboard.
 
+For a rehearsal with multiple accounts, use separate browser profiles, different browsers, or one normal window and one Incognito session. Multiple Incognito windows in the same Chrome profile share cookies. Logging into another account there replaces the browser session for every such window. The app rejects a request when its displayed account differs from the authenticated cookie and shows a session-change notice; reload to see the actual account. Two tabs using the same account are supported.
+
 1. Students choose Request access. The administrator signs in, opens Bank administration → Administrimi, and approves pending accounts (or creates student accounts).
 2. Administrator or owner opens AFA LAUNCH and creates a Level 1 lobby with the desired team capacity.
 3. Approved students sign in, acknowledge the simulation, choose Red or Blue and mark ready. Both teams need at least one player; every enrolled student must be ready.

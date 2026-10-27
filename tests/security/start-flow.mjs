@@ -160,8 +160,7 @@ try {
         });
     });
   }
-  async function login(key) {
-    const p = pages[key];
+  async function login(key, p = pages[key]) {
     await p.goto(origin + "/#/login");
     await p.locator('input[name="email"]').fill(actors[key].email);
     await p.locator('input[name="password"]').fill(pass);
@@ -263,6 +262,92 @@ try {
     path: path.join(output, "owner-ready.png"),
     fullPage: true,
   });
+  // Two Incognito windows in one Chrome profile share cookies. Reproduce the
+  // reported old-name/new-cookie mismatch without touching the real classroom.
+  const sharedContext = await browser.newContext({
+    reducedMotion: "reduce",
+    viewport: { width: 1440, height: 1000 },
+  });
+  const oldTab = await sharedContext.newPage();
+  oldTab.setDefaultTimeout(15000);
+  await login("red", oldTab);
+  await oldTab
+    .getByRole("button", { name: "Mark not ready", exact: true })
+    .waitFor();
+  const otherTab = await sharedContext.newPage();
+  otherTab.setDefaultTimeout(15000);
+  await login("blue", otherTab);
+  const wrongIdentity = await sharedContext.request.post(
+    origin + "/api/launch/" + round + "/ready",
+    {
+      headers: { Origin: origin, "X-AFA-User": actors.red.id },
+      data: { ready: false },
+    },
+  );
+  const identityResult = await wrongIdentity.json();
+  requests.push({
+    key: "shared-cookie-regression",
+    path: "/api/launch/" + round + "/ready",
+    status: wrongIdentity.status(),
+    expectedUser: "red",
+    cookieUser: "blue",
+    response: identityResult,
+  });
+  check(
+    "Shared-cookie request cannot change readiness for another displayed user",
+    wrongIdentity.status() === 409 &&
+      identityResult.code === "SESSION_ACCOUNT_CHANGED",
+  );
+  await oldTab
+    .getByRole("button", { name: "Mark not ready", exact: true })
+    .click();
+  await oldTab
+    .getByRole("heading", { name: "Llogaria ndryshoi në një dritare tjetër." })
+    .waitFor();
+  check(
+    "Stale tab replaces the misleading identity with an explicit shared-session warning",
+    true,
+  );
+  check(
+    "Shared-cookie collision leaves both students ready",
+    db
+      .prepare(
+        "SELECT COUNT(*) AS n FROM launch_players WHERE round_id=? AND ready=1",
+      )
+      .get(round).n === 2,
+  );
+  await oldTab.waitForFunction(() => {
+    const surface = document.querySelector(".route-surface");
+    return surface && Number(getComputedStyle(surface).opacity) > 0.99;
+  });
+  await oldTab.screenshot({
+    path: path.join(output, "shared-session-warning.png"),
+    fullPage: true,
+  });
+  await oldTab
+    .getByRole("button", { name: "Hap llogarinë aktive", exact: true })
+    .click();
+  await oldTab.getByText("LIVE SYNC", { exact: true }).waitFor();
+  check(
+    "Reloaded shared tab shows the actual authenticated account",
+    (await oldTab.locator(".lr-user").innerText()).includes(actors.blue.name),
+  );
+  await sharedContext.close();
+  const sameUserTab = await contexts.red.newPage();
+  sameUserTab.setDefaultTimeout(15000);
+  await sameUserTab.goto(origin + "/#/launch");
+  await sameUserTab
+    .getByRole("button", { name: "Mark not ready", exact: true })
+    .waitFor();
+  check(
+    "Two tabs using the same account remain usable",
+    !(await sameUserTab
+      .getByRole("heading", {
+        name: "Llogaria ndryshoi në një dritare tjetër.",
+      })
+      .count()),
+  );
+  await sameUserTab.close();
   await launch.click();
   await pages.owner
     .getByRole("dialog")

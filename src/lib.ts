@@ -32,13 +32,34 @@ export const money = (n: number) => {
     String(value % 100).padStart(2, "0")
   );
 };
+// A cookie is shared by every tab/window in one browser profile. Bind requests
+// to the identity actually displayed in this tab, so another login cannot make
+// an old screen silently operate on the newly authenticated user's account.
+let displayedUserId: string | undefined;
+export function bindApiUser(id?: string) {
+  displayedUserId = id;
+}
 export async function api<T = any>(path: string, body?: unknown): Promise<T> {
+  const expectedUser = ["login", "register"].includes(path)
+    ? undefined
+    : displayedUserId;
   const r = await fetch("/api/" + path, {
     method: body === undefined ? "GET" : "POST",
-    headers: body === undefined ? {} : { "Content-Type": "application/json" },
+    headers: {
+      ...(body === undefined ? {} : { "Content-Type": "application/json" }),
+      ...(expectedUser ? { "X-AFA-User": expectedUser } : {}),
+    },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const d: any = await r.json();
+  if (
+    r.status === 409 &&
+    d.code === "SESSION_ACCOUNT_CHANGED" &&
+    expectedUser &&
+    displayedUserId === expectedUser
+  ) {
+    window.dispatchEvent(new Event("afa:account-changed"));
+  }
   if (!r.ok) throw new Error(d.error || "Lidhja dështoi.");
   return d;
 }

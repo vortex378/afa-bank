@@ -55,6 +55,8 @@ Run `node tests/security/start-flow.mjs` after building. Set `PLAYWRIGHT_MODULE`
 
 Five separate browser contexts verify actual login forms, administrator approval, empty/unready launch blocking, team selection, readiness, owner confirmation, synchronized countdowns, both contract pages, bank opening, refresh recovery, incident notification, evidence pins and private notes, report submission, report freeze and owner verdict. Screenshots, endpoint statuses and results are saved under ignored `artifacts/start-flow-*/`. The local server is stopped when the run finishes.
 
+An additional shared-cookie context reproduces two Incognito windows logging into different users. It checks that a stale displayed identity receives `409 SESSION_ACCOUNT_CHANGED`, readiness remains unchanged, the stale page shows a warning, and reloading displays the current cookie's account. A separate same-user second tab must continue working. This guard binds UI requests to their displayed user; cookie authentication and role authorization remain authoritative.
+
 Primary accounts: 1 owner, 2 admins, 1 finance, 4 Red, 4 Blue and 1 pending. The app creates the round-only AnOnYmOuS-RuSsIa beneficiary, without login credentials. Two auxiliary users exercise outsider/unready cases; 150 additional unique students exercise load and the 40-login classroom-IP test. Accounts created by registration/XSS probes are also local and disposable.
 
 Sessions are seeded to isolate role tests from login throttling; actual login, logout and password-minimum requests are separately exercised. Rate-limit records are cleared between unrelated test families, never within brute-force or shared-IP tests. No existing production account or balance is changed by testing.
