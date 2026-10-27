@@ -8,7 +8,9 @@ const Dashboard = lazy(() => import("./Dashboard"));
 import { api, bindApiUser, type User } from "./lib";
 import "./styles.css";
 import "./experience.css";
+import { LanguageSwitcher, useLanguage, tr } from "./i18n";
 function App() {
+  useLanguage();
   const [route, setRoute] = useState(location.hash || "#/"),
     [user, setUser] = useState<User | undefined>(),
     [sessionChanged, setSessionChanged] = useState(false),
@@ -46,10 +48,11 @@ function App() {
   }
   return (
     <MotionConfig reducedMotion="user">
+      <LanguageSwitcher />
       <Suspense
         fallback={
           <div className="loading" role="status">
-            Duke ngarkuar…
+            {"Duke ngarkuar…"}
           </div>
         }
       >
@@ -62,7 +65,7 @@ function App() {
             document.querySelector("main")?.scrollIntoView();
           }}
         >
-          Kalo te përmbajtja
+          {tr("Kalo te përmbajtja")}
         </a>
 
         <AnimatePresence mode="wait" initial={false}>
@@ -86,28 +89,30 @@ function App() {
               <main className="session-conflict" role="alert">
                 <section>
                   <span className="eyebrow">
-                    AFA LAUNCH / SESION I PËRBASHKËT
+                    {tr("AFA LAUNCH / SESION I PËRBASHKËT")}
                   </span>
-                  <h1>Llogaria ndryshoi në një dritare tjetër.</h1>
+                  <h1>{tr("Llogaria ndryshoi në një dritare tjetër.")}</h1>
                   <p>
-                    Kjo dritare nuk kreu veprimin për llogarinë tjetër. Dritaret
-                    Incognito të të njëjtit browser ndajnë të njëjtin sesion.
+                    {tr(
+                      "Kjo dritare nuk kreu veprimin për llogarinë tjetër. Dritaret Incognito të të njëjtit browser ndajnë të njëjtin sesion.",
+                    )}
                   </p>
                   <p>
-                    Për dy studentë njëkohësisht, përdorni dy profile ose
-                    browserë të ndryshëm, Chrome normal dhe Incognito, ose dy
-                    pajisje.
+                    {tr(
+                      "Për dy studentë njëkohësisht, përdorni dy profile ose browserë të ndryshëm, Chrome normal dhe Incognito, ose dy pajisje.",
+                    )}
                   </p>
                   <button
                     className="button light"
                     onClick={() => window.location.reload()}
                   >
-                    Hap llogarinë aktive
+                    {tr("Hap llogarinë aktive")}
                   </button>
                   <p>
                     <small>
-                      Rifreskimi do të shfaqë llogarinë që është realisht e
-                      identifikuar në këtë browser.
+                      {tr(
+                        "Rifreskimi do të shfaqë llogarinë që është realisht e identifikuar në këtë browser.",
+                      )}
                     </small>
                   </p>
                 </section>
@@ -115,7 +120,7 @@ function App() {
             ) : route === "#/account" || route === "#/launch" ? (
               loading ? (
                 <div className="loading" role="status">
-                  Duke hapur hapësirën tuaj…
+                  {tr("Duke hapur hapësirën tuaj…")}
                 </div>
               ) : user ? (
                 <Dashboard

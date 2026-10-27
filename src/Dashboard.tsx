@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -86,14 +87,14 @@ export function Activity({
               <div className="transaction-description">
                 <b>
                   {t.kind === "salary"
-                    ? "Pagë mujore"
+                    ? tr("Pagë mujore")
                     : t.kind === "incident"
-                      ? "Incident · Simulim edukativ"
+                      ? tr("Incident · Simulim edukativ")
                       : t.kind === "reversal"
-                        ? "Rikthim i fondeve"
+                        ? tr("Rikthim i fondeve")
                         : incoming
-                          ? t.sender_name || "Transfertë hyrëse"
-                          : t.recipient_name || "Transfertë dalëse"}
+                          ? t.sender_name || tr("Transfertë hyrëse")
+                          : t.recipient_name || tr("Transfertë dalëse")}
                 </b>
                 <span>{t.note}</span>
               </div>
@@ -106,8 +107,8 @@ export function Activity({
                 })}
               </time>
               <strong className={incoming ? "positive" : ""}>
-                {incoming ? "+" : "−"}
-                {money(t.amount)} <small>ALL</small>
+                {incoming ? "+" : tr("−")}
+                {money(t.amount)} <small>{tr("ALL")}</small>
               </strong>
             </article>
           );
@@ -115,8 +116,8 @@ export function Activity({
       ) : (
         <div className="empty">
           <ArrowLeftRight size={28} />
-          <h3>Historia jote fillon këtu.</h3>
-          <p>Lëvizjet e llogarisë do të shfaqen në këtë hapësirë.</p>
+          <h3>{tr("Historia jote fillon këtu.")}</h3>
+          <p>{tr("Lëvizjet e llogarisë do të shfaqen në këtë hapësirë.")}</p>
         </div>
       )}
     </div>
@@ -239,7 +240,7 @@ export default function Dashboard({
   )
     return (
       <div className="loading" role="status">
-        Connecting to AFA-LAUNCH…
+        {tr("Connecting to AFA-LAUNCH…")}
       </div>
     );
   const round = director.snapshot?.round;
@@ -255,7 +256,9 @@ export default function Dashboard({
     (view === "launch" || autoLaunch || user.role === "customer")
   )
     return (
-      <Suspense fallback={<div className="loading">Opening AFA-LAUNCH…</div>}>
+      <Suspense
+        fallback={<div className="loading">{tr("Opening AFA-LAUNCH…")}</div>}
+      >
         <LaunchGame
           user={user}
           director={director}
@@ -294,16 +297,16 @@ export default function Dashboard({
         <div className="auth-art">
           <Logo />
           <h1>
-            Siguri,
+            {tr("Siguri,")}
             <br />
-            nga hapi i parë.
+            {tr("nga hapi i parë.")}
           </h1>
-          <p>AKTIVIZIMI I LLOGARISË</p>
+          <p>{tr("AKTIVIZIMI I LLOGARISË")}</p>
         </div>
         <main tabIndex={-1} className="auth-form">
           <PasswordSetup required onDone={onLogout} />
           <button className="text-link" onClick={logout}>
-            Dil nga llogaria
+            {tr("Dil nga llogaria")}
           </button>
         </main>
       </div>
@@ -312,28 +315,28 @@ export default function Dashboard({
     <div className="app-shell app-v2">
       <aside className={"sidebar " + (menu ? "open" : "")}>
         <Logo />
-        <div className="workspace-label">HAPËSIRA JOTE</div>
-        <nav aria-label="Llogaria">
+        <div className="workspace-label">{tr("HAPËSIRA JOTE")}</div>
+        <nav aria-label={tr("Llogaria")}>
           <button
             className={view === "overview" ? "selected" : ""}
             onClick={() => navigate("overview")}
           >
             <LayoutDashboard size={19} />
-            {staff ? "Përmbledhje" : "Llogaria ime"}
+            {staff ? tr("Përmbledhje") : tr("Llogaria ime")}
           </button>
           <button
             className={view === "activity" ? "selected" : ""}
             onClick={() => navigate("activity")}
           >
             <ArrowLeftRight size={19} />
-            Aktiviteti
+            {tr("Aktiviteti")}
           </button>
           <button
             className={view === "card" ? "selected" : ""}
             onClick={() => navigate("card")}
           >
             <CreditCard size={19} />
-            Karta ime
+            {tr("Karta ime")}
           </button>
           {!preview && (
             <button
@@ -341,7 +344,7 @@ export default function Dashboard({
               onClick={() => navigate("security")}
             >
               <ShieldCheck size={19} />
-              Siguria
+              {tr("Siguria")}
             </button>
           )}
           {!preview && (
@@ -350,7 +353,7 @@ export default function Dashboard({
               onClick={() => navigate("launch")}
             >
               <ShieldCheck size={19} />
-              AFA-LAUNCH
+              {tr("AFA-LAUNCH")}
             </button>
           )}
           {!preview && (
@@ -359,7 +362,7 @@ export default function Dashboard({
               onClick={() => navigate("arena")}
             >
               <ShieldCheck size={19} />
-              Cyber Arena
+              {tr("Cyber Arena")}
             </button>
           )}
           {staff && (
@@ -368,13 +371,14 @@ export default function Dashboard({
               onClick={() => navigate("staff")}
             >
               <ShieldCheck size={19} />
-              Administrimi
+              {tr("Administrimi")}
             </button>
           )}
         </nav>
         <div className="sidebar-bottom">
           <div className="simulation-tag">
-            <span className="status-dot" /> VETËM SIMULIM
+            <span className="status-dot" />
+            {tr(" VETËM SIMULIM")}
           </div>
           <button className="profile" onClick={logout}>
             <span className="avatar">
@@ -386,7 +390,7 @@ export default function Dashboard({
             </span>
             <span>
               {user.name}
-              <small>{preview ? "Demonstrim" : user.role}</small>
+              <small>{preview ? tr("Demonstrim") : tr(user.role)}</small>
             </span>
             <LogOut size={17} />
           </button>
@@ -396,31 +400,31 @@ export default function Dashboard({
         <header className="app-header">
           <button
             className="mobile-menu"
-            aria-label={menu ? "Mbyll menunë" : "Hap menunë"}
+            aria-label={menu ? tr("Mbyll menunë") : tr("Hap menunë")}
             onClick={() => setMenu(!menu)}
           >
             {menu ? <X /> : <Menu />}
           </button>
           <span>
             {view === "arena"
-              ? "Cyber Arena"
+              ? tr("Cyber Arena")
               : view === "overview"
-                ? "Përmbledhje"
+                ? tr("Përmbledhje")
                 : view === "transfer"
-                  ? "Transfertë e re"
+                  ? tr("Transfertë e re")
                   : view === "staff"
-                    ? "Administrimi"
+                    ? tr("Administrimi")
                     : view === "card"
-                      ? "Karta ime"
-                      : "Aktiviteti"}
+                      ? tr("Karta ime")
+                      : tr("Aktiviteti")}
           </span>
           <div>
             <span className="connection-status">
               <span className="status-dot" />
-              {preview ? "DEMONSTRIM" : "PËRDITËSIM ÇDO 10s"}
+              {preview ? tr("DEMONSTRIM") : tr("PËRDITËSIM ÇDO 10s")}
             </span>
             <button
-              aria-label="Njoftimet"
+              aria-label={tr("Njoftimet")}
               className="icon-button"
               onClick={() =>
                 setToast(
@@ -438,41 +442,49 @@ export default function Dashboard({
           {!preview && staff && (
             <div className="preview-banner">
               <span>
-                AFA-LAUNCH ·{" "}
-                {round ? round.stage.toUpperCase() : "LEVEL 1 MISSION CONTROL"}
+                {tr("AFA-LAUNCH ·")}{" "}
+                {round
+                  ? round.stage.toUpperCase()
+                  : tr("LEVEL 1 MISSION CONTROL")}
               </span>
               <button className="text-link" onClick={() => navigate("launch")}>
                 {user.role === "owner" && round?.stage === "banking"
-                  ? "Release the 10,000 ALL incident →"
-                  : "Open Mission Control →"}
+                  ? tr("Release the 10,000 ALL incident →")
+                  : tr("Open Mission Control →")}
               </button>
             </div>
           )}
           {preview && (
             <div className="preview-banner">
               <span>
-                DEMONSTRIM · Të dhënat janë shembull. Transfertat kërkojnë
-                llogari aktive.
+                {tr(
+                  "DEMONSTRIM · Të dhënat janë shembull. Transfertat kërkojnë llogari aktive.",
+                )}
               </span>
-              <a href="#/register">Kërko akses ↗</a>
+              <a href="#/register">{tr("Kërko akses ↗")}</a>
             </div>
           )}
           {error && (
             <div className="error" role="alert">
-              {error}
-              <button onClick={load}>Provo përsëri</button>
+              {tr(error)}
+              <button onClick={load}>{tr("Provo përsëri")}</button>
             </div>
           )}
           {view === "overview" && (
             <>
               <div className="dashboard-greeting">
                 <div>
-                  <div className="section-label">MIRË SE ERDHE NË AFA</div>
+                  <div className="section-label">
+                    {tr("MIRË SE ERDHE NË AFA")}
+                  </div>
                   <h1>
-                    Përshëndetje, {user.name.split(" ")[0]}
-                    <span>.</span>
+                    {tr("Përshëndetje, ")}
+                    {user.name.split(" ")[0]}
+                    <span>{tr(".")}</span>
                   </h1>
-                  <p className="muted">Një ditë e re. Gjithçka në kontroll.</p>
+                  <p className="muted">
+                    {tr("Një ditë e re. Gjithçka në kontroll.")}
+                  </p>
                 </div>
                 <span className="date-label">
                   {new Date().toLocaleDateString("sq-AL", {
@@ -485,13 +497,16 @@ export default function Dashboard({
               <div className="account-overview">
                 <section className="balance-section">
                   <div className="balance-label">
-                    Bilanci i disponueshëm <span>ALL</span>
+                    {tr("Bilanci i disponueshëm ")}
+                    <span>{tr("ALL")}</span>
                   </div>
                   <div className="balance-number">
                     <Balance value={user.balance} />
                   </div>
                   <span className="muted">
-                    Lekë shqiptare · Para virtuale · Pagë mujore 50.000 ALL
+                    {tr(
+                      "Lekë shqiptare · Para virtuale · Pagë mujore 50.000 ALL",
+                    )}
                   </span>
                   <div className="money-actions">
                     <button
@@ -504,21 +519,24 @@ export default function Dashboard({
                           : navigate("transfer")
                       }
                     >
-                      Dërgo para <ArrowUpRight size={18} />
+                      {tr("Dërgo para ")}
+                      <ArrowUpRight size={18} />
                     </button>
                     <button
                       className="button outline"
                       onClick={() => navigate("card")}
                     >
-                      Detajet e llogarisë <CreditCard size={17} />
+                      {tr("Detajet e llogarisë ")}
+                      <CreditCard size={17} />
                     </button>
                   </div>
                   <div className="iban">
                     <span>
-                      IBAN I SIMULUAR<strong>{user.iban}</strong>
+                      {tr("IBAN I SIMULUAR")}
+                      <strong>{user.iban}</strong>
                     </span>
                     <button
-                      aria-label="Kopjo IBAN-in"
+                      aria-label={tr("Kopjo IBAN-in")}
                       className="icon-button"
                       onClick={copy}
                     >
@@ -529,26 +547,28 @@ export default function Dashboard({
                 <section className="account-card">
                   <Atmosphere variant="dashboard" />
                   <div className="card-section-heading">
-                    <span>KARTA JOTE AFA</span>
-                    <span>VIRTUAL DEBIT ↗</span>
+                    <span>{tr("KARTA JOTE AFA")}</span>
+                    <span>{tr("VIRTUAL DEBIT ↗")}</span>
                   </div>
                   <Card name={user.name} />
                   <div className="card-account-meta">
                     <span>
-                      <i /> Aktive
+                      <i />
+                      {tr(" Aktive")}
                     </span>
-                    <span>TITANIUM / 2048</span>
+                    <span>{tr("TITANIUM / 2048")}</span>
                   </div>
                 </section>
               </div>
               <section className="recent-activity">
                 <div className="section-title">
-                  <h2>Lëvizjet e fundit</h2>
+                  <h2>{tr("Lëvizjet e fundit")}</h2>
                   <button
                     className="text-link"
                     onClick={() => navigate("activity")}
                   >
-                    Shiko të gjitha <ArrowUpRight size={16} />
+                    {tr("Shiko të gjitha ")}
+                    <ArrowUpRight size={16} />
                   </button>
                 </div>
                 <Activity
@@ -559,21 +579,24 @@ export default function Dashboard({
               <div className="dashboard-footnote">
                 <ShieldCheck size={16} />
                 <span>
-                  Llogaria jote, perspektiva jote. AFA është një mjedis edukativ
-                  me para virtuale.
+                  {tr(
+                    "Llogaria jote, perspektiva jote. AFA është një mjedis edukativ me para virtuale.",
+                  )}
                 </span>
               </div>
             </>
           )}
           {view === "activity" && (
             <>
-              <div className="section-label">LLOGARIA JOTE / HISTORIA</div>
-              <h1>Çdo lëvizje ka një histori.</h1>
+              <div className="section-label">
+                {tr("LLOGARIA JOTE / HISTORIA")}
+              </div>
+              <h1>{tr("Çdo lëvizje ka një histori.")}</h1>
               <label className="search">
                 <Search size={18} />
                 <input
-                  placeholder="Kërko në 100 lëvizjet e fundit"
-                  aria-label="Kërko transaksione"
+                  placeholder={tr("Kërko në 100 lëvizjet e fundit")}
+                  aria-label={tr("Kërko transaksione")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -590,27 +613,29 @@ export default function Dashboard({
           )}
           {view === "card" && (
             <section className="card-details">
-              <div className="section-label">TITANIUM EDITION / KARTA JOTE</div>
-              <h1>Personale. Në çdo detaj.</h1>
+              <div className="section-label">
+                {tr("TITANIUM EDITION / KARTA JOTE")}
+              </div>
+              <h1>{tr("Personale. Në çdo detaj.")}</h1>
               <Card name={user.name} />
               <dl>
-                <dt>Mbajtësi</dt>
+                <dt>{tr("Mbajtësi")}</dt>
                 <dd>{user.name}</dd>
-                <dt>IBAN i simuluar</dt>
+                <dt>{tr("IBAN i simuluar")}</dt>
                 <dd>
                   {user.iban}{" "}
                   <button
                     className="icon-button"
                     onClick={copy}
-                    aria-label="Kopjo IBAN-in"
+                    aria-label={tr("Kopjo IBAN-in")}
                   >
                     {copied ? <Check size={15} /> : <Copy size={15} />}
                   </button>
                 </dd>
-                <dt>Numri demonstrues</dt>
-                <dd>•••• •••• •••• 2048</dd>
-                <dt>Përdorimi</dt>
-                <dd>Vetëm edukativ · Nuk përdoret për blerje</dd>
+                <dt>{tr("Numri demonstrues")}</dt>
+                <dd>{tr("•••• •••• •••• 2048")}</dd>
+                <dt>{tr("Përdorimi")}</dt>
+                <dd>{tr("Vetëm edukativ · Nuk përdoret për blerje")}</dd>
               </dl>
             </section>
           )}
@@ -621,7 +646,7 @@ export default function Dashboard({
             <Transfer user={user} onComplete={load} />
           )}{" "}
           {view === "arena" && !preview && (
-            <Suspense fallback={<p role="status">Duke hapur Arena…</p>}>
+            <Suspense fallback={<p role="status">{"Duke hapur Arena…"}</p>}>
               <Arena />
             </Suspense>
           )}
@@ -631,8 +656,11 @@ export default function Dashboard({
       {toast && (
         <div className="toast" role="status">
           <Check size={18} />
-          {toast}
-          <button aria-label="Mbyll njoftimin" onClick={() => setToast("")}>
+          {tr(toast)}
+          <button
+            aria-label={tr("Mbyll njoftimin")}
+            onClick={() => setToast("")}
+          >
             <X size={16} />
           </button>
         </div>

@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useState, type FormEvent } from "react";
 import { ShieldCheck, ArrowRight, Check } from "lucide-react";
 import { api } from "./lib";
@@ -34,30 +35,39 @@ export default function PasswordSetup({
   }
   return (
     <section className="staff-form password-setup">
-      <div className="section-label">SIGURIA E LLOGARISË</div>
+      <div className="section-label">{tr("SIGURIA E LLOGARISË")}</div>
       {done ? (
         <>
           <Check className="positive" size={35} />
-          <h1>Fjalëkalimi u ndryshua.</h1>
+          <h1>{tr("Fjalëkalimi u ndryshua.")}</h1>
           <p className="muted">
-            Të gjitha sesionet u mbyllën. Identifikohu me fjalëkalimin e ri.
+            {tr(
+              "Të gjitha sesionet u mbyllën. Identifikohu me fjalëkalimin e ri.",
+            )}
           </p>
           <button className="button light" onClick={onDone}>
-            Vazhdo te hyrja <ArrowRight size={17} />
+            {tr("Vazhdo te hyrja ")}
+            <ArrowRight size={17} />
           </button>
         </>
       ) : (
         <>
           <ShieldCheck size={32} />
-          <h1>{required ? "Bëje llogarinë tënde." : "Një fjalëkalim i ri."}</h1>
+          <h1>
+            {required
+              ? tr("Bëje llogarinë tënde.")
+              : tr("Një fjalëkalim i ri.")}
+          </h1>
           <p className="muted">
             {required
-              ? "Vendos një fjalëkalim personal përpara se të përdorësh panelin."
-              : "Ndryshimi do të mbyllë të gjitha sesionet e hapura."}
+              ? tr(
+                  "Vendos një fjalëkalim personal përpara se të përdorësh panelin.",
+                )
+              : tr("Ndryshimi do të mbyllë të gjitha sesionet e hapura.")}
           </p>
           <form onSubmit={submit}>
             <label>
-              Fjalëkalimi aktual
+              {tr("Fjalëkalimi aktual")}
               <input
                 type="password"
                 name="currentPassword"
@@ -67,7 +77,7 @@ export default function PasswordSetup({
               />
             </label>
             <label>
-              Fjalëkalimi i ri
+              {tr("Fjalëkalimi i ri")}
               <input
                 type="password"
                 name="newPassword"
@@ -78,7 +88,7 @@ export default function PasswordSetup({
               />
             </label>
             <label>
-              Konfirmo fjalëkalimin e ri
+              {tr("Konfirmo fjalëkalimin e ri")}
               <input
                 type="password"
                 name="confirm"
@@ -90,11 +100,11 @@ export default function PasswordSetup({
             </label>
             {error && (
               <div role="alert" className="error">
-                {error}
+                {tr(error)}
               </div>
             )}
             <button className="button light" disabled={busy}>
-              {busy ? "Duke ruajtur…" : "Ruaj fjalëkalimin"}
+              {busy ? tr("Duke ruajtur…") : tr("Ruaj fjalëkalimin")}
               <ArrowRight size={17} />
             </button>
           </form>

@@ -44,6 +44,9 @@ import {
 import { api, money, type User } from "./lib";
 import type { useLaunchDirector, GameData } from "./useLaunchDirector";
 import "./launch.css";
+import "./student-experience.css";
+import InvestigationWorkspace from "./InvestigationWorkspace";
+import { tr } from "./i18n";
 const LaunchScene = lazy(() => import("./LaunchScene"));
 type Director = ReturnType<typeof useLaunchDirector>;
 type Row = Record<string, any>;
@@ -89,7 +92,7 @@ function Field({
 }) {
   return (
     <label className="lr-field">
-      {label}
+      {tr(label)}
       <input
         name={name}
         type={type}
@@ -113,7 +116,7 @@ function Area({
 }) {
   return (
     <label className="lr-field">
-      {label}
+      {tr(label)}
       <textarea
         name={name}
         required
@@ -135,7 +138,7 @@ function Brand() {
           strokeWidth="1.5"
         />
       </svg>
-      AFA LAUNCH
+      {tr("AFA LAUNCH")}
     </span>
   );
 }
@@ -168,16 +171,16 @@ function Countdown({
   return (
     <div
       className="lr-countdown lr-deployment"
-      lang="en"
+
       role="status"
-      aria-label="Phase 1 is launching"
+      aria-label={tr("Phase 1 is launching")}
     >
       <Brand />
       <div className="lr-deploy-scene">
         <Suspense
           fallback={
             <div className="lr-deploy-fallback">
-              AFA BANK / PREPARING ENVIRONMENT
+              {"AFA BANK / PREPARING ENVIRONMENT"}
             </div>
           }
         >
@@ -185,7 +188,7 @@ function Countdown({
         </Suspense>
       </div>
       <div className="lr-deploy-copy">
-        <span className="lr-eyebrow">LIVE DEPLOYMENT / PHASE 01</span>
+        <span className="lr-eyebrow">{tr("LIVE DEPLOYMENT / PHASE 01")}</span>
         <div className="lr-deploy-count">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.strong
@@ -199,23 +202,25 @@ function Countdown({
             </motion.strong>
           </AnimatePresence>
           <span>
-            SECONDS TO
+            {tr("SECONDS TO")}
             <br />
-            AFA BANK
+            {tr("AFA BANK")}
           </span>
         </div>
         <h1>
-          The network.
+          {tr("The network.")}
           <br />
-          <em>Now your world.</em>
+          <em>{tr("Now your world.")}</em>
         </h1>
         <p>
-          Connected systems assemble into AFA BANK.
+          {tr("Connected systems assemble into AFA BANK.")}
           <br />
-          Your contract opens when deployment completes.
+          {tr("Your contract opens when deployment completes.")}
         </p>
         <div className="lr-deploy-steps">
-          <span className={remaining >= 4 ? "active" : "done"}>01 NETWORK</span>
+          <span className={remaining >= 4 ? "active" : "done"}>
+            {tr("01 NETWORK")}
+          </span>
           <i />
           <span
             className={
@@ -226,18 +231,22 @@ function Countdown({
                   : ""
             }
           >
-            02 ASSEMBLY
+            {tr("02 ASSEMBLY")}
           </span>
           <i />
-          <span className={remaining <= 1 ? "active" : ""}>03 AFA BANK</span>
+          <span className={remaining <= 1 ? "active" : ""}>
+            {tr("03 AFA BANK")}
+          </span>
         </div>
         <small>
-          Teams locked · virtual environment · contract acceptance required
+          {tr(
+            "Teams locked · virtual environment · contract acceptance required",
+          )}
         </small>
       </div>
       <div className="lr-deploy-footer">
-        <span>AFA LAUNCH / THE SILENT TRANSFER</span>
-        <span>ALL CONNECTED PLAYERS · ONE LIVE START</span>
+        <span>{tr("AFA LAUNCH / THE SILENT TRANSFER")}</span>
+        <span>{tr("ALL CONNECTED PLAYERS · ONE LIVE START")}</span>
       </div>
     </div>
   );
@@ -257,89 +266,91 @@ function Contract({ busy, onAccept }: { busy: boolean; onAccept: () => void }) {
   return (
     <section className="lr-contract">
       <div className="lr-contract-main">
-        <span className="lr-eyebrow">CONTRACT / PAGE {page} OF 2</span>
+        <span className="lr-eyebrow">
+          {tr("CONTRACT / PAGE ")}
+          {page}
+          {tr(" OF 2")}
+        </span>
         <h1 ref={heading} tabIndex={-1}>
-          Before you enter
+          {tr("Before you enter")}
           <br />
-          <em>the bank.</em>
+          <em>{tr("the bank.")}</em>
         </h1>
         <p className="lr-lead">
-          Read the rules of your training account before proceeding.
+          {tr("Read the rules of your training account before proceeding.")}
         </p>
         <div className="lr-document-tabs">
           <span className={page === 1 ? "active" : ""}>
-            01 General rules {page === 2 && <Check size={15} />}
+            {tr("01 General rules ")}
+            {page === 2 && <Check size={15} />}
           </span>
           <span className={page === 2 ? "active" : ""}>
-            02 Responsibility & security
+            {tr("02 Responsibility & security")}
           </span>
         </div>
         {page === 1 ? (
           <article>
-            <h2>1. An academic simulation</h2>
+            <h2>{tr("1. An academic simulation")}</h2>
             <p>
-              AFA Bank is a fictional bank for supervised cybersecurity
-              education. Every balance, Demo IBAN, transfer and incident in this
-              round is virtual. No deposits, purchases or real financial
-              services are provided.
+              {tr(
+                "AFA Bank is a fictional bank for supervised cybersecurity education. Every balance, Demo IBAN, transfer and incident in this round is virtual. No deposits, purchases or real financial services are provided.",
+              )}
             </p>
-            <h2>2. Your round account</h2>
+            <h2>{tr("2. Your round account")}</h2>
             <p>
-              You receive 50,000 DEMO ALL for Level 1. Use Demo IBANs to
-              transfer numbers to other enrolled students. Round money is
-              separate from your ordinary AFA Bank balance.
+              {tr(
+                "You receive 50,000 DEMO ALL for Level 1. Use Demo IBANs to transfer numbers to other enrolled students. Round money is separate from your ordinary AFA Bank balance.",
+              )}
             </p>
-            <h2>3. Rules of engagement</h2>
+            <h2>{tr("3. Rules of engagement")}</h2>
             <p>
-              Investigate only the records and prepared artifacts supplied
-              inside the exercise. Do not attack external systems, access other
-              teams’ private work, or submit real passwords, tokens or personal
-              banking data.
+              {tr(
+                "Investigate only the records and prepared artifacts supplied inside the exercise. Do not attack external systems, access other teams’ private work, or submit real passwords, tokens or personal banking data.",
+              )}
             </p>
-            <h2>4. Evidence and fair play</h2>
+            <h2>{tr("4. Evidence and fair play")}</h2>
             <p>
-              Your team must support its report with traceable evidence. The
-              owner reviews the findings and publishes the verdict. Progress,
-              transactions and report submission times are recorded.
+              {tr(
+                "Your team must support its report with traceable evidence. The owner reviews the findings and publishes the verdict. Progress, transactions and report submission times are recorded.",
+              )}
             </p>
             <div className="lr-document-notice">
               <BookOpen size={18} />
               <span>
-                The next page contains responsibility, password-security and
-                data-use terms. Read both pages before agreeing.
+                {tr(
+                  "The next page contains responsibility, password-security and data-use terms. Read both pages before agreeing.",
+                )}
               </span>
             </div>
             <button className="lr-button dark" onClick={() => next(2)}>
-              Next: responsibility & security <ArrowRight size={17} />
+              {tr("Next: responsibility & security ")}
+              <ArrowRight size={17} />
             </button>
           </article>
         ) : (
           <article>
-            <h2>5. Service limits & responsibility</h2>
+            <h2>{tr("5. Service limits & responsibility")}</h2>
             <p>
-              This is a supervised training environment and may include
-              fictional adverse events. Do not base real financial decisions on
-              the simulation. These terms do not authorize unauthorized
-              transfers or exclude obligations that cannot lawfully be excluded.
+              {tr(
+                "This is a supervised training environment and may include fictional adverse events. Do not base real financial decisions on the simulation. These terms do not authorize unauthorized transfers or exclude obligations that cannot lawfully be excluded.",
+              )}
             </p>
-            <h2>6. Password security</h2>
+            <h2>{tr("6. Password security")}</h2>
             <p>
-              The platform stores salted password hashes, not readable
-              passwords. A password change replaces its hash and closes existing
-              sessions. Administrators cannot reveal your new password. Never
-              use a real bank password here.
+              {tr(
+                "The platform stores salted password hashes, not readable passwords. A password change replaces its hash and closes existing sessions. Administrators cannot reveal your new password. Never use a real bank password here.",
+              )}
             </p>
             <p>
-              Prepared case artifacts can illustrate a fictional legacy service
-              behaving differently. Those artifacts are evidence for the
-              exercise, not a description of the live authentication system.
+              {tr(
+                "Prepared case artifacts can illustrate a fictional legacy service behaving differently. Those artifacts are evidence for the exercise, not a description of the live authentication system.",
+              )}
             </p>
-            <h2>7. Training records</h2>
+            <h2>{tr("7. Training records")}</h2>
             <p>
-              Your team choice, contract version, acceptance time, round
-              transactions, evidence notes and reports are recorded for
-              instruction and assessment. The instructor can review submitted
-              reports. Private team notes are not shared with the opposing team.
+              {tr(
+                "Your team choice, contract version, acceptance time, round transactions, evidence notes and reports are recorded for instruction and assessment. The instructor can review submitted reports. Private team notes are not shared with the opposing team.",
+              )}
             </p>
             <label className="lr-check">
               <input
@@ -347,41 +358,46 @@ function Contract({ busy, onAccept }: { busy: boolean; onAccept: () => void }) {
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
               />
-              I agree to the Terms of Service.
+              {tr("I agree to the Terms of Service.")}
             </label>
             <div className="lr-contract-actions">
               <button className="lr-link" onClick={() => next(1)}>
-                <ArrowLeft size={16} /> Back to page 1
+                <ArrowLeft size={16} />
+                {tr(" Back to page 1")}
               </button>
               <button
                 className="lr-button dark"
                 disabled={!agree || busy}
                 onClick={onAccept}
               >
-                Accept and enter bank <ArrowRight size={17} />
+                {tr("Accept and enter bank ")}
+                <ArrowRight size={17} />
               </button>
             </div>
-            <small>Level 1 contract · v1 · acceptance is recorded.</small>
+            <small>
+              {tr("Level 1 contract · v1 · acceptance is recorded.")}
+            </small>
           </article>
         )}
       </div>
       <aside>
-        <span className="lr-eyebrow">YOUR TRAINING ACCOUNT</span>
+        <span className="lr-eyebrow">{tr("YOUR TRAINING ACCOUNT")}</span>
         <div className="lr-document-seal">
           <GraduationCap size={40} />
-          <h3>AFA ACADEMY</h3>
+          <h3>{tr("AFA ACADEMY")}</h3>
           <p>
-            Learn today.
+            {tr("Learn today.")}
             <br />
-            Defend tomorrow.
+            {tr("Defend tomorrow.")}
           </p>
         </div>
         <div className="lr-document-balance">
-          <small>STARTING ALLOCATION</small>
+          <small>{tr("STARTING ALLOCATION")}</small>
           <strong>
-            50,000 <span>ALL</span>
+            {tr("50,000 ")}
+            <span>{tr("ALL")}</span>
           </strong>
-          <small>VIRTUAL FUNDS ONLY</small>
+          <small>{tr("VIRTUAL FUNDS ONLY")}</small>
         </div>
         <div className="lr-bank-architecture">
           <i />
@@ -395,17 +411,20 @@ function Contract({ busy, onAccept }: { busy: boolean; onAccept: () => void }) {
   );
 }
 function RoundTransfer({
+  balance,
   id,
   busy,
   act,
   close,
 }: {
+  balance: number;
   id: string;
   busy: boolean;
   act: (action: string, body: unknown) => Promise<any>;
   close: () => void;
 }) {
   const [recipient, setRecipient] = useState<Row>(),
+    [verifying, setVerifying] = useState(false),
     [error, setError] = useState(""),
     [iban, setIban] = useState(""),
     [amount, setAmount] = useState(""),
@@ -414,9 +433,11 @@ function RoundTransfer({
     [key] = useState(() => crypto.randomUUID());
   async function submit(e: FormEvent) {
     e.preventDefault();
+    if (verifying) return;
     setError("");
     try {
       if (!recipient) {
+        setVerifying(true);
         setRecipient(
           await api(
             "launch/" + id + "/recipient?iban=" + encodeURIComponent(iban),
@@ -427,6 +448,10 @@ function RoundTransfer({
       if (!review) {
         if (!/^\d{1,9}(\.\d{1,2})?$/.test(amount) || Number(amount) <= 0)
           throw Error("Enter a positive amount with up to two decimal places.");
+        if (Math.round(Number(amount) * 100) > balance)
+          throw Error(
+            "The round account does not have enough funds for this transfer.",
+          );
         setReview(true);
         return;
       }
@@ -434,6 +459,8 @@ function RoundTransfer({
       if (r) setReceipt(r);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setVerifying(false);
     }
   }
   return (
@@ -446,36 +473,52 @@ function RoundTransfer({
       <section>
         <button
           className="lr-icon close"
-          aria-label="Close transfer"
+          aria-label={tr("Close transfer")}
           onClick={close}
         >
           <X />
         </button>
-        <span className="lr-eyebrow">ROUND LEDGER / DEMO ALL</span>
+        <span className="lr-eyebrow">{tr("ROUND LEDGER / DEMO ALL")}</span>
         <h2 id="lr-transfer-title">
-          {receipt ? "Transfer confirmed." : "A connection, made simple."}
+          {receipt
+            ? tr("Transfer confirmed.")
+            : tr("A connection, made simple.")}
         </h2>
         {receipt ? (
           <>
             <CheckCircle2 className="lr-success" size={48} />
             <p>
-              {money(receipt.amount)} ALL sent to {recipient?.name}.
+              {money(receipt.amount)}
+              {tr(" ALL sent to ")}
+              {recipient?.name}
+              {tr(".")}
             </p>
             <code>{receipt.id}</code>
             <button className="lr-button" onClick={close}>
-              Done
+              {tr("Done")}
             </button>
           </>
         ) : (
           <form onSubmit={submit}>
+            <div className="transfer-balance-hint">
+              <strong>
+                {tr("Available round balance")}: {money(balance)} ALL
+              </strong>
+              <p>
+                {tr(
+                  "Try 1000 ALL for your first transfer. Enter 1000, not 50.000 or 500000. Keep at least 10,000 ALL available for the incident.",
+                )}
+              </p>
+            </div>
             {!recipient ? (
               <label className="lr-field">
-                Recipient Demo IBAN
+                {tr("Recipient Demo IBAN")}
                 <input
                   value={iban}
+                  readOnly={verifying}
                   onChange={(e) => setIban(e.target.value)}
                   required
-                  placeholder="AL-DEMO-…"
+                  placeholder={tr("AL-DEMO-…")}
                 />
               </label>
             ) : (
@@ -484,21 +527,26 @@ function RoundTransfer({
                 <p>{recipient.iban}</p>
                 {review ? (
                   <div className="lr-review-amount">
-                    <small>CONFIRM VIRTUAL TRANSFER</small>
-                    <h2>{amount} DEMO ALL</h2>
+                    <small>{tr("CONFIRM VIRTUAL TRANSFER")}</small>
+                    <h2>
+                      {amount}
+                      {tr(" DEMO ALL")}
+                    </h2>
                     <p>
-                      To {recipient.name}. This changes only round balances.
+                      {tr("To ")}
+                      {recipient.name}
+                      {tr(". This changes only round balances.")}
                     </p>
                   </div>
                 ) : (
                   <label className="lr-field">
-                    Amount in DEMO ALL
+                    {tr("Amount in DEMO ALL")}
                     <input
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       required
                       inputMode="decimal"
-                      placeholder="100.00"
+                      placeholder={tr("1000")}
                     />
                   </label>
                 )}
@@ -510,27 +558,81 @@ function RoundTransfer({
                     setReview(false);
                   }}
                 >
-                  Change recipient
+                  {tr("Change recipient")}
                 </button>
               </>
             )}
             {error && (
               <p className="lr-error" role="alert">
-                {error}
+                {tr(error)}
               </p>
             )}
-            <button className="lr-button" disabled={busy}>
+            <button className="lr-button primary" disabled={busy || verifying}>
               {recipient
                 ? review
-                  ? "Confirm demo transfer"
-                  : "Review transfer"
-                : "Verify recipient"}
+                  ? tr("Confirm demo transfer")
+                  : tr("Review transfer")
+                : tr("Verify recipient")}
               <ArrowRight size={16} />
             </button>
           </form>
         )}
       </section>
     </div>
+  );
+}
+function StudentStageGuide({
+  stage,
+  joined,
+  ready,
+}: {
+  stage: string;
+  joined: boolean;
+  ready: boolean;
+}) {
+  const copy: Record<string, [string, string]> = {
+    lobby: !joined
+      ? [
+          "First: choose your team",
+          "Read and confirm the training notice, choose Red or Blue, then press I am ready. Use a separate browser profile for each student.",
+        ]
+      : ready
+        ? [
+            "You are ready — stay connected",
+            "Wait for the instructor to launch. Your screen will move to the contract automatically. Your team’s readiness does not change another student’s readiness.",
+          ]
+        : [
+            "Next: confirm you are ready",
+            "Your team is selected. Press I am ready below. The instructor can launch after both teams are present and every student is ready.",
+          ],
+    contract: [
+      "Read both contract pages",
+      "Use Next to read page two, then tick the agreement and accept. Wait here until the instructor opens banking for everyone.",
+    ],
+    banking: [
+      "Try the training bank",
+      "Copy a classmate’s round Demo IBAN and try a small transfer. This is fictional money. When the owner releases the incident, the investigation will become available.",
+    ],
+    review: [
+      "Reports are under review",
+      "The instructor has frozen submissions. You can still read your team’s report and the evidence. Wait for the verdict and the debrief.",
+    ],
+    completed: [
+      "The round has ended",
+      "Read the instructor’s verdict and discuss which evidence supports the conclusion. If the round was cancelled, no winner is declared.",
+    ],
+  };
+  const content = copy[stage];
+  if (!content) return null;
+  return (
+    <section className="student-stage-guide" role="status">
+      <GraduationCap size={26} />
+      <div>
+        <span>{tr("WHAT TO DO NOW")}</span>
+        <h2>{tr(content[0])}</h2>
+        <p>{tr(content[1])}</p>
+      </div>
+    </section>
   );
 }
 export default function LaunchGame({
@@ -557,8 +659,6 @@ export default function LaunchGame({
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [selectedEvidence, setSelectedEvidence] = useState(""),
-    [filter, setFilter] = useState("all"),
-    [search, setSearch] = useState(""),
     [training, setTraining] = useState(Boolean(director.snapshot?.player)),
     [transfer, setTransfer] = useState(false),
     [briefing, setBriefing] = useState(false),
@@ -666,8 +766,6 @@ export default function LaunchGame({
     String(elapsed % 60).padStart(2, "0");
   const ownReport = data?.reports?.find((v: Row) => v.team === p?.team),
     evidence = data?.evidence || [];
-  const selected =
-    evidence.find((v: Row) => v.ref === selectedEvidence) || evidence[0];
   const ready = (data?.players || []).filter((v: Row) => v.ready).length;
   const accepted = (data?.players || []).filter((v: Row) => v.terms_at).length;
   const roster: Row[] = data?.players || [];
@@ -699,7 +797,7 @@ export default function LaunchGame({
       disabled={busy || disabled}
       onClick={action}
     >
-      {label}
+      {tr(label)}
     </button>
   );
   const stageButton = (
@@ -722,7 +820,7 @@ export default function LaunchGame({
     return (
       <div className="lr-loader">
         <Brand />
-        <span>Connecting to Mission Control…</span>
+        <span>{tr("Connecting to Mission Control…")}</span>
       </div>
     );
   if (r?.stage === "contract" && p && rawRemaining > 0)
@@ -734,41 +832,49 @@ export default function LaunchGame({
       />
     );
   return (
-    <div className="lr-shell" lang="en" data-team={p?.team || "control"}>
+    <div className="lr-shell" data-team={p?.team || "control"}>
       <header className="lr-top">
         <button
           className="lr-menu lr-icon"
-          aria-label="Toggle game navigation"
+          aria-label={tr("Toggle game navigation")}
           onClick={() => setMenu(!menu)}
         >
           {menu ? <X /> : <Layers />}
         </button>
         <Brand />
         <div className="lr-top-case">
-          LEVEL 01 <span>/</span> THE SILENT TRANSFER
+          {tr("LEVEL 01 ")}
+          <span>{tr("/")}</span>
+          {tr(" THE SILENT TRANSFER")}
         </div>
         <div className="lr-top-right">
           <span className={"lr-live " + (connected ? "on" : "")}>
             <i />
-            {connected ? "LIVE SYNC" : "POLLING / RECONNECTING"}
+            {connected ? tr("LIVE SYNC") : tr("POLLING / RECONNECTING")}
           </span>
-          <Pill tone="demo">SIMULATION / NO REAL MONEY</Pill>
+          <Pill tone="demo">{tr("SIMULATION / NO REAL MONEY")}</Pill>
           <span className="lr-avatar">
             {user.name.slice(0, 2).toUpperCase()}
           </span>
           <span className="lr-user">
             {user.name}
             <small>
-              {manager ? "Mission Control" : p ? p.team + " team" : "Student"}
+              {manager
+                ? tr("Mission Control")
+                : p
+                  ? tr(p.team === "red" ? "Red Team" : "Blue Team")
+                  : tr(
+                      user.role === "finance" ? "Chief of finance" : "Student",
+                    )}
             </small>
           </span>
         </div>
       </header>
       <aside className={"lr-sidebar " + (menu ? "open" : "")}>
         <span className="lr-eyebrow">
-          {manager ? "OWNER / INSTRUCTOR" : "YOUR WORKSPACE"}
+          {manager ? tr("OWNER / INSTRUCTOR") : tr("YOUR WORKSPACE")}
         </span>
-        <nav aria-label="AFA-LAUNCH">
+        <nav aria-label={tr("AFA-LAUNCH")}>
           {[
             {
               key: "overview",
@@ -802,31 +908,33 @@ export default function LaunchGame({
               onClick={() => navigate(item.key)}
             >
               <item.icon size={19} />
-              {item.label}
+              {tr(item.label)}
               {item.disabled && <Lock size={12} />}
             </button>
           ))}
         </nav>
         <div className="lr-sidebar-bottom">
           <div className="lr-level">
-            <span>01</span>
+            <span>{tr("01")}</span>
             <div>
-              THE SILENT TRANSFER<small>Academic cyber range</small>
+              {tr("THE SILENT TRANSFER")}
+              <small>{tr("Academic cyber range")}</small>
             </div>
           </div>
           <button onClick={onExit} disabled={!!p && r?.stage !== "completed"}>
             <ArrowLeft size={16} />{" "}
             {user.role !== "customer"
-              ? "Bank administration"
-              : "AFA LAUNCH homepage"}
+              ? tr("Bank administration")
+              : tr("AFA LAUNCH homepage")}
           </button>
           <button onClick={onLogout}>
-            <LogOut size={16} /> Sign out
+            <LogOut size={16} />
+            {tr(" Sign out")}
           </button>
           <small>
-            Fictional accounts. Prepared case artifacts.
+            {tr("Fictional accounts. Prepared case artifacts.")}
             <br />
-            No real money or production secrets.
+            {tr("No real money or production secrets.")}
           </small>
         </div>
       </aside>
@@ -840,31 +948,32 @@ export default function LaunchGame({
       >
         {(error || syncError) && (
           <div className="lr-error" role="alert">
-            {error || syncError}
-            <button onClick={() => refresh()}>Retry</button>
+            {tr(error || syncError)}
+            <button onClick={() => refresh()}>{tr("Retry")}</button>
           </div>
         )}
         {notice && (
           <div className="lr-toast" role="status">
             <CheckCircle2 size={17} />
-            {notice}
+            {tr(notice)}
           </div>
         )}
         {!r ? (
           <section className="lr-empty-world">
-            <span className="lr-eyebrow">WELCOME TO AFA-LAUNCH</span>
+            <span className="lr-eyebrow">{tr("WELCOME TO AFA-LAUNCH")}</span>
             <h1>
-              The next incident
+              {tr("The next incident")}
               <br />
-              <em>starts with you.</em>
+              <em>{tr("starts with you.")}</em>
             </h1>
             <p>
-              A supervised multiplayer investigation inside AFA Bank. Choose a
-              side. Follow the evidence. Defend your conclusion.
+              {tr(
+                "A supervised multiplayer investigation inside AFA Bank. Choose a side. Follow the evidence. Defend your conclusion.",
+              )}
             </p>
             <div className="lr-empty-art">
               <TeamEmblem team="red" />
-              <span>VS</span>
+              <span>{tr("VS")}</span>
               <TeamEmblem team="blue" />
             </div>
             {manager ? (
@@ -892,29 +1001,32 @@ export default function LaunchGame({
                 <Field
                   name="team_size"
                   type="number"
-                  label="Maximum students per team (1–100)"
+                  label={tr("Maximum students per team (1–100)")}
                   defaultValue={20}
                 />
                 <button className="lr-button primary" disabled={busy}>
-                  Create Level 1 lobby <ArrowRight size={18} />
+                  {tr("Create Level 1 lobby ")}
+                  <ArrowRight size={18} />
                 </button>
               </form>
             ) : (
-              <Pill>Waiting for the owner to open Level 1</Pill>
+              <Pill>{tr("Waiting for the owner to open Level 1")}</Pill>
             )}
             {user.role !== "customer" && (
               <button className="lr-link" onClick={onExit}>
-                Bank administration <ArrowRight size={15} />
+                {tr("Bank administration ")}
+                <ArrowRight size={15} />
               </button>
             )}
             <section className="lr-next-level">
               <Lock size={24} />
               <div>
-                <span className="lr-eyebrow">PHASE 1 / AFA BANK</span>
-                <h2>Await your live deployment.</h2>
+                <span className="lr-eyebrow">{tr("PHASE 1 / AFA BANK")}</span>
+                <h2>{tr("Await your live deployment.")}</h2>
                 <p>
-                  Your instructor opens the lobby. Choose a team, get ready,
-                  then enter the bank together after launch.
+                  {tr(
+                    "Your instructor opens the lobby. Choose a team, get ready, then enter the bank together after launch.",
+                  )}
                 </p>
               </div>
             </section>
@@ -936,31 +1048,42 @@ export default function LaunchGame({
                   <b>
                     {stages.indexOf(r.stage) > i ? <Check size={13} /> : i + 1}
                   </b>
-                  {labels[s]}
+                  {tr(labels[s])}
                 </span>
               ))}
             </div>
+            {user.role === "customer" && (r.stage === "lobby" || !!p) && (
+              <StudentStageGuide
+                stage={r.stage}
+                joined={!!p}
+                ready={!!p?.ready}
+              />
+            )}
             {tab === "overview" && manager && (
               <>
                 <div className="lr-page-heading">
                   <div>
                     <span className="lr-eyebrow">
-                      MISSION CONTROL / LEVEL 01
+                      {tr("MISSION CONTROL / LEVEL 01")}
                     </span>
                     <h1>
-                      You control
+                      {tr("You control")}
                       <br />
-                      <em>the next move.</em>
+                      <em>{tr("the next move.")}</em>
                     </h1>
                     <p>
-                      Coordinate the room. Release the incident. Judge the
-                      evidence.
+                      {tr(
+                        "Coordinate the room. Release the incident. Judge the evidence.",
+                      )}
                     </p>
                   </div>
                   <div className="lr-case-status">
                     <Radio size={20} />
-                    <strong>{labels[r.stage]}</strong>
-                    <small>{data.players.length} enrolled students</small>
+                    <strong>{tr(labels[r.stage])}</strong>
+                    <small>
+                      {data.players.length}
+                      {tr(" enrolled students")}
+                    </small>
                   </div>
                 </div>
                 <div className="lr-metrics">
@@ -972,105 +1095,118 @@ export default function LaunchGame({
                           data.connected.includes(v.user_id),
                         ).length
                       }
-                      <small>/ {data.players.length}</small>
+                      <small>
+                        {tr("/ ")}
+                        {data.players.length}
+                      </small>
                     </strong>
-                    <span>students online</span>
+                    <span>{tr("students online")}</span>
                   </article>
                   <article>
                     <CheckCircle2 />
                     <strong>
                       {r.stage === "lobby" ? ready : accepted}
-                      <small>/ {data.players.length}</small>
+                      <small>
+                        {tr("/ ")}
+                        {data.players.length}
+                      </small>
                     </strong>
                     <span>
                       {r.stage === "lobby"
-                        ? "ready to launch"
-                        : "contracts accepted"}
+                        ? tr("ready to launch")
+                        : tr("contracts accepted")}
                     </span>
                   </article>
                   <article>
                     <Swords />
                     <strong>
                       {data.players.filter((v: Row) => v.team === "red").length}
-                      <small>RED /</small>
+                      <small>{tr("RED /")}</small>
                       {
                         data.players.filter((v: Row) => v.team === "blue")
                           .length
                       }
-                      <small>BLUE</small>
+                      <small>{tr("BLUE")}</small>
                     </strong>
-                    <span>team balance</span>
+                    <span>{tr("team balance")}</span>
                   </article>
                 </div>
                 <div className="lr-control-grid">
                   <section className="lr-panel lr-control">
                     <div className="lr-panel-label">
                       <Zap size={18} />
-                      <span>DIRECTOR ACTION</span>
+                      <span>{tr("DIRECTOR ACTION")}</span>
                     </div>
                     {r.stage === "lobby" ? (
                       <>
-                        <h2>Bring the room online.</h2>
+                        <h2>{tr("Bring the room online.")}</h2>
                         <p>
-                          Each approved student chooses a side and confirms
-                          readiness. Starting locks the roster and broadcasts a
-                          five-second countdown.
+                          {tr(
+                            "Each approved student chooses a side and confirms readiness. Starting locks the roster and broadcasts a five-second countdown.",
+                          )}
                         </p>
                         <div
                           className="lr-document-notice"
                           role="status"
-                          aria-label="Launch readiness"
+                          aria-label={tr("Launch readiness")}
                         >
                           <Shield size={18} />
                           <div>
                             <strong>
                               {canStart
-                                ? "Ready to launch"
-                                : "Launch blocked — finish student setup"}
+                                ? tr("Ready to launch")
+                                : tr("Launch blocked — finish student setup")}
                             </strong>
                             <ul>
                               <li>
-                                {hasRed ? "✓" : "○"} Red team:{" "}
+                                {hasRed ? tr("✓") : tr("○")}
+                                {tr(" Red team:")}{" "}
                                 {
                                   activeStudents.filter((v) => v.team === "red")
                                     .length
                                 }{" "}
-                                enrolled
+                                {tr("enrolled")}
                               </li>
                               <li>
-                                {hasBlue ? "✓" : "○"} Blue team:{" "}
+                                {hasBlue ? tr("✓") : tr("○")}
+                                {tr(" Blue team:")}{" "}
                                 {
                                   activeStudents.filter(
                                     (v) => v.team === "blue",
                                   ).length
                                 }{" "}
-                                enrolled
+                                {tr("enrolled")}
                               </li>
                               <li>
-                                {ready} / {roster.length} students marked ready
+                                {ready}
+                                {tr(" / ")}
+                                {roster.length}
+                                {tr(" students marked ready")}
                               </li>
                             </ul>
                             {!roster.length && (
                               <p>
-                                Signing in does not join a team. Each student
-                                must confirm the training notice, choose Red or
-                                Blue, then press “I am ready” in their own
-                                window.
+                                {tr(
+                                  "Signing in does not join a team. Each student must confirm the training notice, choose Red or Blue, then press “I am ready” in their own window.",
+                                )}
                               </p>
                             )}
                             {!!waitingStudents.length && (
                               <p>
-                                Still needs to press “I am ready”:{" "}
-                                {waitingStudents.map((v) => v.name).join(", ")}.
+                                {tr("Still needs to press “I am ready”:")}{" "}
+                                {waitingStudents.map((v) => v.name).join(", ")}
+                                {tr(".")}
                               </p>
                             )}
                             {!!ineligibleStudents.length && (
                               <p>
-                                Restore active student access before launching:{" "}
+                                {tr(
+                                  "Restore active student access before launching:",
+                                )}{" "}
                                 {ineligibleStudents
                                   .map((v) => v.name)
                                   .join(", ")}
-                                .
+                                {tr(".")}
                               </p>
                             )}
                           </div>
@@ -1083,17 +1219,21 @@ export default function LaunchGame({
                           !canStart,
                         )}
                         <small>
-                          Requires at least one student on each team and
-                          everyone ready.
+                          {tr(
+                            "Requires at least one student on each team and everyone ready.",
+                          )}
                         </small>
                       </>
                     ) : r.stage === "contract" ? (
                       <>
-                        <h2>The bank is waiting.</h2>
+                        <h2>{tr("The bank is waiting.")}</h2>
                         <p>
-                          {accepted} of {data.players.length} students accepted
-                          the round contract. Everyone must finish before the
-                          bank opens.
+                          {accepted}
+                          {tr(" of ")}
+                          {data.players.length}
+                          {tr(
+                            " students accepted the round contract. Everyone must finish before the bank opens.",
+                          )}
                         </p>
                         {stageButton(
                           "banking",
@@ -1108,53 +1248,57 @@ export default function LaunchGame({
                       </>
                     ) : r.stage === "banking" ? (
                       <>
-                        <h2>Release the incident.</h2>
+                        <h2>{tr("Release the incident.")}</h2>
                         <p>
-                          One controlled event. Every eligible participant is
-                          debited once. All case evidence is published with the
-                          virtual transfers.
+                          {tr(
+                            "One controlled event. Every eligible participant is debited once. All case evidence is published with the virtual transfers.",
+                          )}
                         </p>
                         <div className="lr-transfer-equation">
                           <div>
-                            <small>ELIGIBLE STUDENTS</small>
+                            <small>{tr("ELIGIBLE STUDENTS")}</small>
                             <strong>{eligible.length}</strong>
                           </div>
-                          <b>×</b>
+                          <b>{tr("×")}</b>
                           <div>
-                            <small>PER ACCOUNT</small>
+                            <small>{tr("PER ACCOUNT")}</small>
                             <strong>
-                              10,000 <small>ALL</small>
+                              {tr("10,000 ")}
+                              <small>{tr("ALL")}</small>
                             </strong>
                           </div>
-                          <b>=</b>
+                          <b>{tr("=")}</b>
                           <div>
-                            <small>TOTAL TRANSFER</small>
+                            <small>{tr("TOTAL TRANSFER")}</small>
                             <strong>
                               {money(eligible.length * 1000000)}{" "}
-                              <small>ALL</small>
+                              <small>{tr("ALL")}</small>
                             </strong>
                           </div>
                         </div>
                         <div className="lr-beneficiary">
-                          <span className="lr-avatar anonymous">?</span>
+                          <span className="lr-avatar anonymous">{tr("?")}</span>
                           <div>
-                            <small>SIMULATION BENEFICIARY / NO LOGIN</small>
-                            <strong>AnOnYmOuS-RuSsIa</strong>
+                            <small>
+                              {tr("SIMULATION BENEFICIARY / NO LOGIN")}
+                            </small>
+                            <strong>{tr("AnOnYmOuS-RuSsIa")}</strong>
                             <code>{data.beneficiary?.iban}</code>
                           </div>
                         </div>
                         <div className="lr-document-notice">
                           <Shield size={18} />
                           <span>
-                            Excluded: owner, administrator, finance, unenrolled
-                            users and the beneficiary.
+                            {tr(
+                              "Excluded: owner, administrator, finance, unenrolled users and the beneficiary.",
+                            )}
                           </span>
                         </div>
                         {invalidFunds && (
                           <p className="lr-error">
-                            A participant has less than 10,000 ALL. Resolve the
-                            round balance before releasing the incident. Nothing
-                            will be partially debited.
+                            {tr(
+                              "A participant has less than 10,000 ALL. Resolve the round balance before releasing the incident. Nothing will be partially debited.",
+                            )}
                           </p>
                         )}
                         {owner ? (
@@ -1175,30 +1319,35 @@ export default function LaunchGame({
                             invalidFunds || !eligible.length,
                           )
                         ) : (
-                          <Pill>Only the owner can release the incident</Pill>
+                          <Pill>
+                            {tr("Only the owner can release the incident")}
+                          </Pill>
                         )}
                       </>
                     ) : r.stage === "investigation" ? (
                       <>
-                        <h2>The evidence is live.</h2>
+                        <h2>{tr("The evidence is live.")}</h2>
                         <p>
-                          The room is investigating. Team reports remain private
-                          until owner review. The answer is supported by
-                          correlated case records, not guesswork.
+                          {tr(
+                            "The room is investigating. Team reports remain private until owner review. The answer is supported by correlated case records, not guesswork.",
+                          )}
                         </p>
                         <div className="lr-report-status">
                           {["red", "blue"].map((t) => (
                             <article key={t}>
-                              <Pill tone={t}>{t.toUpperCase()} TEAM</Pill>
+                              <Pill tone={t}>
+                                {tr(t).toUpperCase()}
+                                {tr(" TEAM")}
+                              </Pill>
                               <strong>
                                 {reportsByTeam(t)
-                                  ? "Report received"
-                                  : "Investigating"}
+                                  ? tr("Report received")
+                                  : tr("Investigating")}
                               </strong>
                               <small>
                                 {reportsByTeam(t)
                                   ? date(reportsByTeam(t).submitted_at)
-                                  : "No report submitted yet"}
+                                  : tr("No report submitted yet")}
                               </small>
                             </article>
                           ))}
@@ -1218,11 +1367,11 @@ export default function LaunchGame({
                       </>
                     ) : r.stage === "review" ? (
                       <>
-                        <h2>Evidence decides the outcome.</h2>
+                        <h2>{tr("Evidence decides the outcome.")}</h2>
                         <p>
-                          Review the latest report from each team, apply the
-                          common rubric, and explain your decision. Publishing
-                          the verdict completes Level 1.
+                          {tr(
+                            "Review the latest report from each team, apply the common rubric, and explain your decision. Publishing the verdict completes Level 1.",
+                          )}
                         </p>
                         {button(
                           "Compare reports & judge",
@@ -1233,11 +1382,15 @@ export default function LaunchGame({
                     ) : (
                       <>
                         <h2>
-                          {data.verdict ? "Level 1 complete." : "Round closed."}
+                          {data.verdict
+                            ? tr("Level 1 complete.")
+                            : tr("Round closed.")}
                         </h2>
                         <p>
                           {data.verdict?.reason ||
-                            "This round ended without an academic verdict. Its audit history is preserved."}
+                            tr(
+                              "This round ended without an academic verdict. Its audit history is preserved.",
+                            )}
                         </p>
                         {button(
                           "Open debrief",
@@ -1262,7 +1415,8 @@ export default function LaunchGame({
                           }}
                         >
                           <button className="lr-button ghost" disabled={busy}>
-                            Create a fresh Level 1 round <RefreshCw size={15} />
+                            {tr("Create a fresh Level 1 round ")}
+                            <RefreshCw size={15} />
                           </button>
                         </form>
                       </>
@@ -1271,14 +1425,20 @@ export default function LaunchGame({
                   <aside className="lr-panel lr-roster">
                     <div className="lr-title-row">
                       <h3>
-                        Participants <span>({data.players.length})</span>
+                        {tr("Participants ")}
+                        <span>
+                          {tr("(")}
+                          {data.players.length}
+                          {tr(")")}
+                        </span>
                       </h3>
-                      <Pill tone="live">LIVE</Pill>
+                      <Pill tone="live">{tr("LIVE")}</Pill>
                     </div>
                     {!data.players.length && (
                       <p>
-                        Share the bank login. Approved students will see the
-                        lobby automatically.
+                        {tr(
+                          "Share the bank login. Approved students will see the lobby automatically.",
+                        )}
                       </p>
                     )}
                     {data.players.map((v: Row) => (
@@ -1288,7 +1448,7 @@ export default function LaunchGame({
                           {v.name}
                           <small>
                             {v.role !== "customer" || v.status !== "active"
-                              ? "No longer eligible"
+                              ? tr("No longer eligible")
                               : v.team + " team"}
                           </small>
                         </span>
@@ -1301,11 +1461,11 @@ export default function LaunchGame({
                         <small>
                           {r.stage === "lobby"
                             ? v.ready
-                              ? "Ready"
-                              : "Waiting"
+                              ? tr("Ready")
+                              : tr("Waiting")
                             : v.terms_at
-                              ? "In bank"
-                              : "Contract"}
+                              ? tr("In bank")
+                              : tr("Contract")}
                         </small>
                       </div>
                     ))}
@@ -1313,8 +1473,10 @@ export default function LaunchGame({
                 </div>
                 <section className="lr-panel">
                   <div className="lr-title-row">
-                    <h3>Event timeline</h3>
-                    <span className="lr-eyebrow">AUDITED DIRECTOR ACTIONS</span>
+                    <h3>{tr("Event timeline")}</h3>
+                    <span className="lr-eyebrow">
+                      {tr("AUDITED DIRECTOR ACTIONS")}
+                    </span>
                   </div>
                   {data.events.map((v: Row) => (
                     <div className="lr-event" key={v.id}>
@@ -1322,14 +1484,14 @@ export default function LaunchGame({
                       <time>{date(v.created_at)}</time>
                       <span>
                         {v.event}
-                        <small>{v.name || "System"}</small>
+                        <small>{v.name || tr("System")}</small>
                       </span>
                     </div>
                   ))}
                 </section>
                 {owner && r.stage !== "completed" && (
                   <details className="lr-panel lr-danger">
-                    <summary>End round without verdict</summary>
+                    <summary>{tr("End round without verdict")}</summary>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -1351,10 +1513,10 @@ export default function LaunchGame({
                     >
                       <Field
                         name="reason"
-                        label="Reason (at least 10 characters)"
+                        label={tr("Reason (at least 10 characters)")}
                       />
                       <button className="lr-button ghost" disabled={busy}>
-                        End round
+                        {tr("End round")}
                       </button>
                     </form>
                   </details>
@@ -1366,20 +1528,22 @@ export default function LaunchGame({
                 <div className="lr-page-heading">
                   <div>
                     <span className="lr-eyebrow">
-                      LEVEL 01 / TEAM SELECTION
+                      {tr("LEVEL 01 / TEAM SELECTION")}
                     </span>
                     <h1>
-                      Choose
+                      {tr("Choose")}
                       <br />
-                      <em>your side.</em>
+                      <em>{tr("your side.")}</em>
                     </h1>
                     <p>
-                      1. Confirm the training notice. 2. Join Red or Blue. 3.
-                      Press “I am ready”.
+                      {tr(
+                        "1. Confirm the training notice. 2. Join Red or Blue. 3. Press “I am ready”.",
+                      )}
                     </p>
                   </div>
                   <Pill tone="live">
-                    {data.players.length} students enrolled
+                    {data.players.length}
+                    {tr(" students enrolled")}
                   </Pill>
                 </div>
                 <div className="lr-lobby-grid">
@@ -1390,8 +1554,9 @@ export default function LaunchGame({
                         checked={training}
                         onChange={(e) => setTraining(e.target.checked)}
                       />
-                      I understand this is a supervised educational simulation
-                      with fictional money and prepared security incidents.
+                      {tr(
+                        "I understand this is a supervised educational simulation with fictional money and prepared security incidents.",
+                      )}
                     </label>
                     <div className="lr-teams">
                       {["red", "blue"].map((t) => (
@@ -1405,20 +1570,27 @@ export default function LaunchGame({
                         >
                           <span className="lr-eyebrow">
                             {t === "red"
-                              ? "OFFENSIVE REASONING"
-                              : "DEFENSIVE OPERATIONS"}
+                              ? tr("OFFENSIVE REASONING")
+                              : tr("DEFENSIVE OPERATIONS")}
                           </span>
                           <TeamEmblem team={t} />
-                          <h2>{t.toUpperCase()} TEAM</h2>
+                          <h2>
+                            {tr(t).toUpperCase()}
+                            {tr(" TEAM")}
+                          </h2>
                           <h3>
                             {t === "red"
-                              ? "Reconstruct the attack."
-                              : "Investigate and defend."}
+                              ? tr("Reconstruct the attack.")
+                              : tr("Investigate and defend.")}
                           </h3>
                           <p>
                             {t === "red"
-                              ? "Trace the entry point. Explain the failed control."
-                              : "Correlate events. Build an evidence-backed timeline."}
+                              ? tr(
+                                  "Trace the entry point. Explain the failed control.",
+                                )
+                              : tr(
+                                  "Correlate events. Build an evidence-backed timeline.",
+                                )}
                           </p>
                           <button
                             className={"lr-button team " + t}
@@ -1433,8 +1605,12 @@ export default function LaunchGame({
                             onClick={() => act("join", { team: t, training })}
                           >
                             {p?.team === t
-                              ? "Selected team"
-                              : "Join " + t + " team"}
+                              ? tr("Selected team")
+                              : tr(
+                                  t === "red"
+                                    ? "Join red team"
+                                    : "Join blue team",
+                                )}
                             <ArrowRight size={16} />
                           </button>
                           <div className="lr-team-avatars">
@@ -1451,7 +1627,9 @@ export default function LaunchGame({
                                 data.players.filter((v: Row) => v.team === t)
                                   .length
                               }{" "}
-                              / {r.team_size} participants
+                              {tr("/ ")}
+                              {r.team_size}
+                              {tr(" participants")}
                             </small>
                           </div>
                         </article>
@@ -1462,13 +1640,17 @@ export default function LaunchGame({
                         <div>
                           <strong>
                             {p.ready
-                              ? "You are ready."
-                              : "Your team is selected."}
+                              ? tr("You are ready.")
+                              : tr("Your team is selected.")}
                           </strong>
                           <p>
                             {p.ready
-                              ? "Stay connected. The owner launches the whole room."
-                              : "Confirm readiness when you are ready to enter the bank."}
+                              ? tr(
+                                  "Stay connected. The owner launches the whole room.",
+                                )
+                              : tr(
+                                  "Confirm readiness when you are ready to enter the bank.",
+                                )}
                           </p>
                         </div>
                         {button(
@@ -1480,41 +1662,44 @@ export default function LaunchGame({
                     )}
                     <section className="lr-panel">
                       <div className="lr-title-row">
-                        <h3>Live lobby</h3>
-                        <small>Waiting for owner launch</small>
+                        <h3>{tr("Live lobby")}</h3>
+                        <small>{tr("Waiting for owner launch")}</small>
                       </div>
                       <div className="lr-lobby-roster">
                         {data.players.map((v: Row) => (
                           <div className="lr-roster-row" key={v.user_id}>
                             <span className={"lr-team-dot " + v.team} />
                             <span>{v.name}</span>
-                            <small>{v.ready ? "Ready" : "Waiting"}</small>
+                            <small>
+                              {v.ready ? tr("Ready") : tr("Waiting")}
+                            </small>
                           </div>
                         ))}
                       </div>
                     </section>
                   </div>
                   <aside className="lr-panel lr-dossier">
-                    <span className="lr-eyebrow">MISSION DOSSIER</span>
-                    <h2>Level 1</h2>
-                    <h3>The Silent Transfer</h3>
+                    <span className="lr-eyebrow">{tr("MISSION DOSSIER")}</span>
+                    <h2>{tr("Level 1")}</h2>
+                    <h3>{tr("The Silent Transfer")}</h3>
                     <dl>
-                      <dt>Estimated time</dt>
-                      <dd>35–45 minutes</dd>
-                      <dt>Objective</dt>
-                      <dd>Evidence-based investigation</dd>
-                      <dt>Starting allocation</dt>
-                      <dd>50,000 DEMO ALL</dd>
+                      <dt>{tr("Estimated time")}</dt>
+                      <dd>{tr("35–45 minutes")}</dd>
+                      <dt>{tr("Objective")}</dt>
+                      <dd>{tr("Evidence-based investigation")}</dd>
+                      <dt>{tr("Starting allocation")}</dt>
+                      <dd>{tr("50,000 DEMO ALL")}</dd>
                     </dl>
                     <p>
-                      The bank will open after the owner starts the round and
-                      students accept the bank contract. Follow your team’s
-                      brief when the incident arrives.
+                      {tr(
+                        "The bank will open after the owner starts the round and students accept the bank contract. Follow your team’s brief when the incident arrives.",
+                      )}
                     </p>
                     <div className="lr-locked-level">
                       <Lock size={18} />
                       <div>
-                        Level 2<small>Awaiting a future briefing</small>
+                        {tr("Level 2")}
+                        <small>{tr("Awaiting a future briefing")}</small>
                       </div>
                     </div>
                   </aside>
@@ -1528,18 +1713,24 @@ export default function LaunchGame({
                 p.terms_at ? (
                   <section className="lr-wait">
                     <CheckCircle2 size={55} />
-                    <span className="lr-eyebrow">CONTRACT ACCEPTED</span>
+                    <span className="lr-eyebrow">
+                      {tr("CONTRACT ACCEPTED")}
+                    </span>
                     <h1>
-                      You’re ready
+                      {tr("You’re ready")}
                       <br />
-                      <em>for the bank.</em>
+                      <em>{tr("for the bank.")}</em>
                     </h1>
                     <p>
-                      The owner will open banking for everyone once all students
-                      have accepted.
+                      {tr(
+                        "The owner will open banking for everyone once all students have accepted.",
+                      )}
                     </p>
                     <Pill>
-                      {accepted} / {data.players.length} contracts accepted
+                      {accepted}
+                      {tr(" / ")}
+                      {data.players.length}
+                      {tr(" contracts accepted")}
                     </Pill>
                   </section>
                 ) : (
@@ -1553,10 +1744,11 @@ export default function LaunchGame({
               ) : (
                 <section className="lr-wait">
                   <Lock size={44} />
-                  <h2>The round has started.</h2>
+                  <h2>{tr("The round has started.")}</h2>
                   <p>
-                    You are not on this round’s roster. Join the next lobby when
-                    the owner opens it.
+                    {tr(
+                      "You are not on this round’s roster. Join the next lobby when the owner opens it.",
+                    )}
                   </p>
                   {button("Return to AFA Bank", onExit, "ghost")}
                 </section>
@@ -1569,27 +1761,30 @@ export default function LaunchGame({
                   <div className="lr-page-heading">
                     <div>
                       <span className="lr-eyebrow">
-                        AFA BANK / ROUND ACCOUNT
+                        {tr("AFA BANK / ROUND ACCOUNT")}
                       </span>
                       <h1>
-                        Your bank.
+                        {tr("Your bank.")}
                         <br />
-                        <em>Your next move.</em>
+                        <em>{tr("Your next move.")}</em>
                       </h1>
                       <p>
-                        Personal round balance · {p.team.toUpperCase()} TEAM
+                        {tr("Personal round balance · ")}
+                        {tr(p.team).toUpperCase()}
+                        {tr(" TEAM")}
                       </p>
                     </div>
                     {caseOpen && (
                       <Pill tone="warning">
-                        <ShieldAlert size={14} /> INCIDENT ACTIVE
+                        <ShieldAlert size={14} />
+                        {tr(" INCIDENT ACTIVE")}
                       </Pill>
                     )}
                   </div>
                   <div className="lr-bank-grid">
                     <section className="lr-balance">
                       <span className="lr-eyebrow">
-                        CURRENT BALANCE / DEMO ALL
+                        {tr("CURRENT BALANCE / DEMO ALL")}
                       </span>
                       <motion.div
                         className="lr-money"
@@ -1598,12 +1793,12 @@ export default function LaunchGame({
                         animate={{ opacity: 1 }}
                       >
                         {money(data.wallet?.balance || 0)}
-                        <span>ALL</span>
+                        <span>{tr("ALL")}</span>
                       </motion.div>
                       {caseOpen && (
                         <span className="lr-negative">
-                          −10,000.00 ALL incident debit ·{" "}
-                          {r.incident_ref || "See ledger reference"}
+                          {tr("−10,000.00 ALL incident debit ·")}{" "}
+                          {r.incident_ref || tr("See ledger reference")}
                         </span>
                       )}
                       <div className="lr-bank-actions">
@@ -1622,12 +1817,12 @@ export default function LaunchGame({
                       </div>
                       <div className="lr-iban">
                         <span>
-                          <small>YOUR SIMULATED IBAN</small>
+                          <small>{tr("YOUR SIMULATED IBAN")}</small>
                           <code>{data.wallet?.iban}</code>
                         </span>
                         <button
                           className="lr-icon"
-                          aria-label="Copy Demo IBAN"
+                          aria-label={tr("Copy Demo IBAN")}
                           onClick={async () => {
                             try {
                               await navigator.clipboard.writeText(
@@ -1646,16 +1841,16 @@ export default function LaunchGame({
                     <section className="lr-metal-card">
                       <div>
                         <Brand />
-                        <small>VIRTUAL DEBIT</small>
+                        <small>{tr("VIRTUAL DEBIT")}</small>
                       </div>
                       <span className="lr-chip">
                         <i />
                         <i />
                         <i />
                       </span>
-                      <strong>••••　••••　••••　2048</strong>
+                      <strong>{tr("••••　••••　••••　2048")}</strong>
                       <span>{user.name.toUpperCase()}</span>
-                      <small>ACADEMIC EDITION / ROUND 01</small>
+                      <small>{tr("ACADEMIC EDITION / ROUND 01")}</small>
                       <i className="lr-card-shine" />
                     </section>
                   </div>
@@ -1664,11 +1859,12 @@ export default function LaunchGame({
                       <ShieldAlert size={24} />
                       <div>
                         <strong>
-                          10,000 DEMO ALL moved to AnOnYmOuS-RuSsIa.
+                          {tr("10,000 DEMO ALL moved to AnOnYmOuS-RuSsIa.")}
                         </strong>
                         <p>
-                          Find the mechanism. Follow the records. Submit your
-                          team’s conclusion.
+                          {tr(
+                            "Find the mechanism. Follow the records. Submit your team’s conclusion.",
+                          )}
                         </p>
                       </div>
                       {button(
@@ -1680,9 +1876,9 @@ export default function LaunchGame({
                   )}
                   <section className="lr-panel">
                     <div className="lr-title-row">
-                      <h2>Account activity</h2>
+                      <h2>{tr("Account activity")}</h2>
                       <span className="lr-eyebrow">
-                        ROUND LEDGER / EXACT VALUES
+                        {tr("ROUND LEDGER / EXACT VALUES")}
                       </span>
                     </div>
                     {data.transactions.map((t: Row) => (
@@ -1692,8 +1888,13 @@ export default function LaunchGame({
                         onClick={() => {
                           if (t.batch_ref) {
                             navigate("investigation");
-                            setFilter("transactions");
-                            setSearch(t.id.slice(0, 8));
+                            setSelectedEvidence(
+                              evidence.find(
+                                (record: Row) =>
+                                  record.category === "transactions" &&
+                                  record.body.includes(t.id),
+                              )?.ref || "",
+                            );
                           } else setNotice("Transaction reference: " + t.id);
                         }}
                       >
@@ -1708,7 +1909,7 @@ export default function LaunchGame({
                         <span>
                           <strong>
                             {t.kind === "allocation"
-                              ? "Level 1 starting allocation"
+                              ? tr("Level 1 starting allocation")
                               : t.recipient === data.wallet.id
                                 ? "From " + t.sender_name
                                 : "To " + t.recipient_name}
@@ -1723,8 +1924,9 @@ export default function LaunchGame({
                               : "lr-negative"
                           }
                         >
-                          {t.recipient === data.wallet.id ? "+" : "−"}
-                          {money(t.amount)} ALL
+                          {t.recipient === data.wallet.id ? "+" : tr("−")}
+                          {money(t.amount)}
+                          {tr(" ALL")}
                         </strong>
                         {t.batch_ref && <ChevronRight size={18} />}
                       </button>
@@ -1732,33 +1934,39 @@ export default function LaunchGame({
                   </section>
                   <p className="lr-footnote">
                     <Shield size={16} />
-                    Round money is separate from your ordinary bank. All case
-                    authentication records are fictional.
+                    {tr(
+                      "Round money is separate from your ordinary bank. All case authentication records are fictional.",
+                    )}
                   </p>
                 </>
               )}
-            {tab === "overview" && !manager && r.stage !== "lobby" && !p && (
-              <section className="lr-wait">
-                <Lock size={44} />
-                <h2>Roster locked.</h2>
-                <p>
-                  This round is already underway. The next lobby will appear
-                  when the owner opens it.
-                </p>
-                {button("Return to AFA LAUNCH", onExit, "ghost")}
-              </section>
-            )}
+            {tab === "overview" &&
+              !manager &&
+              !["lobby", "contract"].includes(r.stage) &&
+              !p && (
+                <section className="lr-wait">
+                  <Lock size={44} />
+                  <h2>{tr("Roster locked.")}</h2>
+                  <p>
+                    {tr(
+                      "This round is already underway. The next lobby will appear when the owner opens it.",
+                    )}
+                  </p>
+                  {button("Return to AFA LAUNCH", onExit, "ghost")}
+                </section>
+              )}
             {tab === "overview" && !manager && r.stage === "completed" && p && (
               <section className="lr-wait">
                 <Trophy size={55} />
                 <h1>
-                  Level 1<br />
-                  <em>complete.</em>
+                  {tr("Level 1")}
+                  <br />
+                  <em>{tr("complete.")}</em>
                 </h1>
                 <p>
                   {data.verdict
-                    ? "The owner has published the assessment and debrief."
-                    : "This round ended without a verdict."}
+                    ? tr("The owner has published the assessment and debrief.")
+                    : tr("This round ended without a verdict.")}
                 </p>
                 {button(
                   "Open the debrief",
@@ -1768,219 +1976,54 @@ export default function LaunchGame({
               </section>
             )}
             {tab === "investigation" && canInvestigate && (
-              <>
-                <div className="lr-page-heading">
-                  <div>
-                    <span className={"lr-eyebrow " + p?.team}>
-                      {p ? p.team.toUpperCase() + " TEAM /" : "OWNER /"}{" "}
-                      PREPARED FORENSIC CASE
-                    </span>
-                    <h1>
-                      {p?.team === "red" ? "Reconstruct" : "Follow"}
-                      <br />
-                      <em>
-                        {p?.team === "red" ? "the breach." : "the evidence."}
-                      </em>
-                    </h1>
-                    <p>
-                      Correlate records. Establish the mechanism. Prove your
-                      conclusion.
-                    </p>
-                  </div>
-                  <div className="lr-timer">
-                    <Clock size={16} />
-                    <strong>{elapsedLabel}</strong>
-                    <small>ELAPSED SINCE INCIDENT</small>
-                  </div>
-                </div>
-                <div className="lr-evidence-notice">
-                  <Shield size={16} />
-                  <span>
-                    Authentication and code artifacts are fabricated for this
-                    case. Transfer records reference the actual virtual round
-                    ledger. No passwords or usable credentials are exposed.
-                  </span>
-                </div>
-                <div className="lr-investigation-grid">
-                  <aside className="lr-panel lr-categories">
-                    <span className="lr-eyebrow">CASE NAVIGATION</span>
-                    {[
-                      "all",
-                      "transactions",
-                      "authentication",
-                      "requests",
-                      "code",
-                      "policy",
-                    ].map((v) => (
-                      <button
-                        key={v}
-                        className={filter === v ? "active" : ""}
-                        onClick={() => {
-                          setFilter(v);
-                          setSearch("");
-                        }}
-                      >
-                        <span>
-                          {v === "all"
-                            ? "All evidence"
-                            : v.charAt(0).toUpperCase() + v.slice(1)}
-                        </span>
-                        <small>
-                          {v === "all"
-                            ? evidence.length
-                            : evidence.filter((e: Row) => e.category === v)
-                                .length}
-                        </small>
-                      </button>
-                    ))}
-                    <div className="lr-evidence-count">
-                      <Pin size={22} />
-                      <strong>{data.pins.length}</strong>
-                      <small>TEAM REFERENCES PINNED</small>
-                    </div>
-                  </aside>
-                  <section className="lr-panel lr-evidence-browser">
-                    <div className="lr-search">
-                      <Search size={17} />
-                      <input
-                        aria-label="Search case evidence"
-                        placeholder="Search reference, event, request ID, Demo IBAN…"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
-                    </div>
-                    <div className="lr-record-list">
-                      {evidence
-                        .filter(
-                          (v: Row) =>
-                            (filter === "all" || v.category === filter) &&
-                            JSON.stringify(v)
-                              .toLowerCase()
-                              .includes(search.toLowerCase()),
-                        )
-                        .map((v: Row) => (
-                          <button
-                            key={v.ref}
-                            className={
-                              selected?.ref === v.ref ? "selected" : ""
-                            }
-                            onClick={() => setSelectedEvidence(v.ref)}
-                          >
-                            <span className="lr-record-ref">{v.ref}</span>
-                            <span>
-                              {v.title}
-                              <small>{v.category}</small>
-                            </span>
-                            <time>{date(v.occurred_at)}</time>
-                            <ChevronRight size={15} />
-                          </button>
-                        ))}
-                    </div>
-                    {selected && (
-                      <div className="lr-record-detail">
-                        <div className="lr-title-row">
-                          <div>
-                            <Pill>{selected.category}</Pill>
-                            <h2>{selected.title}</h2>
-                            <code>{selected.ref}</code>
-                          </div>
-                          {p &&
-                            button(
-                              data.pins.some((v: Row) => v.ref === selected.ref)
-                                ? "Pinned to team"
-                                : "Pin evidence",
-                              () => act("pin", { ref: selected.ref }),
-                              "ghost",
-                              r.stage !== "investigation" ||
-                                data.pins.some(
-                                  (v: Row) => v.ref === selected.ref,
-                                ),
-                            )}
-                        </div>
-                        <dl className="lr-record-fields">
-                          {Object.entries(JSON.parse(selected.body)).map(
-                            ([key, value]) => (
-                              <div key={key}>
-                                <dt>{key.replaceAll("_", " ")}</dt>
-                                <dd>
-                                  {key === "code" ? (
-                                    <pre>{String(value)}</pre>
-                                  ) : (
-                                    String(value ?? "—")
-                                  )}
-                                </dd>
-                              </div>
-                            ),
-                          )}
-                        </dl>
-                      </div>
-                    )}
-                  </section>
-                  <aside className="lr-panel lr-investigation-help">
-                    <span className="lr-eyebrow">INVESTIGATION METHOD</span>
-                    <h3>Build the chain.</h3>
-                    <ol>
-                      <li>Start with the affected transaction.</li>
-                      <li>Find its batch and request references.</li>
-                      <li>Correlate the service’s authentication events.</li>
-                      <li>
-                        Compare timestamps with supplied service behavior.
-                      </li>
-                      <li>Support your conclusion with references.</li>
-                    </ol>
-                    <div className="lr-locked-level">
-                      <FileText size={20} />
-                      <div>
-                        Evidence-based report
-                        <small>Root cause · timeline · remediation</small>
-                      </div>
-                    </div>
-                    {p &&
-                      button(
-                        "Open team notebook",
-                        () => navigate("evidence"),
-                        "ghost",
-                      )}
-                    {owner && (
-                      <details className="lr-answer-key">
-                        <summary>Owner answer key</summary>
-                        <p>{data.answerKey?.mechanism}</p>
-                        <small>
-                          Required evidence:{" "}
-                          {data.answerKey?.requiredEvidence.join(", ")}
-                        </small>
-                      </details>
-                    )}
-                  </aside>
-                </div>
-              </>
+              <InvestigationWorkspace
+                records={evidence}
+                pins={data.pins}
+                selectedRef={selectedEvidence}
+                onSelect={setSelectedEvidence}
+                onPin={(ref) => act("pin", { ref })}
+                onNotebook={() => navigate("evidence")}
+                onReport={() => navigate("reports")}
+                canEdit={r.stage === "investigation"}
+                busy={busy}
+                team={p?.team}
+                elapsed={elapsedLabel}
+                answerKey={owner ? data.answerKey : null}
+              />
             )}
             {tab === "evidence" && p && caseOpen && (
               <>
                 <div className="lr-page-heading">
                   <div>
                     <span className="lr-eyebrow">
-                      PRIVATE TO {p.team.toUpperCase()} TEAM
+                      {tr("PRIVATE TO ")}
+                      {tr(p.team).toUpperCase()}
+                      {tr(" TEAM")}
                     </span>
                     <h1>
-                      Turn records
+                      {tr("Turn records")}
                       <br />
-                      <em>into evidence.</em>
+                      <em>{tr("into evidence.")}</em>
                     </h1>
                     <p>
-                      Your team’s pinned references and shared investigation
-                      notebook.
+                      {tr(
+                        "Your team’s pinned references and shared investigation notebook.",
+                      )}
                     </p>
                   </div>
-                  <Pill tone={p.team}>{p.team.toUpperCase()} TEAM</Pill>
+                  <Pill tone={p.team}>
+                    {tr(p.team).toUpperCase()}
+                    {tr(" TEAM")}
+                  </Pill>
                 </div>
                 <div className="lr-notebook-grid">
                   <section className="lr-panel">
-                    <h2>Pinned evidence</h2>
+                    <h2>{tr("Pinned evidence")}</h2>
                     {!data.pins.length && (
                       <p>
-                        Open the investigation and pin the records that support
-                        your hypothesis.
+                        {tr(
+                          "Open the investigation and pin the records that support your hypothesis.",
+                        )}
                       </p>
                     )}
                     {data.pins.map((pin: Row) => {
@@ -2010,7 +2053,7 @@ export default function LaunchGame({
                     )}
                   </section>
                   <section className="lr-panel">
-                    <h2>Team notebook</h2>
+                    <h2>{tr("Team notebook")}</h2>
                     {r.stage === "investigation" && (
                       <form
                         onSubmit={async (e) => {
@@ -2024,11 +2067,14 @@ export default function LaunchGame({
                       >
                         <Area
                           name="body"
-                          label="Observation, hypothesis or question (no real credentials)"
+                          label={tr(
+                            "Observation, hypothesis or question (no real credentials)",
+                          )}
                           maxLength={3000}
                         />
                         <button className="lr-button primary" disabled={busy}>
-                          Share with team <Send size={16} />
+                          {tr("Share with team ")}
+                          <Send size={16} />
                         </button>
                       </form>
                     )}
@@ -2052,11 +2098,13 @@ export default function LaunchGame({
               <>
                 {r.stage === "completed" ? (
                   <section className="lr-verdict">
-                    <span className="lr-eyebrow">LEVEL 01 / DEBRIEF</span>
+                    <span className="lr-eyebrow">
+                      {tr("LEVEL 01 / DEBRIEF")}
+                    </span>
                     <h1>
-                      Evidence decides
+                      {tr("Evidence decides")}
                       <br />
-                      <em>the outcome.</em>
+                      <em>{tr("the outcome.")}</em>
                     </h1>
                     {data.verdict ? (
                       <>
@@ -2064,21 +2112,22 @@ export default function LaunchGame({
                           <Trophy size={26} />
                           <span>
                             {data.verdict.winner === "draw"
-                              ? "A DRAW"
+                              ? tr("A DRAW")
                               : data.verdict.winner.toUpperCase() +
                                 " TEAM WINS"}
                           </span>
-                          <Pill>OWNER VERIFIED</Pill>
+                          <Pill>{tr("OWNER VERIFIED")}</Pill>
                         </div>
                         <div className="lr-report-compare">
                           {["red", "blue"].map((t) => (
                             <article className={"lr-panel " + t} key={t}>
                               <span className={"lr-eyebrow " + t}>
-                                {t.toUpperCase()} TEAM
+                                {tr(t).toUpperCase()}
+                                {tr(" TEAM")}
                               </span>
                               <div className="lr-score">
                                 {data.verdict.grades[t].total}
-                                <span>/100</span>
+                                <span>{tr("/100")}</span>
                               </div>
                               {[
                                 ["root", "Root cause", 35],
@@ -2088,7 +2137,7 @@ export default function LaunchGame({
                                 ["time", "Valid report timing", 5],
                               ].map(([key, label, max]) => (
                                 <div className="lr-grade-row" key={String(key)}>
-                                  <span>{label}</span>
+                                  <span>{tr(String(label))}</span>
                                   <div>
                                     <i
                                       style={{
@@ -2101,7 +2150,9 @@ export default function LaunchGame({
                                     />
                                   </div>
                                   <b>
-                                    {data.verdict.grades[t][key]} / {max}
+                                    {data.verdict.grades[t][key]}
+                                    {tr(" / ")}
+                                    {max}
                                   </b>
                                 </div>
                               ))}
@@ -2109,20 +2160,22 @@ export default function LaunchGame({
                           ))}
                         </div>
                         <section className="lr-panel">
-                          <span className="lr-eyebrow">INSTRUCTOR VERDICT</span>
+                          <span className="lr-eyebrow">
+                            {tr("INSTRUCTOR VERDICT")}
+                          </span>
                           <h2>{data.verdict.reason}</h2>
                           <small>
-                            {fullDate(data.verdict.created_at)} · decision
-                            recorded
+                            {fullDate(data.verdict.created_at)}
+                            {tr(" · decision recorded")}
                           </small>
                         </section>
                         <section className="lr-panel lr-debrief-answer">
                           <Fingerprint size={32} />
                           <div>
-                            <h2>What happened?</h2>
+                            <h2>{tr("What happened?")}</h2>
                             <p>{data.debrief?.mechanism}</p>
                             <p>
-                              <strong>The lesson:</strong>{" "}
+                              <strong>{tr("The lesson:")}</strong>{" "}
                               {data.debrief?.lesson}
                             </p>
                             <div className="lr-evidence-chips">
@@ -2144,18 +2197,22 @@ export default function LaunchGame({
                       </>
                     ) : (
                       <p>
-                        This round was closed without a verdict. Its records are
-                        preserved.
+                        {tr(
+                          "This round was closed without a verdict. Its records are preserved.",
+                        )}
                       </p>
                     )}
                     <section className="lr-next-level">
                       <Lock size={32} />
                       <div>
-                        <span className="lr-eyebrow">LEVEL 02 / LOCKED</span>
-                        <h2>Containment starts next.</h2>
+                        <span className="lr-eyebrow">
+                          {tr("LEVEL 02 / LOCKED")}
+                        </span>
+                        <h2>{tr("Containment starts next.")}</h2>
                         <p>
-                          Awaiting the next briefing. No Level 2 gameplay is
-                          enabled yet.
+                          {tr(
+                            "Awaiting the next briefing. No Level 2 gameplay is enabled yet.",
+                          )}
                         </p>
                       </div>
                     </section>
@@ -2166,22 +2223,23 @@ export default function LaunchGame({
                     <div className="lr-page-heading">
                       <div>
                         <span className="lr-eyebrow">
-                          OWNER REVIEW / PRIVATE REPORTS
+                          {tr("OWNER REVIEW / PRIVATE REPORTS")}
                         </span>
                         <h1>
-                          Show the work.
+                          {tr("Show the work.")}
                           <br />
-                          <em>Judge the evidence.</em>
+                          <em>{tr("Judge the evidence.")}</em>
                         </h1>
                         <p>
-                          Latest team reports are shown below. Revisions retain
-                          server timestamps.
+                          {tr(
+                            "Latest team reports are shown below. Revisions retain server timestamps.",
+                          )}
                         </p>
                       </div>
                       <Pill>
                         {r.stage === "review"
-                          ? "REPORTS FROZEN"
-                          : "SUBMISSIONS OPEN"}
+                          ? tr("REPORTS FROZEN")
+                          : tr("SUBMISSIONS OPEN")}
                       </Pill>
                     </div>
                     <div className="lr-report-compare">
@@ -2190,16 +2248,22 @@ export default function LaunchGame({
                         return (
                           <article className="lr-panel" key={t}>
                             <TeamEmblem team={t} />
-                            <h2>{t.toUpperCase()} TEAM</h2>
+                            <h2>
+                              {tr(t).toUpperCase()}
+                              {tr(" TEAM")}
+                            </h2>
                             {report ? (
                               <>
                                 <small>
-                                  Submitted {fullDate(report.submitted_at)}
+                                  {tr("Submitted ")}
+                                  {fullDate(report.submitted_at)}
                                 </small>
                                 {Object.entries(report.payload).map(
                                   ([key, value]) => (
                                     <div className="lr-report-field" key={key}>
-                                      <span>{key.replaceAll("_", " ")}</span>
+                                      <span>
+                                        {tr(key.replaceAll("_", " "))}
+                                      </span>
                                       <p>
                                         {Array.isArray(value)
                                           ? value.join(" · ")
@@ -2210,7 +2274,7 @@ export default function LaunchGame({
                                 )}
                               </>
                             ) : (
-                              <p>No report submitted.</p>
+                              <p>{tr("No report submitted.")}</p>
                             )}
                           </article>
                         );
@@ -2254,17 +2318,19 @@ export default function LaunchGame({
                           );
                         }}
                       >
-                        <h2>Assessment rubric</h2>
+                        <h2>{tr("Assessment rubric")}</h2>
                         <p>
-                          Server-calculated timing bonus: fastest report with
-                          root-cause ≥25 and evidence ≥20 receives 5; another
-                          valid report receives 3. An invalid report receives no
-                          timing bonus.
+                          {tr(
+                            "Server-calculated timing bonus: fastest report with root-cause ≥25 and evidence ≥20 receives 5; another valid report receives 3. An invalid report receives no timing bonus.",
+                          )}
                         </p>
                         <div className="lr-report-compare">
                           {["red", "blue"].map((t) => (
                             <fieldset key={t}>
-                              <legend>{t.toUpperCase()} TEAM</legend>
+                              <legend>
+                                {tr(t).toUpperCase()}
+                                {tr(" TEAM")}
+                              </legend>
                               {[
                                 ["root", "Root cause (0–35)"],
                                 ["evidence", "Evidence (0–30)"],
@@ -2274,7 +2340,7 @@ export default function LaunchGame({
                                 <Field
                                   key={key}
                                   name={t + "_" + key}
-                                  label={label}
+                                  label={tr(label)}
                                   type="number"
                                   defaultValue={0}
                                 />
@@ -2283,24 +2349,27 @@ export default function LaunchGame({
                           ))}
                         </div>
                         <label className="lr-field">
-                          Winner
+                          {tr("Winner")}
                           <select name="winner">
-                            <option value="red">Red Team</option>
-                            <option value="blue">Blue Team</option>
-                            <option value="draw">Draw</option>
+                            <option value="red">{tr("Red Team")}</option>
+                            <option value="blue">{tr("Blue Team")}</option>
+                            <option value="draw">{tr("Draw")}</option>
                           </select>
                         </label>
                         <Area
                           name="reason"
-                          label="Academic verdict and supporting reasoning (at least 30 characters)"
+                          label={tr(
+                            "Academic verdict and supporting reasoning (at least 30 characters)",
+                          )}
                         />
                         <label className="lr-check">
                           <input type="checkbox" name="override" />
-                          The stated reason explains an override of the rubric
-                          totals.
+                          {tr(
+                            "The stated reason explains an override of the rubric totals.",
+                          )}
                         </label>
                         <button className="lr-button primary" disabled={busy}>
-                          Publish verdict & complete Level 1{" "}
+                          {tr("Publish verdict & complete Level 1")}{" "}
                           <Trophy size={18} />
                         </button>
                       </form>
@@ -2311,28 +2380,35 @@ export default function LaunchGame({
                     <div className="lr-page-heading">
                       <div>
                         <span className={"lr-eyebrow " + p?.team}>
-                          {p?.team.toUpperCase()} TEAM / FINAL REPORT
+                          {p?.team ? tr(p.team).toUpperCase() : ""}
+                          {tr(" TEAM / FINAL REPORT")}
                         </span>
                         <h1>
-                          Make your
+                          {tr("Make your")}
                           <br />
-                          <em>case.</em>
+                          <em>{tr("case.")}</em>
                         </h1>
-                        <p>A conclusion is only as strong as its evidence.</p>
+                        <p>
+                          {tr(
+                            "A conclusion is only as strong as its evidence.",
+                          )}
+                        </p>
                       </div>
                       <Pill>
                         {r.stage === "review"
-                          ? "FROZEN FOR OWNER REVIEW"
-                          : "TEAM SUBMISSION"}
+                          ? tr("FROZEN FOR OWNER REVIEW")
+                          : tr("TEAM SUBMISSION")}
                       </Pill>
                     </div>
                     {ownReport && (
                       <div className="lr-report-receipt">
                         <CheckCircle2 size={22} />
                         <div>
-                          <strong>Report received</strong>
+                          <strong>{tr("Report received")}</strong>
                           <small>
-                            {fullDate(ownReport.submitted_at)} · {ownReport.id}
+                            {fullDate(ownReport.submitted_at)}
+                            {tr(" · ")}
+                            {ownReport.id}
                           </small>
                         </div>
                       </div>
@@ -2359,25 +2435,36 @@ export default function LaunchGame({
                           );
                         }}
                       >
+                        <div className="report-writing-guide">
+                          <BookOpen size={23} />
+                          <div>
+                            <h2>{tr("Write an explanation, not a guess")}</h2>
+                            <p>
+                              {tr(
+                                "Use the record references in every part: recipient → request/service → authorization → failed check. Then explain the timeline and a concrete prevention. Three relevant pinned records are the minimum; the instructor checks your reasoning.",
+                              )}
+                            </p>
+                          </div>
+                        </div>
                         <div className="lr-form-grid">
                           <Field
                             name="beneficiary"
-                            label="Who received the money?"
+                            label={tr("Who received the money?")}
                             defaultValue={ownReport?.payload.beneficiary}
                           />
                           <Field
                             name="service"
-                            label="Which service executed the transfers?"
+                            label={tr("Which service executed the transfers?")}
                             defaultValue={ownReport?.payload.service}
                           />
                           <Field
                             name="credential"
-                            label="Which credential reference was used?"
+                            label={tr("Which credential reference was used?")}
                             defaultValue={ownReport?.payload.credential}
                           />
                           <div>
                             <span className="lr-eyebrow">
-                              ATTACHED TEAM EVIDENCE / MINIMUM 3
+                              {tr("ATTACHED TEAM EVIDENCE / MINIMUM 3")}
                             </span>
                             <div className="lr-evidence-chips">
                               {data.pins.map((v: Row) => (
@@ -2385,23 +2472,29 @@ export default function LaunchGame({
                               ))}
                             </div>
                             {!data.pins.length && (
-                              <p>Pin relevant case records first.</p>
+                              <p>{tr("Pin relevant case records first.")}</p>
                             )}
                           </div>
                         </div>
                         <Area
                           name="root_cause"
-                          label="Explain the failed control and why the transfer was accepted"
+                          label={tr(
+                            "Explain the failed control and why the transfer was accepted",
+                          )}
                           defaultValue={ownReport?.payload.root_cause}
                         />
                         <Area
                           name="timeline"
-                          label="Reconstruct the timeline with record references"
+                          label={tr(
+                            "Reconstruct the timeline with record references",
+                          )}
                           defaultValue={ownReport?.payload.timeline}
                         />
                         <Area
                           name="remediation"
-                          label="Which technical changes would prevent recurrence?"
+                          label={tr(
+                            "Which technical changes would prevent recurrence?",
+                          )}
                           maxLength={1500}
                           defaultValue={ownReport?.payload.remediation}
                         />
@@ -2409,7 +2502,8 @@ export default function LaunchGame({
                           className="lr-button primary"
                           disabled={busy || data.pins.length < 3}
                         >
-                          Submit evidence-backed report <ArrowRight size={18} />
+                          {tr("Submit evidence-backed report ")}
+                          <ArrowRight size={18} />
                         </button>
                       </form>
                     ) : ownReport ? (
@@ -2417,7 +2511,7 @@ export default function LaunchGame({
                         {Object.entries(ownReport.payload).map(
                           ([key, value]) => (
                             <div className="lr-report-field" key={key}>
-                              <span>{key.replaceAll("_", " ")}</span>
+                              <span>{tr(key.replaceAll("_", " "))}</span>
                               <p>
                                 {Array.isArray(value)
                                   ? value.join(" · ")
@@ -2429,8 +2523,9 @@ export default function LaunchGame({
                       </section>
                     ) : (
                       <p>
-                        Your team has no submitted report. Submissions are now
-                        closed.
+                        {tr(
+                          "Your team has no submitted report. Submissions are now closed.",
+                        )}
                       </p>
                     )}
                   </>
@@ -2442,6 +2537,7 @@ export default function LaunchGame({
       </motion.main>
       {transfer && r && (
         <RoundTransfer
+          balance={data.wallet?.balance || 0}
           id={r.id}
           busy={busy}
           act={act}
@@ -2459,30 +2555,32 @@ export default function LaunchGame({
           <section className="lr-briefing">
             <span className="lr-eyebrow warning">
               <i />
-              UNAUTHORIZED TRANSFER / LEVEL 01
+              {tr("UNAUTHORIZED TRANSFER / LEVEL 01")}
             </span>
             <h2 id="lr-brief-title">
-              Your balance
+              {tr("Your balance")}
               <br />
-              has changed.
+              {tr("has changed.")}
             </h2>
             <p>
-              <strong>10,000 DEMO ALL</strong> was transferred to{" "}
-              <strong>AnOnYmOuS-RuSsIa.</strong>
+              <strong>{tr("10,000 DEMO ALL")}</strong>
+              {tr(" was transferred to")}{" "}
+              <strong>{tr("AnOnYmOuS-RuSsIa.")}</strong>
             </p>
             <div className="lr-brief-ref">
               <span>
-                <small>BATCH REFERENCE</small>
-                <code>{r.incident_ref || "See ledger reference"}</code>
+                <small>{tr("BATCH REFERENCE")}</small>
+                <code>{r.incident_ref || tr("See ledger reference")}</code>
               </span>
               <span>
-                <small>INCIDENT TIME</small>
+                <small>{tr("INCIDENT TIME")}</small>
                 <code>{date(r.incident_at)}</code>
               </span>
             </div>
             <p>
-              Find the mechanism. Follow the evidence. Submit your team’s
-              report.
+              {tr(
+                "Find the mechanism. Follow the evidence. Submit your team’s report.",
+              )}
             </p>
             <button
               className="lr-button primary"
@@ -2491,12 +2589,13 @@ export default function LaunchGame({
                 navigate("investigation");
               }}
             >
-              Open investigation <ArrowRight size={17} />
+              {tr("Open investigation ")}
+              <ArrowRight size={17} />
             </button>
             <button className="lr-link" onClick={closeBrief}>
-              Review my bank account
+              {tr("Review my bank account")}
             </button>
-            <small>Supervised exercise · no real money.</small>
+            <small>{tr("Supervised exercise · no real money.")}</small>
           </section>
         </div>
       )}
@@ -2526,9 +2625,9 @@ export default function LaunchGame({
           }}
         >
           <section>
-            <span className="lr-eyebrow">CONFIRM DIRECTOR ACTION</span>
-            <h2 id="lr-confirm-title">{confirm.title}</h2>
-            <p>{confirm.description}</p>
+            <span className="lr-eyebrow">{tr("CONFIRM DIRECTOR ACTION")}</span>
+            <h2 id="lr-confirm-title">{tr(confirm.title)}</h2>
+            <p>{tr(confirm.description)}</p>
             <div className="lr-confirm-actions">
               {button("Cancel", () => setConfirm(undefined), "ghost")}
               {button(

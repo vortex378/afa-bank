@@ -1,0 +1,1598 @@
+[
+  ["YOUR INVESTIGATION / LEVEL 01", "HETIMI YT / NIVELI 01"],
+  ["Find the story.", "Zbulo ngjarjen."],
+  ["Prove it.", "Mbështete me prova."],
+  [
+    "Your team lost virtual money. Follow the records to explain how it happened. Start with step 1 below.",
+    "Ekipit tuaj iu hoqën para virtuale. Ndiqni regjistrimet për të shpjeguar si ndodhi. Filloni me hapin 1 më poshtë."
+  ],
+  ["since the incident", "nga incidenti"],
+  ["Investigation guide", "Udhëzuesi i hetimit"],
+  ["Investigation steps", "Hapat e hetimit"],
+  ["Your next move", "Hapi yt i radhës"],
+  ["Step {current} of 5", "Hapi {current} nga 5"],
+  ["Follow the money", "Ndiq paratë"],
+  ["Find the request", "Gjej kërkesën"],
+  ["Check the permission", "Kontrollo lejen"],
+  ["Explain the failed control", "Shpjego kontrollin që mungoi"],
+  ["Build your conclusion", "Ndërto përfundimin"],
+  ["Open transactions", "Hap transfertat"],
+  ["Open requests", "Hap kërkesat"],
+  ["Open authentication", "Hap autorizimet"],
+  ["Compare code and policy", "Krahaso kodin me rregullat"],
+  ["Write the team report", "Shkruaj raportin e ekipit"],
+  [
+    "Find the 10,000 ALL incident transfer. Record the recipient and its batch reference.",
+    "Gjej transfertën e incidentit prej 10,000 ALL. Shëno përfituesin dhe referencën e grupit të transfertave (batch)."
+  ],
+  [
+    "Match the transfer’s batch reference to a request. Identify which service and authorization it used.",
+    "Lidh referencën e transfertës me kërkesën përkatëse. Gjej shërbimin dhe autorizimin që ajo përdori."
+  ],
+  [
+    "Open the authorization reference from the request. Compare the permissions it has with the action that occurred.",
+    "Hap referencën e autorizimit që tregohet te kërkesa. Krahaso lejet e tij me veprimin që u krye."
+  ],
+  [
+    "Compare the supplied handler with the policy. Identify the check that should have prevented the action, and cite the records.",
+    "Krahaso kodin e dhënë me rregullat. Gjej kontrollin që duhej ta ndalonte veprimin dhe cito provat përkatëse."
+  ],
+  [
+    "Use at least three relevant pinned records to explain what happened, when it happened and how to prevent it.",
+    "Përdor të paktën tri prova relevante të fiksuara për të shpjeguar çfarë ndodhi, kur ndodhi dhe si parandalohet."
+  ],
+  [
+    "The guide explains the method. Your team must interpret the evidence and write its own conclusion.",
+    "Udhëzuesi shpjegon metodën. Ekipi juaj duhet t’i interpretojë provat dhe ta shkruajë vetë përfundimin."
+  ],
+  ["EVIDENCE LIBRARY", "BIBLIOTEKA E PROVAVE"],
+  ["Evidence categories", "Kategoritë e provave"],
+  ["relevant records pinned", "prova relevante të fiksuara"],
+  [
+    "Search a reference, service, event or Demo IBAN…",
+    "Kërko një referencë, shërbim, ngjarje ose Demo IBAN…"
+  ],
+  ["{count} records", "{count} regjistrime"],
+  ["Case records", "Regjistrimet e çështjes"],
+  ["No matching records", "Nuk u gjetën regjistrime"],
+  [
+    "Try another reference or clear the search.",
+    "Provo një referencë tjetër ose pastro kërkimin."
+  ],
+  ["Show all evidence", "Shfaq të gjitha provat"],
+  ["Selected evidence", "Prova e zgjedhur"],
+  ["Copy reference", "Kopjo referencën"],
+  ["Copied", "U kopjua"],
+  [
+    "Clipboard unavailable. Select and copy the displayed reference.",
+    "Kopjimi automatik nuk është i disponueshëm. Përzgjidh dhe kopjo referencën e shfaqur."
+  ],
+  [
+    "Read the fields below. Click a linked reference to follow it to the next record.",
+    "Lexo fushat më poshtë. Shtyp një referencë të lidhur për të hapur regjistrimin përkatës."
+  ],
+  [
+    "What should you do with this record?",
+    "Çfarë duhet të bësh me këtë provë?"
+  ],
+  [
+    "Pin it if it supports your explanation. Then connect it with the next record; three arbitrary pins are not a complete investigation.",
+    "Fiksoje nëse mbështet shpjegimin tënd. Pastaj lidhe me provën tjetër; tri prova të zgjedhura rastësisht nuk përbëjnë një hetim të plotë."
+  ],
+  ["Next investigation step", "Hapi tjetër i hetimit"],
+  [
+    "Prepared authentication and code artifacts are fictional. Transfer records come from this round’s virtual ledger. No usable credentials are provided.",
+    "Autorizimet dhe kodi i përgatitur janë fiktivë. Transfertat vijnë nga regjistri virtual i këtij raundi. Nuk shfaqen kredenciale të përdorshme."
+  ],
+  ["Transaction ID", "Identifikuesi i transfertës"],
+  ["Sender Demo IBAN", "Demo IBAN-i i dërguesit"],
+  ["Transfer batch reference", "Referenca e grupit të transfertave"],
+  ["Executing service", "Shërbimi që kreu veprimin"],
+  ["Authorization reference", "Referenca e autorizimit"],
+  ["Credential reference", "Referenca e kredencialit"],
+  ["Control-change reference", "Referenca e ndryshimit të kontrollit"],
+  ["Service named in the authorization", "Shërbimi i shënuar në autorizim"],
+  ["Service required for this action", "Shërbimi i kërkuar për këtë veprim"],
+  ["Permission to debit accounts", "Leja për të hequr para nga llogaritë"],
+  ["Was the request accepted?", "A u pranua kërkesa?"],
+  ["Intended service (audience)", "Shërbimi i synuar (audience)"],
+  ["Allowed actions (scope)", "Veprimet e lejuara (scope)"],
+  ["Allowed actions (scopes)", "Veprimet e lejuara (scopes)"],
+  ["Prepared code excerpt", "Fragmenti i kodit të përgatitur"],
+  ["About this training artifact", "Rreth kësaj prove mësimore"],
+  ["Issued at", "Lëshuar më"],
+  ["Expires at", "Skadon më"],
+  ["Signature valid", "Nënshkrimi i vlefshëm"],
+  ["Credential generation", "Versioni i kredencialit"],
+  ["Current generation", "Versioni aktual"],
+  ["Token generation", "Versioni i token-it"],
+  ["Revoked", "I revokuar"],
+  ["Contains a usable secret?", "Përmban sekret të përdorshëm?"],
+  ["Event", "Ngjarja"],
+  ["Note", "Shënimi"],
+  ["Result", "Rezultati"],
+  ["Required rule", "Rregulli i kërkuar"],
+  ["Required permission", "Leja e kërkuar"],
+  ["Source", "Burimi"],
+  ["User", "Përdoruesi"],
+  ["Decision", "Vendimi"],
+  [
+    "Use this reference to connect the transfer to its request.",
+    "Përdore këtë referencë për ta lidhur transfertën me kërkesën që e shkaktoi."
+  ],
+  [
+    "Open this reference to inspect the authorization used by the request.",
+    "Hape këtë referencë për të parë autorizimin që përdori kërkesa."
+  ],
+  [
+    "This is an evidence identifier, not a password.",
+    "Ky është identifikues i një prove, jo fjalëkalim."
+  ],
+  [
+    "Audience identifies the service an authorization is intended for.",
+    "Audience tregon shërbimin për të cilin është lëshuar autorizimi."
+  ],
+  [
+    "Compare this value with the audience actually presented.",
+    "Krahasoje këtë vlerë me shërbimin e shënuar në autorizimin e paraqitur."
+  ],
+  [
+    "Scope describes permitted actions. Check whether debiting an account was allowed.",
+    "Scope tregon veprimet e lejuara. Kontrollo nëse autorizimi lejonte heqjen e parave."
+  ],
+  [
+    "Compare the recorded decision with the permissions and the policy.",
+    "Krahaso vendimin e regjistruar me lejet dhe rregullat."
+  ],
+  [
+    "Read the checks in this fictional handler and compare them with the policy. This is not the live bank source code.",
+    "Lexo kontrollet në këtë kod fiktiv dhe krahasoji me rregullat. Ky nuk është kodi i bankës që po përdor."
+  ],
+  ["Yes", "Po"],
+  ["No", "Jo"],
+  ["All evidence", "Të gjitha provat"],
+  ["Transactions", "Transfertat"],
+  ["Requests", "Kërkesat"],
+  ["Authentication", "Autorizimet"],
+  ["Code", "Kodi"],
+  ["Policy", "Rregullat"],
+  ["Settlement batch accepted", "Grupi i transfertave u pranua"],
+  ["Authorization artifact recorded", "Autorizimi i regjistruar"],
+  ["Prepared handler excerpt", "Fragmenti i kodit të shërbimit"],
+  ["Training contract excerpt", "Fragmenti i kontratës mësimore"],
+  ["Routine student login", "Hyrje e zakonshme e studentit"],
+  ["Control change recorded", "Ndryshimi i regjistruar i kontrollit"],
+  ["Live lobby", "Salla e pritjes"],
+  ["Bank contract", "Kontrata e bankës"],
+  ["Banking", "Banka"],
+  ["Investigation", "Hetimi"],
+  ["Owner review", "Vlerësimi i drejtuesit"],
+  ["Debrief", "Përfundimet"],
+  ["Lobby / Bank", "Salla / Banka"],
+  ["Team evidence", "Provat e ekipit"],
+  ["Team report", "Raporti i ekipit"],
+  ["Reports & verdict", "Raportet dhe vendimi"],
+  ["Mission Control", "Drejtimi i lojës"],
+  ["Student", "Student"],
+  ["Pin evidence", "Fikso provën"],
+  ["Pinned to team", "E fiksuar për ekipin"],
+  ["Pinned evidence", "Provat e fiksuara"],
+  ["Open team notebook", "Hap shënimet e ekipit"],
+  ["Team notebook", "Shënimet e ekipit"],
+  ["Share with team", "Ndaje me ekipin"],
+  [
+    "Observation, hypothesis or question (no real credentials)",
+    "Vëzhgim, hipotezë ose pyetje (pa kredenciale reale)"
+  ],
+  [
+    "Your team’s pinned references and shared investigation notebook.",
+    "Referencat e fiksuara dhe shënimet e përbashkëta të ekipit tuaj."
+  ],
+  [
+    "Open the investigation and pin the records that support your hypothesis.",
+    "Hap hetimin dhe fikso regjistrimet që mbështesin hipotezën tënde."
+  ],
+  ["Pin relevant case records first.", "Fikso fillimisht provat relevante."],
+  ["Required evidence:", "Provat e kërkuara:"],
+  ["Owner answer key", "Zgjidhja për owner"],
+  ["Submit evidence-backed report", "Dorëzo raportin me prova"],
+  ["Report received", "Raporti u pranua"],
+  ["Submit your team’s report?", "Ta dorëzosh raportin e ekipit?"],
+  [
+    "This report is shared with the owner. Its server submission time is recorded. A later revision replaces the assessed version.",
+    "Ky raport i dërgohet owner. Koha e dorëzimit regjistrohet në server. Një rishikim i mëvonshëm zëvendëson versionin që vlerësohet."
+  ],
+  ["Who received the money?", "Kush i mori paratë?"],
+  ["Which service executed the transfers?", "Cili shërbim i kreu transfertat?"],
+  [
+    "Which credential reference was used?",
+    "Cila referencë kredenciali u përdor?"
+  ],
+  [
+    "Explain the failed control and why the transfer was accepted",
+    "Shpjego kontrollin që dështoi dhe pse u pranua transferta"
+  ],
+  [
+    "Reconstruct the timeline with record references",
+    "Shkruaj kronologjinë duke cituar referencat e provave"
+  ],
+  [
+    "Which technical changes would prevent recurrence?",
+    "Cilat ndryshime teknike do ta parandalonin përsëritjen?"
+  ],
+  [
+    "ATTACHED TEAM EVIDENCE / MINIMUM 3",
+    "PROVAT E BASHKËNGJITURA / MINIMUMI 3"
+  ],
+  ["TEAM SUBMISSION", "DORËZIMI I EKIPIT"],
+  ["FROZEN FOR OWNER REVIEW", "I KYÇUR PËR VLERËSIMIN E OWNER"],
+  [
+    "Your team has no submitted report. Submissions are now closed.",
+    "Ekipi juaj nuk ka raport të dorëzuar. Dorëzimet janë mbyllur."
+  ],
+  ["Root cause", "Shkaku kryesor"],
+  ["Evidence", "Provat"],
+  ["Timeline", "Kronologjia"],
+  ["Remediation", "Masat parandaluese"],
+  ["Valid report timing", "Koha e raportit të vlefshëm"],
+  ["Root cause (0–35)", "Shkaku teknik (0–35)"],
+  ["Evidence (0–30)", "Provat (0–30)"],
+  ["Timeline (0–20)", "Kronologjia (0–20)"],
+  ["Remediation (0–10)", "Masat parandaluese (0–10)"],
+  ["Winner", "Fituesi"],
+  ["Draw", "Barazim"],
+  ["A DRAW", "BARAZIM"],
+  ["Red Team", "Ekipi i Kuq"],
+  ["Blue Team", "Ekipi Blu"],
+  ["Red", "Kuq"],
+  ["Blue", "Blu"],
+  ["RED", "KUQ"],
+  ["BLUE", "BLU"],
+  ["TEAM", "EKIPI"],
+  ["Team.", "Ekipi."],
+  ["Sign in", "Hyr në llogari"],
+  ["Sign out", "Dil nga llogaria"],
+  ["Request access", "Kërko akses"],
+  ["Retry", "Provo përsëri"],
+  ["Confirm", "Konfirmo"],
+  ["Cancel", "Anulo"],
+  ["Done", "U krye"],
+  ["Ready", "Gati"],
+  ["Waiting", "Në pritje"],
+  ["I am ready", "Jam gati"],
+  ["Mark not ready", "Nuk jam ende gati"],
+  ["Selected team", "Ekipi i zgjedhur"],
+  ["Join red team", "Bashkohu me ekipin e Kuq"],
+  ["Join blue team", "Bashkohu me ekipin Blu"],
+  ["You are ready.", "Je gati."],
+  ["Your team is selected.", "Ekipi yt u zgjodh."],
+  [
+    "Stay connected. The owner launches the whole room.",
+    "Qëndro i lidhur. Owner do ta nisë lojën për të gjithë."
+  ],
+  [
+    "Confirm readiness when you are ready to enter the bank.",
+    "Shtyp «Jam gati» kur të jesh gati për të hyrë në bankë."
+  ],
+  [
+    "I understand this is a supervised educational simulation with fictional money and prepared security incidents.",
+    "E kuptoj që ky është një simulim edukativ i mbikëqyrur, me para virtuale dhe incidente të përgatitura."
+  ],
+  [
+    "1. Confirm the training notice. 2. Join Red or Blue. 3. Press “I am ready”.",
+    "1. Prano njoftimin mësimor. 2. Zgjidh ekipin e Kuq ose Blu. 3. Shtyp «Jam gati»."
+  ],
+  ["Launch Level 1", "Nis nivelin 1"],
+  ["Create Level 1 lobby", "Krijo sallën për nivelin 1"],
+  ["Create a fresh Level 1 round", "Krijo një raund të ri të nivelit 1"],
+  [
+    "Maximum students per team (1–100)",
+    "Maksimumi i studentëve për ekip (1–100)"
+  ],
+  ["Launch readiness", "Gatishmëria për nisje"],
+  ["Ready to launch", "Gati për nisje"],
+  [
+    "Launch blocked — finish student setup",
+    "Nisja është bllokuar — plotësoni hapat e studentëve"
+  ],
+  [
+    "Signing in does not join a team. Each student must confirm the training notice, choose Red or Blue, then press “I am ready” in their own window.",
+    "Hyrja në llogari nuk të bashkon automatikisht me ekipin. Çdo student duhet të pranojë njoftimin, të zgjedhë ekipin dhe të shtypë «Jam gati» në dritaren e vet."
+  ],
+  ["Still needs to press “I am ready”:", "Ende duhet të shtypë «Jam gati»:"],
+  [
+    "Restore active student access before launching:",
+    "Riktheni aksesin aktiv të studentëve para nisjes:"
+  ],
+  [
+    "Requires at least one student on each team and everyone ready.",
+    "Duhet të ketë të paktën një student në secilin ekip dhe të gjithë të jenë gati."
+  ],
+  ["Bring the room online.", "Përgatit sallën për lojë."],
+  ["You control", "Ti drejton"],
+  ["the next move.", "hapin e radhës."],
+  [
+    "Coordinate the room. Release the incident. Judge the evidence.",
+    "Koordino sallën. Lësho incidentin. Vlerëso provat."
+  ],
+  [
+    "Each approved student chooses a side and confirms readiness. Starting locks the roster and broadcasts a five-second countdown.",
+    "Çdo student i miratuar zgjedh ekipin dhe konfirmon gatishmërinë. Nisja kyç listën e pjesëmarrësve dhe fillon numërimin pesësekondësh."
+  ],
+  [
+    "Launch the countdown for all enrolled students? Teams lock and every connected student moves to the bank contract.",
+    "Të nisë numërimi për të gjithë studentët e regjistruar? Ekipet kyçen dhe studentët e lidhur kalojnë te kontrata e bankës."
+  ],
+  ["Open the bank", "Hap bankën"],
+  ["The bank is waiting.", "Banka po pret."],
+  [
+    "Open round banking for all enrolled students? Each has 50,000 DEMO ALL in their separate round account.",
+    "Të hapet banka për të gjithë studentët? Secili ka 50,000 DEMO ALL në llogarinë e veçantë të raundit."
+  ],
+  [
+    "students accepted the round contract. Everyone must finish before the bank opens.",
+    "studentë pranuan kontratën e raundit. Të gjithë duhet ta përfundojnë para hapjes së bankës."
+  ],
+  ["Launch simulated transfer", "Lësho transfertën e simuluar"],
+  ["Release the incident.", "Lësho incidentin."],
+  ["Release the Level 1 incident?", "Ta lëshosh incidentin e nivelit 1?"],
+  [
+    "Only the owner can release the incident",
+    "Vetëm owner mund ta lëshojë incidentin"
+  ],
+  [
+    "One controlled event. Every eligible participant is debited once. All case evidence is published with the virtual transfers.",
+    "Një ngjarje e kontrolluar. Çdo pjesëmarrësi të vlefshëm i hiqet shuma vetëm një herë. Provat publikohen bashkë me transfertat virtuale."
+  ],
+  [
+    "A participant has less than 10,000 ALL. Resolve the round balance before releasing the incident. Nothing will be partially debited.",
+    "Një pjesëmarrës ka më pak se 10,000 ALL. Rregulloni bilancin e raundit para incidentit. Nuk do të kryhet debit i pjesshëm."
+  ],
+  [
+    "Excluded: owner, administrator, finance, unenrolled users and the beneficiary.",
+    "Përjashtohen: owner, administratori, financa, përdoruesit jashtë raundit dhe përfituesi."
+  ],
+  ["ELIGIBLE STUDENTS", "STUDENTËT E PËRFSHIRË"],
+  ["PER ACCOUNT", "PËR ÇDO LLOGARI"],
+  ["TOTAL TRANSFER", "TRANSFERTA TOTALE"],
+  ["SIMULATION BENEFICIARY / NO LOGIN", "PËRFITUESI I SIMULIMIT / PA HYRJE"],
+  ["The evidence is live.", "Hetimi është hapur."],
+  [
+    "The room is investigating. Team reports remain private until owner review. The answer is supported by correlated case records, not guesswork.",
+    "Studentët po hetojnë. Raportet e ekipeve mbeten private deri në vlerësim. Përfundimi duhet të mbështetet në lidhjen e provave, jo në hamendësime."
+  ],
+  ["No report submitted yet", "Ende pa raport të dorëzuar"],
+  ["No report submitted.", "Nuk është dorëzuar raport."],
+  ["Freeze reports & open judging", "Kyç raportet dhe hap vlerësimin"],
+  ["Open case evidence", "Hap provat e çështjes"],
+  [
+    "Freeze report submissions for both teams and open the owner review stage? Students keep read-only access to the case.",
+    "Të kyçen dorëzimet e të dy ekipeve dhe të hapet vlerësimi? Studentët do të mund vetëm t’i lexojnë provat."
+  ],
+  [
+    "Stop report revisions for both teams and open the owner assessment?",
+    "Të ndalen rishikimet e raporteve dhe të hapet vlerësimi i owner?"
+  ],
+  ["Evidence decides the outcome.", "Provat përcaktojnë rezultatin."],
+  ["Compare reports & judge", "Krahaso raportet dhe vlerëso"],
+  [
+    "Review the latest report from each team, apply the common rubric, and explain your decision. Publishing the verdict completes Level 1.",
+    "Shqyrto raportin e fundit të secilit ekip, përdor kriteret e përbashkëta dhe arsyeto vendimin. Publikimi i vendimit përfundon nivelin 1."
+  ],
+  [
+    "Publish verdict & complete Level 1",
+    "Publiko vendimin dhe përfundo nivelin 1"
+  ],
+  [
+    "Publish verdict and complete Level 1?",
+    "Ta publikosh vendimin dhe ta përfundosh nivelin 1?"
+  ],
+  [
+    "Academic verdict and supporting reasoning (at least 30 characters)",
+    "Vendimi dhe arsyetimi mbështetës (të paktën 30 karaktere)"
+  ],
+  [
+    "Latest team reports are shown below. Revisions retain server timestamps.",
+    "Më poshtë shfaqen raportet e fundit të ekipeve. Rishikimet ruajnë kohën e serverit."
+  ],
+  [
+    "Server-calculated timing bonus: fastest report with root-cause ≥25 and evidence ≥20 receives 5; another valid report receives 3. An invalid report receives no timing bonus.",
+    "Bonusi i kohës llogaritet nga serveri: raporti më i shpejtë me shkak teknik ≥25 dhe prova ≥20 merr 5 pikë; raporti tjetër i vlefshëm merr 3. Raporti i pavlefshëm nuk merr bonus kohe."
+  ],
+  [
+    "The stated reason explains an override of the rubric totals.",
+    "Arsyetimi shpjegon përzgjedhjen që ndryshon nga totali i pikëve."
+  ],
+  ["What happened?", "Çfarë ndodhi?"],
+  ["The lesson:", "Mësimi:"],
+  ["OWNER VERIFIED", "VLERËSUAR NGA OWNER"],
+  ["INSTRUCTOR VERDICT", "VENDIMI I INSTRUKTORIT"],
+  ["TEAM WINS", "EKIPI FITON"],
+  ["Evidence decides", "Provat përcaktojnë"],
+  ["the outcome.", "rezultatin."],
+  ["Level 1 complete.", "Niveli 1 përfundoi."],
+  ["Round closed.", "Raundi u mbyll."],
+  ["This round ended without a verdict.", "Ky raund u mbyll pa vendim."],
+  [
+    "This round was closed without a verdict. Its records are preserved.",
+    "Ky raund u mbyll pa vendim. Regjistrimet e tij ruhen."
+  ],
+  [
+    "This round ended without an academic verdict. Its audit history is preserved.",
+    "Ky raund u mbyll pa vlerësim akademik. Historiku i veprimeve ruhet."
+  ],
+  ["End round", "Mbyll raundin"],
+  ["End round without verdict", "Mbyll raundin pa vendim"],
+  ["End this round?", "Ta mbyllësh këtë raund?"],
+  [
+    "This preserves the ledger and closes Level 1 without a winner.",
+    "Regjistri ruhet dhe niveli 1 mbyllet pa fitues."
+  ],
+  ["Reason (at least 10 characters)", "Arsyeja (të paktën 10 karaktere)"],
+  ["Open debrief", "Hap përfundimet"],
+  ["Open the debrief", "Hap përfundimet e raundit"],
+  [
+    "The owner has published the assessment and debrief.",
+    "Owner ka publikuar vlerësimin dhe përfundimet."
+  ],
+  ["Containment starts next.", "Së shpejti, sfida e radhës."],
+  [
+    "Awaiting the next briefing. No Level 2 gameplay is enabled yet.",
+    "Në pritje të udhëzimit tjetër. Loja e nivelit 2 nuk është ende aktive."
+  ],
+  ["Bank administration", "Administrimi i bankës"],
+  ["Return to AFA LAUNCH", "Kthehu te AFA LAUNCH"],
+  ["Return to AFA Bank", "Kthehu te AFA BANK"],
+  ["Open Mission Control →", "Hap drejtimin e lojës →"],
+  ["Participants", "Pjesëmarrësit"],
+  ["No longer eligible", "Nuk ka më akses të vlefshëm"],
+  ["In bank", "Në bankë"],
+  ["Contract", "Kontrata"],
+  ["Event timeline", "Kronologjia e veprimeve"],
+  ["System", "Sistemi"],
+  [
+    "Share the bank login. Approved students will see the lobby automatically.",
+    "Ndani adresën e hyrjes. Studentët e miratuar do ta shohin automatikisht sallën."
+  ],
+  ["students online", "studentë të lidhur"],
+  ["ready to launch", "gati për nisje"],
+  ["team balance", "ndarja e ekipeve"],
+  ["enrolled students", "studentë të regjistruar"],
+  ["students enrolled", "studentë të regjistruar"],
+  ["students marked ready", "studentë të shënuar gati"],
+  ["enrolled", "të regjistruar"],
+  ["contracts accepted", "kontrata të pranuara"],
+  ["participants", "pjesëmarrës"],
+  ["Choose", "Zgjidh"],
+  ["your side.", "ekipin tënd."],
+  [
+    "One incident. Two perspectives. Prove what happened.",
+    "Një incident. Dy këndvështrime. Provo çfarë ndodhi."
+  ],
+  ["Reconstruct the attack.", "Rindërto mënyrën e sulmit."],
+  ["Investigate and defend.", "Heto dhe mbro."],
+  [
+    "Trace the entry point. Explain the failed control.",
+    "Gjej pikën hyrëse. Shpjego kontrollin që dështoi."
+  ],
+  [
+    "Correlate events. Build an evidence-backed timeline.",
+    "Lidh ngjarjet. Ndërto kronologjinë me prova."
+  ],
+  ["Waiting for owner launch", "Në pritje të nisjes nga owner"],
+  [
+    "Waiting for the owner to open Level 1",
+    "Në pritje që owner të hapë nivelin 1"
+  ],
+  [
+    "The bank will open after the owner starts the round and students accept the bank contract. Follow your team’s brief when the incident arrives.",
+    "Banka hapet pasi owner nis raundin dhe studentët pranojnë kontratën. Ndiqni udhëzimin e ekipit kur të ndodhë incidenti."
+  ],
+  ["Estimated time", "Koha e parashikuar"],
+  ["35–45 minutes", "35–45 minuta"],
+  ["Objective", "Qëllimi"],
+  ["Evidence-based investigation", "Hetim i mbështetur në prova"],
+  ["Starting allocation", "Shuma fillestare"],
+  ["Awaiting a future briefing", "Në pritje të udhëzimit të ardhshëm"],
+  ["You’re ready", "Je gati"],
+  ["for the bank.", "për bankën."],
+  [
+    "The owner will open banking for everyone once all students have accepted.",
+    "Owner do ta hapë bankën për të gjithë pasi secili student të ketë pranuar kontratën."
+  ],
+  ["The round has started.", "Raundi ka nisur."],
+  [
+    "You are not on this round’s roster. Join the next lobby when the owner opens it.",
+    "Nuk je pjesë e këtij raundi. Bashkohu me sallën tjetër kur ta hapë owner."
+  ],
+  ["Roster locked.", "Lista e pjesëmarrësve është kyçur."],
+  [
+    "This round is already underway. The next lobby will appear when the owner opens it.",
+    "Ky raund është në vazhdim. Salla tjetër do të shfaqet kur ta hapë owner."
+  ],
+  ["Your bank.", "Banka jote."],
+  ["Your next move.", "Hapi yt i radhës."],
+  ["Personal round balance ·", "Bilanci yt në raund ·"],
+  ["CURRENT BALANCE / DEMO ALL", "BILANCI AKTUAL / DEMO ALL"],
+  ["YOUR SIMULATED IBAN", "IBAN-I YT I SIMULUAR"],
+  ["Send demo money", "Dërgo para virtuale"],
+  ["Open investigation", "Hap hetimin"],
+  ["Read briefing", "Lexo udhëzimin e incidentit"],
+  ["Review my bank account", "Shiko llogarinë time"],
+  ["Account activity", "Lëvizjet e llogarisë"],
+  [
+    "Round money is separate from your ordinary bank. All case authentication records are fictional.",
+    "Paratë e raundit janë të ndara nga llogaria e zakonshme. Autorizimet e çështjes janë fiktive."
+  ],
+  ["Your balance", "Bilanci yt"],
+  ["has changed.", "ka ndryshuar."],
+  ["was transferred to", "u transferuan te"],
+  [
+    "Find the mechanism. Follow the evidence. Submit your team’s report.",
+    "Gjej mekanizmin. Ndiq provat. Dorëzo raportin e ekipit."
+  ],
+  [
+    "Find the mechanism. Follow the records. Submit your team’s conclusion.",
+    "Gjej mekanizmin. Ndiq regjistrimet. Dorëzo përfundimin e ekipit."
+  ],
+  [
+    "Supervised exercise · no real money.",
+    "Ushtrim i mbikëqyrur · pa para reale."
+  ],
+  [
+    "10,000 DEMO ALL moved to AnOnYmOuS-RuSsIa.",
+    "10,000 DEMO ALL kaluan te AnOnYmOuS-RuSsIa."
+  ],
+  ["−10,000.00 ALL incident debit ·", "−10,000.00 ALL nga incidenti ·"],
+  ["Level 1 starting allocation", "Shuma fillestare e nivelit 1"],
+  ["A connection, made simple.", "Një lidhje e thjeshtë."],
+  ["Recipient Demo IBAN", "Demo IBAN-i i përfituesit"],
+  ["Amount in DEMO ALL", "Shuma në DEMO ALL"],
+  ["Verify recipient", "Verifiko përfituesin"],
+  ["Review transfer", "Rishiko transfertën"],
+  ["Confirm demo transfer", "Konfirmo transfertën virtuale"],
+  ["Change recipient", "Ndrysho përfituesin"],
+  ["Transfer confirmed.", "Transferta u konfirmua."],
+  ["Close transfer", "Mbyll transfertën"],
+  [
+    "Enter a positive amount with up to two decimal places.",
+    "Vendos një shumë pozitive me maksimumi dy shifra dhjetore."
+  ],
+  ["To", "Për"],
+  ["From", "Nga"],
+  ["ALL sent to", "ALL u dërguan te"],
+  [
+    ". This changes only round balances.",
+    ". Kjo ndryshon vetëm bilancet e raundit."
+  ],
+  ["Copy Demo IBAN", "Kopjo Demo IBAN-in"],
+  ["Demo IBAN copied.", "Demo IBAN-i u kopjua."],
+  ["Copy the displayed Demo IBAN.", "Kopjo Demo IBAN-in e shfaqur."],
+  ["Action recorded.", "Veprimi u regjistrua."],
+  ["I agree to the Terms of Service.", "Pranoj kushtet e përdorimit."],
+  ["Next: responsibility & security", "Vazhdo: përgjegjësia dhe siguria"],
+  ["Back to page 1", "Kthehu te faqja 1"],
+  ["Accept and enter bank", "Prano kontratën dhe vazhdo"],
+  ["Before you enter", "Para se të hysh"],
+  ["the bank.", "në bankë."],
+  [
+    "Read the rules of your training account before proceeding.",
+    "Lexo rregullat e llogarisë mësimore përpara se të vazhdosh."
+  ],
+  ["01 General rules", "01 Rregullat e përgjithshme"],
+  ["02 Responsibility & security", "02 Përgjegjësia dhe siguria"],
+  ["OF 2", "NGA 2"],
+  ["1. An academic simulation", "1. Një simulim akademik"],
+  ["2. Your round account", "2. Llogaria jote e raundit"],
+  ["3. Rules of engagement", "3. Rregullat e ushtrimit"],
+  ["4. Evidence and fair play", "4. Provat dhe loja e ndershme"],
+  [
+    "5. Service limits & responsibility",
+    "5. Kufijtë e shërbimit dhe përgjegjësia"
+  ],
+  ["6. Password security", "6. Siguria e fjalëkalimit"],
+  ["7. Training records", "7. Regjistrimet mësimore"],
+  [
+    "AFA Bank is a fictional bank for supervised cybersecurity education. Every balance, Demo IBAN, transfer and incident in this round is virtual. No deposits, purchases or real financial services are provided.",
+    "AFA Bank është një bankë fiktive për mësimin e mbikëqyrur të sigurisë kibernetike. Çdo bilanc, Demo IBAN, transfertë dhe incident është virtual. Nuk ofrohen depozita, blerje ose shërbime financiare reale."
+  ],
+  [
+    "You receive 50,000 DEMO ALL for Level 1. Use Demo IBANs to transfer numbers to other enrolled students. Round money is separate from your ordinary AFA Bank balance.",
+    "Merr 50,000 DEMO ALL për nivelin 1. Përdor Demo IBAN-et për transferta virtuale te studentët e tjerë të raundit. Këto para janë të ndara nga bilanci i zakonshëm AFA Bank."
+  ],
+  [
+    "Investigate only the records and prepared artifacts supplied inside the exercise. Do not attack external systems, access other teams’ private work, or submit real passwords, tokens or personal banking data.",
+    "Heto vetëm regjistrimet dhe provat e dhëna në ushtrim. Mos sulmo sisteme të jashtme, mos hyr në punën private të ekipit tjetër dhe mos vendos fjalëkalime, token-e ose të dhëna bankare reale."
+  ],
+  [
+    "Your team must support its report with traceable evidence. The owner reviews the findings and publishes the verdict. Progress, transactions and report submission times are recorded.",
+    "Ekipi duhet ta mbështesë raportin me prova të verifikueshme. Owner shqyrton përfundimet dhe publikon vendimin. Progresi, transfertat dhe koha e dorëzimit të raporteve regjistrohen."
+  ],
+  [
+    "The next page contains responsibility, password-security and data-use terms. Read both pages before agreeing.",
+    "Faqja tjetër përmban kushtet e përgjegjësisë, sigurisë së fjalëkalimit dhe përdorimit të të dhënave. Lexoji të dyja faqet para pranimit."
+  ],
+  [
+    "This is a supervised training environment and may include fictional adverse events. Do not base real financial decisions on the simulation. These terms do not authorize unauthorized transfers or exclude obligations that cannot lawfully be excluded.",
+    "Ky është një mjedis mësimor i mbikëqyrur dhe mund të përfshijë ngjarje negative fiktive. Mos merr vendime financiare reale mbi bazën e simulimit. Këto kushte nuk lejojnë transferta të paautorizuara dhe nuk përjashtojnë detyrime që ligjërisht nuk mund të përjashtohen."
+  ],
+  [
+    "The platform stores salted password hashes, not readable passwords. A password change replaces its hash and closes existing sessions. Administrators cannot reveal your new password. Never use a real bank password here.",
+    "Platforma ruan hash-e të kripëzuara të fjalëkalimeve, jo fjalëkalime të lexueshme. Ndryshimi i fjalëkalimit zëvendëson hash-in dhe mbyll sesionet ekzistuese. Administratorët nuk mund ta shohin fjalëkalimin tënd të ri. Mos përdor këtu fjalëkalim të bankës reale."
+  ],
+  [
+    "Prepared case artifacts can illustrate a fictional legacy service behaving differently. Those artifacts are evidence for the exercise, not a description of the live authentication system.",
+    "Provat e përgatitura mund të ilustrojnë një shërbim fiktiv të vjetër që sillet ndryshe. Ato janë prova të ushtrimit dhe nuk përshkruajnë sistemin real të hyrjes në këtë aplikacion."
+  ],
+  [
+    "Your team choice, contract version, acceptance time, round transactions, evidence notes and reports are recorded for instruction and assessment. The instructor can review submitted reports. Private team notes are not shared with the opposing team.",
+    "Zgjedhja e ekipit, versioni i kontratës, koha e pranimit, transfertat, shënimet dhe raportet regjistrohen për mësim dhe vlerësim. Instruktori mund t’i shqyrtojë raportet. Shënimet private nuk ndahen me ekipin kundërshtar."
+  ],
+  [
+    "Level 1 contract · v1 · acceptance is recorded.",
+    "Kontrata e nivelit 1 · v1 · pranimi regjistrohet."
+  ],
+  ["LIVE SYNC", "SINKRONIZIM AKTIV"],
+  ["POLLING / RECONNECTING", "DUKE RILIDHUR"],
+  ["SIMULATION / NO REAL MONEY", "SIMULIM / PA PARA REALE"],
+  ["YOUR WORKSPACE", "HAPËSIRA JOTE"],
+  ["OWNER / INSTRUCTOR", "OWNER / INSTRUKTORI"],
+  ["THE SILENT TRANSFER", "TRANSFERTA E HESHTUR"],
+  ["The Silent Transfer", "Transferta e heshtur"],
+  ["LEVEL 01", "NIVELI 01"],
+  ["LEVEL 01 / DEBRIEF", "NIVELI 01 / PËRFUNDIMET"],
+  ["LEVEL 01 / TEAM SELECTION", "NIVELI 01 / ZGJEDHJA E EKIPIT"],
+  ["LEVEL 02 / LOCKED", "NIVELI 02 / I KYÇUR"],
+  ["LEVEL 02", "NIVELI 02"],
+  ["Level 1", "Niveli 1"],
+  ["Level 2", "Niveli 2"],
+  ["complete.", "përfundoi."],
+  ["MISSION CONTROL / LEVEL 01", "DREJTIMI I LOJËS / NIVELI 01"],
+  ["MISSION DOSSIER", "UDHËZIMI I MISIONIT"],
+  ["DIRECTOR ACTION", "VEPRIMI I DREJTUESIT"],
+  ["AUDITED DIRECTOR ACTIONS", "VEPRIMET E REGJISTRUARA"],
+  ["ELAPSED SINCE INCIDENT", "KOHA NGA INCIDENTI"],
+  ["CONTRACT ACCEPTED", "KONTRATA U PRANUA"],
+  ["AFA BANK / ROUND ACCOUNT", "AFA BANK / LLOGARIA E RAUNDIT"],
+  ["ROUND LEDGER / DEMO ALL", "REGJISTRI I RAUNDIT / DEMO ALL"],
+  ["ROUND LEDGER / EXACT VALUES", "REGJISTRI I RAUNDIT / VLERAT E SAKTA"],
+  ["CONFIRM VIRTUAL TRANSFER", "KONFIRMO TRANSFERTËN VIRTUALE"],
+  ["BATCH REFERENCE", "REFERENCA E GRUPIT"],
+  ["INCIDENT TIME", "KOHA E INCIDENTIT"],
+  ["INCIDENT ACTIVE", "INCIDENTI AKTIV"],
+  ["UNAUTHORIZED TRANSFER / LEVEL 01", "TRANSFERTË E PAAUTORIZUAR / NIVELI 01"],
+  ["CONFIRM DIRECTOR ACTION", "KONFIRMO VEPRIMIN E DREJTUESIT"],
+  ["TEAM REFERENCES PINNED", "REFERENCA TË FIKSUARA"],
+  ["TEAM / FINAL REPORT", "EKIPI / RAPORTI PËRFUNDIMTAR"],
+  ["OWNER REVIEW / PRIVATE REPORTS", "VLERËSIMI I OWNER / RAPORTET PRIVATE"],
+  ["PRIVATE TO", "PRIVATE PËR"],
+  ["TEAM /", "EKIPI /"],
+  ["OWNER /", "OWNER /"],
+  ["Phase 1 is launching", "Faza 1 po nis"],
+  ["AFA BANK / PREPARING ENVIRONMENT", "AFA BANK / DUKE PËRGATITUR MJEDISIN"],
+  ["LIVE DEPLOYMENT / PHASE 01", "NISJA E LOJËS / FAZA 01"],
+  ["SECONDS TO", "SEKONDA DERI TE"],
+  ["The network.", "Rrjeti."],
+  ["Now your world.", "Tani bota jote."],
+  [
+    "Connected systems assemble into AFA BANK.",
+    "Sistemet e lidhura formojnë AFA BANK."
+  ],
+  [
+    "Your contract opens when deployment completes.",
+    "Kontrata hapet sapo të përfundojë numërimi."
+  ],
+  ["01 NETWORK", "01 RRJETI"],
+  ["02 ASSEMBLY", "02 FORMIMI"],
+  ["03 AFA BANK", "03 AFA BANK"],
+  [
+    "Teams locked · virtual environment · contract acceptance required",
+    "Ekipet u kyçën · mjedis virtual · duhet pranuar kontrata"
+  ],
+  ["Connecting to Mission Control…", "Duke u lidhur me drejtimin e lojës…"],
+  ["Connecting to AFA-LAUNCH…", "Duke u lidhur me AFA-LAUNCH…"],
+  ["Opening AFA-LAUNCH…", "Duke hapur AFA-LAUNCH…"],
+  ["WELCOME TO AFA-LAUNCH", "MIRË SE ERDHE NË AFA-LAUNCH"],
+  ["The next incident", "Incidenti i radhës"],
+  ["starts with you.", "fillon me ty."],
+  [
+    "A supervised multiplayer investigation inside AFA Bank. Choose a side. Follow the evidence. Defend your conclusion.",
+    "Një hetim i mbikëqyrur me shumë lojtarë brenda AFA Bank. Zgjidh ekipin. Ndiq provat. Mbështet përfundimin tënd."
+  ],
+  ["PHASE 1 / AFA BANK", "FAZA 1 / AFA BANK"],
+  ["Await your live deployment.", "Prit nisjen e lojës."],
+  [
+    "Your instructor opens the lobby. Choose a team, get ready, then enter the bank together after launch.",
+    "Instruktori hap sallën. Zgjidh ekipin, konfirmo gatishmërinë dhe hyni së bashku në bankë pas nisjes."
+  ],
+  [
+    "Fictional accounts. Prepared case artifacts.",
+    "Llogari fiktive. Prova mësimore të përgatitura."
+  ],
+  [
+    "No real money or production secrets.",
+    "Pa para reale ose sekrete të sistemit."
+  ],
+  ["Toggle game navigation", "Hap menunë e lojës"],
+  ["Search case evidence", "Kërko në provat e çështjes"],
+  [
+    "ACADEMIC CYBER OPERATIONS / SEASON 01",
+    "USHTRIME AKADEMIKE KIBERNETIKE / SEZONI 01"
+  ],
+  ["Outthink", "Mendo përtej"],
+  ["the breach.", "sulmit."],
+  [
+    "Step inside a world built to be investigated.",
+    "Hyr në një botë të ndërtuar për t’u hetuar."
+  ],
+  [
+    "Two teams. One incident. Nothing without evidence.",
+    "Dy ekipe. Një incident. Asnjë përfundim pa prova."
+  ],
+  ["Enter the arena", "Hyr në lojë"],
+  ["Instructor approved", "Me miratimin e instruktorit"],
+  ["Entirely simulated", "Plotësisht virtual"],
+  ["OFFENSE / RED", "SULMI / KUQ"],
+  ["DEFENSE / BLUE", "MBROJTJA / BLU"],
+  ["Preview the launch", "Shiko paraprakisht nisjen"],
+  [
+    "Preview the network-to-bank transformation",
+    "Shiko shndërrimin nga rrjeti në bankë"
+  ],
+  ["VISUAL PREVIEW / NO GAME STARTS", "PARAPAMJE VIZUALE / NUK NIS LOJË"],
+  [
+    "INTERACTIVE 3D / MOVE TO EXPLORE",
+    "3D NDËRVEPRUES / LËVIZ PËR TA EKSPLORUAR"
+  ],
+  [
+    "A LIVE MULTIPLAYER INVESTIGATION",
+    "NJË HETIM NË KOHË REALE ME SHUMË LOJTARË"
+  ],
+  ["SCROLL TO DEPLOY", "LËVIZ POSHTË PËR TË VAZHDUAR"],
+  ["LEARN TODAY. DEFEND TOMORROW.", "MËSO SOT. MBRO NESËR."],
+  ["01 / The teams", "01 / Ekipet"],
+  ["02 / The mission", "02 / Misioni"],
+  ["01 / CHOOSE YOUR PERSPECTIVE", "01 / ZGJIDH KËNDVËSHTRIMIN TËND"],
+  ["Different instincts.", "Qasje të ndryshme."],
+  ["One pursuit of truth.", "Një kërkim i së vërtetës."],
+  [
+    "Reconstruct the attack. Understand the failed defense. Your team’s conclusion is only as strong as the evidence behind it.",
+    "Rindërto sulmin. Kupto mbrojtjen që dështoi. Përfundimi i ekipit vlen aq sa provat që e mbështesin."
+  ],
+  ["EXPLORING", "DUKE EKSPLORUAR"],
+  ["EXPLORE TEAM", "NJIH EKIPIN"],
+  ["ADVERSARIAL THINKING", "MENDIMI NGA KËNDVËSHTRIMI I SULMUESIT"],
+  ["DEFENSIVE REASONING", "ARSYETIMI MBROJTËS"],
+  ["OFFENSIVE REASONING", "ARSYETIMI I SULMIT"],
+  ["DEFENSIVE OPERATIONS", "VEPRIMET MBROJTËSE"],
+  [
+    "Follow the attack. Reconstruct the sequence.",
+    "Ndiq sulmin. Rindërto rendin e ngjarjeve."
+  ],
+  [
+    "Examine the controls. Explain what failed.",
+    "Shqyrto kontrollet. Shpjego çfarë dështoi."
+  ],
+  [
+    "Red perspective: which credential opened the door?",
+    "Këndvështrimi i Kuq: cili autorizim hapi rrugën?"
+  ],
+  [
+    "Blue perspective: which control should have closed it?",
+    "Këndvështrimi Blu: cili kontroll duhej ta ndalonte?"
+  ],
+  [
+    "Team preview · choose your team after approval.",
+    "Njih ekipet · zgjedhja bëhet pas miratimit."
+  ],
+  ["02 / YOUR FIRST DEPLOYMENT", "02 / USHTRIMI YT I PARË"],
+  ["Welcome to", "Mirë se vjen"],
+  ["the inside.", "brenda sistemit."],
+  ["Every world has its rules.", "Çdo botë ka rregullat e veta."],
+  [
+    "Your first mission begins in a bank.",
+    "Misioni yt i parë fillon në një bankë."
+  ],
+  [
+    "LEVEL 01 / INSTRUCTOR CONTROLLED",
+    "NIVELI 01 / I DREJTUAR NGA INSTRUKTORI"
+  ],
+  ["ACADEMIC SIMULATION", "SIMULIM AKADEMIK"],
+  [
+    "A balance changes. The trail remains.",
+    "Bilanci ndryshon. Gjurmët mbeten."
+  ],
+  [
+    "Trace the records. Build the case. Prove what happened.",
+    "Ndiq regjistrimet. Ndërto shpjegimin. Provo çfarë ndodhi."
+  ],
+  ["Enter the player hub", "Hyr në hapësirën e lojtarit"],
+  ["FORENSIC EVIDENCE", "PROVA DIGJITALE"],
+  ["TWO COMPETING TEAMS", "DY EKIPE NË GARË"],
+  ["LIVE INSTRUCTOR LAUNCH", "NISJE NË KOHË REALE NGA INSTRUKTORI"],
+  ["The story continues.", "Historia vazhdon."],
+  [
+    "Future phases. New worlds. Not unlocked yet.",
+    "Faza të ardhshme. Mjedise të reja. Ende të kyçura."
+  ],
+  ["COMING LATER", "SË SHPEJTI"],
+  ["03 / FROM INVITATION TO INVESTIGATION", "03 / NGA KËRKESA TE HETIMI"],
+  ["The room moves", "Salla ecën"],
+  ["together.", "së bashku."],
+  ["Get your access.", "Merr aksesin."],
+  [
+    "Request an account. Your administrator approves your place in the exercise.",
+    "Kërko një llogari. Administratori miraton pjesëmarrjen tënde në ushtrim."
+  ],
+  ["Find your team.", "Gjej ekipin tënd."],
+  [
+    "Choose Red or Blue, meet your teammates and confirm you’re ready.",
+    "Zgjidh ekipin e Kuq ose Blu, njih shokët e ekipit dhe konfirmo gatishmërinë."
+  ],
+  ["Wait for the signal.", "Prit sinjalin."],
+  [
+    "Your instructor launches the countdown. Everyone enters Phase 1 together.",
+    "Instruktori nis numërimin. Të gjithë hyjnë së bashku në fazën 1."
+  ],
+  ["Make your case.", "Ndërto shpjegimin tënd."],
+  [
+    "Read the contract, enter the bank and investigate using traceable evidence.",
+    "Lexo kontratën, hyr në bankë dhe heto duke përdorur prova të verifikueshme."
+  ],
+  ["YOUR NEXT MOVE MATTERS.", "HAPI YT I RADHËS KA RËNDËSI."],
+  ["Don’t just study it.", "Mos u mjafto me teorinë."],
+  ["Step inside it.", "Hyr vetë në ushtrim."],
+  [
+    "Supervised learning. Real reasoning. Virtual worlds.",
+    "Mësim i mbikëqyrur. Arsyetim i vërtetë. Mjedise virtuale."
+  ],
+  [
+    "AFA LAUNCH · Academic cybersecurity simulation.",
+    "AFA LAUNCH · Simulim akademik i sigurisë kibernetike."
+  ],
+  [
+    "Fictional accounts, virtual funds and prepared evidence.",
+    "Llogari fiktive, para virtuale dhe prova të përgatitura."
+  ],
+  ["BACK TO TOP", "KTHEHU LART"],
+  ["Main navigation", "Menuja kryesore"],
+  ["AFA LAUNCH homepage", "Kryefaqja AFA LAUNCH"],
+  ["NETWORK / A—01", "RRJETI / A—01"],
+  ["SCROLL PREVIEW", "PARAPAMJE ME LËVIZJE"],
+  ["ACADEMIC CYBER ARENA", "ARENA AKADEMIKE KIBERNETIKE"],
+  ["YOUR NEXT DEPLOYMENT", "USHTRIMI YT I RADHËS"],
+  ["Choose a side.", "Zgjidh ekipin tënd."],
+  ["Find the truth.", "Zbulo të vërtetën."],
+  ["LEARN. INVESTIGATE. DEFEND.", "MËSO. HETO. MBRO."],
+  ["AFA LAUNCH / SEASON 01", "AFA LAUNCH / SEZONI 01"],
+  ["Your personal space", "HAPËSIRA JOTE PERSONALE"],
+  ["Join AFA", "BËHU PJESË E AFA"],
+  ["A new beginning.", "Një fillim i ri."],
+  ["Welcome back.", "Mirë se u ktheve."],
+  [
+    "Sign in to AFA LAUNCH. Phase 1 opens when the administrator or owner starts the game.",
+    "Hyr në AFA LAUNCH. Faza 1 hapet kur administratori ose owner nis lojën."
+  ],
+  [
+    "Request access to AFA LAUNCH. The administrator approves your request before you choose a team.",
+    "Kërko akses në AFA LAUNCH. Administratori miraton kërkesën përpara se të zgjedhësh ekipin."
+  ],
+  ["Full name", "Emri i plotë"],
+  ["First and last name", "Emri dhe mbiemri"],
+  ["Password", "Fjalëkalimi"],
+  ["Your password", "Fjalëkalimi juaj"],
+  ["At least 12 characters", "Të paktën 12 karaktere"],
+  ["Show password", "Shfaq fjalëkalimin"],
+  ["Hide password", "Fshih fjalëkalimin"],
+  [
+    "I understand this platform uses only virtual money.",
+    "E kuptoj që kjo platformë përdor vetëm para virtuale."
+  ],
+  ["Request submitted.", "Kërkesa u dërgua."],
+  [
+    "The administrator will review your request. The account becomes active after approval.",
+    "Administratori do të shqyrtojë kërkesën. Llogaria aktivizohet pas miratimit."
+  ],
+  ["Return to sign in", "Kthehu te hyrja"],
+  ["Already have an account?", "Ke një llogari?"],
+  ["Don’t have an account yet?", "Nuk ke ende një llogari?"],
+  [
+    "Educational platform · No real money",
+    "Platformë edukative · Asnjë para reale"
+  ],
+  ["Send request", "Dërgo kërkesën"],
+  ["Continuing…", "Duke vazhduar…"],
+  ["Home", "Kryefaqja"],
+  ["Skip to content", "Kalo te përmbajtja"],
+  [
+    "Your account changed in another window.",
+    "Llogaria ndryshoi në një dritare tjetër."
+  ],
+  [
+    "This window did not act on the other account. Incognito windows in the same browser share one session.",
+    "Kjo dritare nuk kreu veprimin për llogarinë tjetër. Dritaret Incognito të të njëjtit browser ndajnë të njëjtin sesion."
+  ],
+  [
+    "For two students at once, use separate browser profiles, different browsers, a normal and an Incognito window, or two devices.",
+    "Për dy studentë njëkohësisht, përdorni dy profile ose browserë të ndryshëm, Chrome normal dhe Incognito, ose dy pajisje."
+  ],
+  ["Open active account", "Hap llogarinë aktive"],
+  [
+    "Reloading displays the account actually signed in to this browser.",
+    "Rifreskimi do të shfaqë llogarinë që është realisht e identifikuar në këtë browser."
+  ],
+  ["AFA LAUNCH / SHARED SESSION", "AFA LAUNCH / SESION I PËRBASHKËT"],
+  ["Administration", "Administrimi"],
+  ["Overview", "Përmbledhje"],
+  ["My account", "Llogaria ime"],
+  ["Activity", "Aktiviteti"],
+  ["My card", "Karta ime"],
+  ["Security", "Siguria"],
+  ["Notifications", "Njoftimet"],
+  ["Open menu", "Hap menunë"],
+  ["Close menu", "Mbyll menunë"],
+  ["Account", "Llogaria"],
+  ["SIMULATION ONLY", "VETËM SIMULIM"],
+  ["YOUR ACCOUNT", "LLOGARIA JOTE"],
+  ["VIRTUAL SALARY · 50,000 ALL / MONTH", "PAGË VIRTUALE · 50.000 ALL / MUAJ"],
+  ["Full perspective.", "Perspektiva e plotë."],
+  ["Every detail, under control.", "Çdo detaj, në kontroll."],
+  ["Welcome,", "Mirë se erdhe,"],
+  [
+    ". All actions use virtual money.",
+    ". Të gjitha veprimet përdorin para virtuale."
+  ],
+  ["Active customers", "Klientë aktivë"],
+  ["Pending requests", "Kërkesa në pritje"],
+  ["Open incidents", "Incidente të hapura"],
+  ["Accounts", "Llogaritë"],
+  ["Add customer", "Shto klient"],
+  ["Finance", "Financa"],
+  ["Audit log", "Historiku i veprimeve"],
+  ["Search customer", "Kërko klient"],
+  ["Search by name, email or IBAN", "Kërko sipas emrit, email-it ose IBAN-it"],
+  ["Approve request", "Prano kërkesën"],
+  ["Activate", "Aktivizo"],
+  ["Suspend", "Pezullo"],
+  ["Reject", "Refuzo"],
+  ["Role:", "Roli:"],
+  ["· Last salary:", "· Paga e fundit:"],
+  ["Change status to", "Ndrysho statusin në"],
+  ["All up to date.", "Gjithçka është e përditësuar."],
+  ["No pending requests.", "Nuk ka kërkesa në pritje."],
+  ["No actions yet.", "Nuk ka ende veprime."],
+  ["Administrator", "Administrator"],
+  ["Owner", "Owner"],
+  ["Customer", "Klienti"],
+  ["Chief of finance", "Shefi i financës"],
+  ["Initial password", "Fjalëkalim fillestar"],
+  ["Create customer", "Krijo klientin"],
+  [
+    "Share credentials through a secure channel. The customer receives a virtual 50,000 ALL salary. Terms are accepted on first entry.",
+    "Ndani kredencialet në një kanal të sigurt. Klienti krijohet me pagë virtuale 50.000 ALL. Kushtet pranohen në hyrjen e parë."
+  ],
+  ["Action recorded successfully.", "Veprimi u regjistrua me sukses."],
+  ["Refreshing every 10s", "PËRDITËSIM ÇDO 10s"],
+  ["Loading…", "Duke ngarkuar…"],
+  ["Loading your workspace…", "Duke hapur hapësirën tuaj…"],
+  ["Loading data…", "Duke ngarkuar të dhënat…"],
+  ["Loading alerts…", "Duke ngarkuar sinjalizimet…"],
+  ["Saving…", "Duke ruajtur…"],
+  ["Verifying…", "Duke verifikuar…"],
+  ["Current password", "Fjalëkalimi aktual"],
+  ["New password", "Fjalëkalimi i ri"],
+  ["Confirm new password", "Konfirmo fjalëkalimin e ri"],
+  ["Save password", "Ruaj fjalëkalimin"],
+  ["Your new passwords do not match.", "Fjalëkalimet e reja nuk përputhen."],
+  ["Password changed.", "Fjalëkalimi u ndryshua."],
+  [
+    "Changing your password closes all open sessions.",
+    "Ndryshimi do të mbyllë të gjitha sesionet e hapura."
+  ],
+  [
+    "All sessions were closed. Sign in with your new password.",
+    "Të gjitha sesionet u mbyllën. Identifikohu me fjalëkalimin e ri."
+  ],
+  [
+    "Set a personal password before using the dashboard.",
+    "Vendos një fjalëkalim personal përpara se të përdorësh panelin."
+  ],
+  ["ACCOUNT ACTIVATION", "AKTIVIZIMI I LLOGARISË"],
+  ["Security,", "Siguri,"],
+  ["from the first step.", "nga hapi i parë."],
+  ["Recipient", "Përfituesi"],
+  ["Amount", "Shuma"],
+  ["Amount in ALL", "Shuma në ALL"],
+  ["Reference", "Referenca"],
+  ["Description", "Përshkrimi"],
+  ["Description (optional)", "Përshkrimi (opsional)"],
+  ["Confirm transfer", "Konfirmo transfertën"],
+  ["Review transfer details", "Rishiko transfertën"],
+  ["New transfer", "Transfertë e re"],
+  ["Send money", "Dërgo para"],
+  [
+    "Send virtual money to an active AFA account.",
+    "Dërgo para virtuale te një llogari aktive AFA."
+  ],
+  [
+    "Check the details before confirming.",
+    "Kontrolloni të dhënat përpara konfirmimit."
+  ],
+  ["Copy IBAN", "Kopjo IBAN-in"],
+  [
+    "Copy the recipient’s IBAN from their profile.",
+    "Kopjo IBAN-in nga profili i përfituesit."
+  ],
+  ["Copy the displayed IBAN.", "Kopjoni IBAN-in e shfaqur në ekran."],
+  ["What is the transfer for?", "Për çfarë është transferta?"],
+  ["Available balance", "Bilanci i disponueshëm"],
+  ["Insufficient balance.", "Bilanci nuk është i mjaftueshëm."],
+  [
+    "Enter an amount with up to two decimal places.",
+    "Vendosni shumën me maksimumi dy shifra dhjetore."
+  ],
+  [
+    "Balance updated. Check your account activity.",
+    "Bilanci u përditësua. Kontrolloni aktivitetin e llogarisë."
+  ],
+  ["Incoming transfer", "Transfertë hyrëse"],
+  ["Outgoing transfer", "Transfertë dalëse"],
+  ["Virtual transfer", "Transfertë virtuale"],
+  ["Monthly salary", "Pagë mujore"],
+  ["Funds returned", "Rikthim i fondeve"],
+  ["Incident · Educational simulation", "Incident · Simulim edukativ"],
+  ["Your history starts here.", "Historia jote fillon këtu."],
+  [
+    "Account movements will appear here.",
+    "Lëvizjet e llogarisë do të shfaqen në këtë hapësirë."
+  ],
+  ["ACCOUNT SECURITY", "SIGURIA E LLOGARISË"],
+  ["YOUR ACCOUNT / HISTORY", "LLOGARIA JOTE / HISTORIA"],
+  ["Recent activity", "Lëvizjet e fundit"],
+  ["Search transactions", "Kërko transaksione"],
+  ["Search the latest 100 movements", "Kërko në 100 lëvizjet e fundit"],
+  ["See all", "Shiko të gjitha"],
+  ["Account details", "Detajet e llogarisë"],
+  ["Cardholder", "Mbajtësi"],
+  ["Demo number", "Numri demonstrues"],
+  ["Educational use only", "Vetëm për përdorim edukativ"],
+  [
+    "Educational only · Not for purchases",
+    "Vetëm edukativ · Nuk përdoret për blerje"
+  ],
+  ["Rotate card", "Rrotullo kartën"],
+  [
+    "Balance notifications appear automatically during this session.",
+    "Njoftimet për bilancin shfaqen automatikisht gjatë këtij sesioni."
+  ],
+  ["New member.", "Një anëtar i ri."],
+  [
+    "Your account, your perspective. AFA is an educational environment using virtual money.",
+    "Llogaria jote, perspektiva jote. AFA është një mjedis edukativ me para virtuale."
+  ],
+  [
+    "A new day. Everything under control.",
+    "Një ditë e re. Gjithçka në kontroll."
+  ],
+  ["Hello,", "Përshëndetje,"],
+  ["Available:", "Në dispozicion:"],
+  ["per active account · every month", "për çdo llogari aktive · çdo muaj"],
+  ["Virtual salary.", "Pagë virtuale."],
+  ["Every movement has a story.", "Çdo lëvizje ka një histori."],
+  ["Personal. In every detail.", "Personale. Në çdo detaj."],
+  ["Terms of Service", "Kushtet e përdorimit"],
+  ["General rules", "Rregullat e përgjithshme"],
+  ["Responsibility and security", "Përgjegjësia dhe siguria"],
+  ["I agree and continue", "Pranoj dhe vazhdoj"],
+  ["Before we begin.", "Para se të fillojmë."],
+  [
+    "Read the Terms of Service before opening your account.",
+    "Lexoni kushtet e përdorimit përpara se të hapni llogarinë tuaj."
+  ],
+  ["Page", "Faqja"],
+  ["of 2 ·", "nga 2 ·"],
+  ["Next — Responsibility and security →", "Next — Përgjegjësia dhe siguria →"],
+  ["← Return to the first page", "← Kthehu te faqja e parë"],
+  [
+    "Version 22 October 2026 · AFA BANK — educational platform",
+    "Versioni 22 tetor 2026 · AFA BANK — platformë edukative"
+  ],
+  ["Incorrect email or password.", "Email ose fjalëkalim i pasaktë."],
+  [
+    "Your account is pending approval or suspended.",
+    "Llogaria pret miratimin ose është pezulluar."
+  ],
+  ["Sign in to continue.", "Identifikohuni për të vazhduar."],
+  ["Session expired.", "Sesioni ka skaduar."],
+  ["Connection failed.", "Lidhja dështoi."],
+  ["Internal error. Please try again.", "Gabim i brendshëm. Provoni përsëri."],
+  ["A new password.", "Një fjalëkalim i ri."],
+  ["A new dimension.", "Një dimension i ri."],
+  ["Learn today.", "Mëso sot."],
+  ["Defend tomorrow.", "Mbro nesër."],
+  ["Learn. Defend. Compete.", "Mëso. Mbro. Konkuro."],
+  ["Learning objectives", "Objektivat mësimore"],
+  ["Instructions", "Udhëzimet"],
+  ["My Missions", "Misionet e mia"],
+  ["My Team", "Ekipi im"],
+  ["My Score", "Pikët e mia"],
+  ["Leaderboard", "Renditja"],
+  ["Instructor", "Instruktori"],
+  ["Announcements", "Njoftimet"],
+  ["Assessment rubric", "Kriteret e vlerësimit"],
+  ["Competition operations", "Drejtimi i garës"],
+  ["Individual leaderboard", "Renditja individuale"],
+  ["Team leaderboard", "Renditja e ekipeve"],
+  ["Team mission history", "Historiku i misioneve të ekipit"],
+  ["Score audit trail", "Historiku i pikëve"],
+  ["Achievement badges", "Shenjat e arritjeve"],
+  ["Instructor control", "Drejtimi nga instruktori"],
+  ["Security Center", "Qendra e sigurisë"],
+  ["SOC Analyst", "Analisti SOC"],
+  ["Auditor", "Audituesi"],
+  ["Hints", "Ndihma"],
+  ["Hint", "Udhëzim"],
+  ["Severity", "Rëndësia"],
+  ["Submission review", "Shqyrtimi i dorëzimeve"],
+  ["Submitted", "Dorëzuar"],
+  ["Independent", "I pavarur"],
+  ["Completed", "Përfunduar"],
+  ["Upcoming", "Në vijim"],
+  ["Active", "Aktive"],
+  ["Draft", "Draft"],
+  ["Registration Open", "Regjistrimi është hapur"],
+  ["Team leader", "Drejtuesi i ekipit"],
+  ["Investigating", "Në hetim"],
+  ["New competition", "Garë e re"],
+  ["Competition details", "Detajet e garës"],
+  ["Create draft", "Krijo draft"],
+  ["Create team", "Krijo ekip"],
+  ["Team name", "Emri i ekipit"],
+  ["Capacity", "Kapaciteti"],
+  ["Team", "Ekipi"],
+  ["Teams and participants", "Ekipe dhe pjesëmarrës"],
+  ["Title", "Titulli"],
+  ["Category", "Kategoria"],
+  ["Difficulty", "Vështirësia"],
+  ["Format", "Formati"],
+  ["Maximum points", "Pikët maksimale"],
+  ["Start (local time)", "Fillimi (ora lokale)"],
+  ["End (local time)", "Përfundimi (ora lokale)"],
+  ["Create mission", "Krijo misionin"],
+  ["Open mission", "Hap misionin"],
+  ["Start mission", "Nis misionin"],
+  ["Submit for verification", "Dorëzo për verifikim"],
+  ["Answer", "Përgjigjja"],
+  ["No submissions yet.", "Nuk ka ende dorëzime."],
+  ["No announcements yet.", "Nuk ka ende njoftime."],
+  ["Saved successfully.", "U ruajt me sukses."],
+  ["Publish announcement", "Publiko njoftimin"],
+  ["Refresh", "Rifresko"],
+  ["Refresh Arena", "Rifresko Arena"],
+  ["Save details", "Ruaj detajet"],
+  ["All participants", "Të gjithë pjesëmarrësit"],
+  ["Everyone", "Të gjithë"],
+  ["Unassigned", "Pa caktim"],
+  ["Assigned", "I caktuar"],
+  [
+    "Join request sent. The instructor will assign your role and team.",
+    "Kërkesa u dërgua. Instruktori do të caktojë rolin dhe ekipin."
+  ],
+  ["Simulation", "Simulim"],
+  ["Administrator or owner required.", "Kërkohet administratori ose owner."],
+  [
+    "Both teams need active students, and every enrolled student must be ready.",
+    "Të dy ekipet duhet të kenë studentë aktivë dhe çdo student duhet të jetë gati."
+  ],
+  [
+    "Every enrolled student must accept the contract and remain eligible.",
+    "Çdo student duhet ta pranojë kontratën dhe ta ketë aksesin aktiv."
+  ],
+  [
+    "The round account does not have enough funds for this transfer.",
+    "Llogaria e raundit nuk ka mjaftueshëm fonde për këtë transfertë."
+  ],
+  [
+    "Keep at least 10,000 ALL for the incident exercise.",
+    "Mbaj të paktën 10,000 ALL për ushtrimin e incidentit."
+  ],
+  ["Available round balance", "Gjendja e disponueshme e raundit"],
+  [
+    "For a first transfer, try 1,000 ALL. Enter digits without thousands separators.",
+    "Për provën e parë dërgo 1,000 ALL. Shkruaj vetëm shifrat, pa ndarës mijëshe."
+  ],
+  ["What to do now", "Çfarë duhet të bësh tani"],
+  [
+    "Choose a team, then mark yourself ready.",
+    "Zgjidh ekipin, pastaj konfirmo që je gati."
+  ],
+  [
+    "Read both contract pages, then accept to continue.",
+    "Lexo të dyja faqet e kontratës, pastaj pranoje për të vazhduar."
+  ],
+  [
+    "Try a small transfer and wait for the incident.",
+    "Provo një transfertë të vogël dhe prit incidentin."
+  ],
+  [
+    "Your report is frozen. Wait for the owner’s assessment.",
+    "Raporti yt është kyçur. Prit vlerësimin e owner."
+  ],
+  [
+    "The round is finished. Read the outcome and debrief.",
+    "Raundi përfundoi. Lexo rezultatin dhe përfundimet."
+  ],
+  ["Start the investigation", "Fillo hetimin"],
+  [
+    "Your report needs a clear explanation, not just pinned records.",
+    "Raporti ka nevojë për shpjegim të qartë, jo vetëm prova të fiksuara."
+  ],
+  [
+    "Start with the recipient and service, explain the failed permission check, cite a timeline, then propose a fix.",
+    "Fillo me përfituesin dhe shërbimin, shpjego kontrollin që dështoi, cito kronologjinë dhe propozo zgjidhjen."
+  ],
+  [
+    "Use your own words. The owner evaluates how your references support your conclusion.",
+    "Përdor fjalët e tua. Owner vlerëson se si referencat e mbështesin përfundimin tënd."
+  ],
+  ["Follow the reference", "Ndiq referencën"],
+  ["Keep investigating", "Vazhdo hetimin"],
+  ["Return to investigation", "Kthehu te hetimi"],
+  [
+    "A conclusion is only as strong as its evidence.",
+    "Një përfundim vlen aq sa provat që e mbështesin."
+  ],
+  ["Evidence-based report", "Raport i mbështetur në prova"],
+  [
+    "Root cause · timeline · remediation",
+    "Shkaku teknik · kronologjia · parandalimi"
+  ],
+  ["Show the work.", "Shfaq arsyetimin."],
+  ["Judge the evidence.", "Vlerëso provat."],
+  ["Make your", "Ktheji"],
+  ["case.", "provat në shpjegim."],
+  ["Turn records", "Ktheji regjistrimet"],
+  ["into evidence.", "në prova."],
+  [
+    "Search reference, event, request ID, Demo IBAN…",
+    "Kërko referencë, ngjarje, kërkesë ose Demo IBAN…"
+  ],
+  ["See ledger reference", "Shiko referencën në regjistër"],
+  ["Welcome to AFA", "MIRË SE ERDHE NË AFA"],
+  ["ACCOUNT APPROVED", "LLOGARIA U MIRATUA"],
+  ["YOUR AFA CARD", "KARTA JOTE AFA"],
+  ["Personal space", "HAPËSIRA JOTE"],
+  ["AFA BANK homepage", "AFA BANK — Kryefaqja"],
+  ["Close notification", "Mbyll njoftimin"],
+  ["Simulated IBAN", "IBAN i simuluar"],
+  ["SIMULATED IBAN", "IBAN I SIMULUAR"],
+  ["Recipient simulated IBAN", "IBAN i simuluar i përfituesit"],
+  ["Sender:", "Dërguesi:"],
+  ["Recipient:", "Përfituesi:"],
+  ["Amount:", "Shuma:"],
+  ["Description:", "Përshkrimi:"],
+  ["Reference:", "Referenca:"],
+  ["Date:", "Data:"],
+  ["Fee", "Tarifa"],
+  ["Download receipt", "Shkarko dëftesën"],
+  [
+    "The transfer has been confirmed by the system.",
+    "Transferta është konfirmuar nga sistemi."
+  ],
+  [
+    "Sign in to make a virtual transfer.",
+    "Identifikohuni për të kryer një transfertë virtuale."
+  ],
+  ["Continue to sign in", "Vazhdo te hyrja"],
+  ["NEW VIRTUAL TRANSFER", "PARA VIRTUALE / TRANSFERTË E RE"],
+  ["Confirmation", "Konfirmimi"],
+  ["Use", "Përdorimi"],
+  ["Log in", "Identifikohu"],
+  ["Status", "Statusi"],
+  ["1. Purpose of the service", "1. Qëllimi i shërbimit"],
+  ["2. Account and approval", "2. Llogaria dhe miratimi"],
+  ["3. Virtual actions", "3. Veprimet virtuale"],
+  ["4. Permitted use", "4. Përdorimi i lejuar"],
+  ["6. Password and security", "6. Fjalëkalimi dhe siguria"],
+  ["7. Data and acceptance records", "7. Të dhënat dhe regjistrimi i pranimit"],
+  ["8. Acceptance", "8. Pranimi"],
+  [
+    "AFA BANK is an educational simulation. It is not a real bank and does not offer real deposits, loans or payment services. Balances, salaries, cards and IBANs are virtual; they have no monetary value and cannot be withdrawn or exchanged.",
+    "AFA BANK është një simulim edukativ. Nuk është bankë reale dhe nuk ofron depozita, kredi ose shërbime pagesash reale. Bilancet, pagat, kartat dhe IBAN-et janë virtuale; nuk kanë vlerë monetare dhe nuk mund të tërhiqen ose të këmbehen."
+  ],
+  [
+    "Use your own details and only authorized accounts. The administrator approves requests and manages accounts. An account may only be used after approval and acceptance of these terms. Misuse may result in suspension.",
+    "Përdorni të dhënat tuaja dhe mbani vetëm llogari të autorizuara. Administratori miraton kërkesat dhe administron llogaritë. Llogaria përdoret vetëm pas miratimit dhe pranimit të këtyre kushteve. Shkeljet ose keqpërdorimi mund të sjellin pezullimin e aksesit."
+  ],
+  [
+    "Virtual transfers take place between active platform accounts regardless of role. Check the name, IBAN and amount before confirming. Self-transfers are not allowed. Actions are recorded; the standard virtual salary is 50,000 ALL once per active account per UTC calendar month.",
+    "Transfertat kryhen mes llogarive aktive të platformës, pavarësisht rolit. Kontrolloni emrin, IBAN-in dhe shumën para konfirmimit. Nuk lejohet dërgimi te vetë llogaria. Veprimet regjistrohen në historik; paga virtuale standarde është 50.000 ALL për muaj kalendarik UTC, një herë për çdo llogari aktive."
+  ],
+  [
+    "Do not share credentials, access other people's accounts, bypass permissions or manipulate records. The incident laboratory is an authorized educational exercise clearly marked as a simulation.",
+    "Mos ndani kredencialet, mos hyni në llogaritë e të tjerëve dhe mos tentoni të anashkaloni lejet ose të manipuloni regjistrat. Laboratori i incidenteve është ushtrim edukativ i autorizuar dhe shënohet si simulim."
+  ],
+  [
+    "The training service may be interrupted or contain errors. Operators do not guarantee uninterrupted availability and are not responsible for real financial decisions based on this simulation or for users sharing credentials. These terms do not exclude liability that applicable law does not allow to be excluded.",
+    "Shërbimi ofrohet për trajnim dhe mund të ndërpritet ose të përmbajë gabime. Operatorët nuk garantojnë funksionim të pandërprerë dhe nuk marrin përgjegjësi për vendime financiare reale të marra duke u mbështetur te ky simulim ose për pasojat e ndarjes së kredencialeve nga përdoruesi. Këto kushte nuk përjashtojnë përgjegjësi që nuk mund të përjashtohen sipas ligjit të zbatueshëm."
+  ],
+  [
+    "The platform stores a salted hash to verify sign-in, not your readable password. Changing your password replaces the old hash and closes existing sessions. Administrators cannot show your new password. Do not use your real bank password or submit real banking codes or card data.",
+    "Platforma nuk ruan fjalëkalimin tuaj në tekst të lexueshëm; ruan një hash të kripëzuar për verifikimin e hyrjes. Kur ndryshoni fjalëkalimin, hash-i i mëparshëm zëvendësohet dhe sesionet ekzistuese mbyllen. Administratori nuk mund t’ju tregojë fjalëkalimin e ri. Mos përdorni këtu fjalëkalimin e bankës suaj reale dhe mos dërgoni kode bankare ose të dhëna kartash reale."
+  ],
+  [
+    "Names, emails, roles, status, password hashes and virtual-action records are stored to operate the platform. Authorized staff have role-based access. Acceptance records include account ID, date and version. Do not enter real banking data in descriptions.",
+    "Për funksionimin e platformës ruhen emri, email-i, roli, statusi, hash-i i fjalëkalimit dhe regjistrat e veprimeve virtuale. Personeli i autorizuar ka akses sipas rolit. Pranimi i kushteve regjistrohet me identifikuesin e llogarisë, datën dhe versionin. Mos vendosni të dhëna bankare reale në përshkrime."
+  ],
+  [
+    "By checking the box below and pressing “I agree and continue”, you confirm that you have read the terms and understand the platform is virtual. You may sign out instead of accepting.",
+    "Duke zgjedhur kutinë më poshtë dhe duke shtypur “Pranoj dhe vazhdoj”, konfirmoni se i keni lexuar kushtet dhe kuptoni natyrën virtuale të platformës. Pa pranim mund të dilni nga llogaria."
+  ],
+  [
+    "The next page contains responsibility, password and data terms. Read them before accepting.",
+    "Faqja tjetër përmban kushtet për përgjegjësinë, fjalëkalimet dhe të dhënat. Lexojini përpara pranimit."
+  ],
+  ["Run virtual payroll", "Ekzekuto pagën virtuale"],
+  ["Review and run for everyone", "Kontrollo dhe ekzekuto për të gjithë"],
+  [
+    "One payment per customer per UTC calendar month. Database constraints prevent duplicates.",
+    "Një pagesë për klient në muaj kalendarik (UTC). Dublikatat bllokohen nga databaza."
+  ],
+  ["Choose customer", "Zgjidh klientin"],
+  ["Confirm action", "Konfirmo veprimin"],
+  ["Start simulation", "Nis simulimin"],
+  ["Virtual debit (ALL)", "Debiti virtual (ALL)"],
+  ["Select and return funds", "Zgjidh dhe rikthe fondet"],
+  ["Incident register", "Regjistri i incidenteve"],
+  ["Incident status", "Statusi i incidentit"],
+  [
+    "Simulate an unauthorized debit for education. The customer sees a transaction clearly marked as a simulation. Returning funds is auditable.",
+    "Simuloni një debit të paautorizuar për edukim. Klienti do të shohë një transaksion të shënuar qartë si simulim. Rikthimi është i auditueshëm."
+  ],
+  ["Current password is incorrect.", "Fjalëkalimi aktual është i pasaktë."],
+  ["Training lab", "Laborator trajnimi"],
+  ["Log in to continue", "Identifikohu për të vazhduar"],
+  ["Take a moment to review", "Kontrollo të dhënat para se të vazhdosh"],
+  [
+    "I agree to the Terms of Service — I accept the usage terms.",
+    "I agree to the Terms of Service — Pranoj kushtet e përdorimit."
+  ],
+  [
+    "Try 1000 ALL for your first transfer. Enter 1000, not 50.000 or 500000. Keep at least 10,000 ALL available for the incident.",
+    "Provo 1000 ALL për transfertën e parë. Shkruaj 1000, jo 50.000 ose 500000. Mbaj të paktën 10 000 ALL për incidentin."
+  ],
+  ["WHAT TO DO NOW", "ÇFARË TË BËSH TANI"],
+  ["First: choose your team", "Fillimisht: zgjidh ekipin"],
+  [
+    "Read and confirm the training notice, choose Red or Blue, then press I am ready. Use a separate browser profile for each student.",
+    "Lexo dhe prano njoftimin e ushtrimit, zgjidh ekipin e Kuq ose Blu, pastaj shtyp Jam gati. Përdor një profil të veçantë të shfletuesit për çdo student."
+  ],
+  ["You are ready — stay connected", "Je gati — qëndro i lidhur"],
+  [
+    "Wait for the instructor to launch. Your screen will move to the contract automatically. Your team’s readiness does not change another student’s readiness.",
+    "Prit që instruktori të nisë raundin. Kontrata do të hapet automatikisht. Gatishmëria jote nuk ndryshon gatishmërinë e një studenti tjetër."
+  ],
+  ["Next: confirm you are ready", "Hapi tjetër: konfirmo që je gati"],
+  [
+    "Your team is selected. Press I am ready below. The instructor can launch after both teams are present and every student is ready.",
+    "Ekipi yt është zgjedhur. Shtyp Jam gati më poshtë. Instruktori mund ta nisë raundin kur të dy ekipet të jenë të pranishme dhe çdo student të jetë gati."
+  ],
+  ["Read both contract pages", "Lexo të dyja faqet e kontratës"],
+  [
+    "Use Next to read page two, then tick the agreement and accept. Wait here until the instructor opens banking for everyone.",
+    "Shtyp Vazhdo për të lexuar faqen e dytë, pastaj shëno pranimin dhe konfirmo. Prit këtu derisa instruktori të hapë bankën për të gjithë."
+  ],
+  ["Try the training bank", "Provo bankën e ushtrimit"],
+  [
+    "Copy a classmate’s round Demo IBAN and try a small transfer. This is fictional money. When the owner releases the incident, the investigation will become available.",
+    "Kopjo Demo IBAN-in e raundit të një shoku dhe provo një transfertë të vogël. Paratë janë fiktive. Kur drejtuesi të aktivizojë incidentin, hetimi do të bëhet i disponueshëm."
+  ],
+  ["Reports are under review", "Raportet po shqyrtohen"],
+  [
+    "The instructor has frozen submissions. You can still read your team’s report and the evidence. Wait for the verdict and the debrief.",
+    "Instruktori i ka mbyllur dorëzimet. Ende mund të lexosh raportin e ekipit dhe provat. Prit vendimin dhe shpjegimin përfundimtar."
+  ],
+  ["The round has ended", "Raundi përfundoi"],
+  [
+    "Read the instructor’s verdict and discuss which evidence supports the conclusion. If the round was cancelled, no winner is declared.",
+    "Lexo vendimin e instruktorit dhe diskutoni cilat prova mbështesin përfundimin. Nëse raundi u anulua, nuk shpallet fitues."
+  ],
+  [
+    "Write an explanation, not a guess",
+    "Shkruaj një shpjegim të mbështetur në prova"
+  ],
+  [
+    "Use the record references in every part: recipient → request/service → authorization → failed check. Then explain the timeline and a concrete prevention. Three relevant pinned records are the minimum; the instructor checks your reasoning.",
+    "Përdor referencat e provave në çdo pjesë: përfituesi → kërkesa/shërbimi → autorizimi → kontrolli i munguar. Pastaj shpjego rrjedhën kohore dhe një masë konkrete parandaluese. Duhen të paktën tri prova të lidhura; instruktori vlerëson arsyetimin tënd."
+  ],
+  ["Replay transformation", "Riluaj transformimin"],
+  ["Follow scroll", "Ndiq lëvizjen e faqes"],
+  ["THE NETWORK BECOMES THE BANK.", "RRJETI SHNDËRROHET NË BANKË."],
+  ["AFA BANK. Level 01.", "AFA BANK. Niveli 01."],
+  ["THINK LIKE AN ATTACKER", "MENDO SI NJË SULMUES"],
+  ["PROVE IT LIKE A DEFENDER", "PROVOJE SI NJË MBROJTËS"],
+  ["AFA LAUNCH / THE SILENT TRANSFER", "AFA LAUNCH / TRANSFERTA E HESHTUR"],
+  [
+    "ALL CONNECTED PLAYERS · ONE LIVE START",
+    "TË GJITHË LOJTARËT · NJË NISJE NË KOHË REALE"
+  ],
+  ["CONTRACT / PAGE", "KONTRATA / FAQJA"],
+  ["YOUR TRAINING ACCOUNT", "LLOGARIA JOTE E USHTRIMIT"],
+  ["STARTING ALLOCATION", "FONDI FILLESTAR"],
+  ["VIRTUAL FUNDS ONLY", "VETËM FONDE VIRTUALE"],
+  ["Academic cyber range", "Laborator akademik i sigurisë kibernetike"],
+  ["Red team:", "Ekipi i Kuq:"],
+  ["Blue team:", "Ekipi Blu:"],
+  ["of", "nga"],
+  ["LIVE", "NË KOHË REALE"],
+  ["VIRTUAL DEBIT", "DEBITIM VIRTUAL"],
+  ["ACADEMIC EDITION / ROUND 01", "EDICION AKADEMIK / RAUNDI 01"],
+  ["· decision recorded", "· vendimi u regjistrua"],
+  ["REPORTS FROZEN", "RAPORTET U MBYLLËN"],
+  ["SUBMISSIONS OPEN", "DORËZIMET JANË TË HAPURA"],
+  ["Make this account yours.", "Bëje llogarinë tënde."],
+  ["OWNER / EXECUTIVE OVERVIEW", "DREJTUESI / PAMJA E PËRGJITHSHME"],
+  ["FINANCE / OPERATIONS", "FINANCA / VEPRIMET"],
+  ["ADMIN / ACCOUNT OPERATIONS", "ADMINISTRATORI / VEPRIMET E LLOGARIVE"],
+  ["Operational sections", "Seksionet operative"],
+  ["Role", "Roli"],
+  [
+    "I confirm this is an authorized educational exercise.",
+    "Konfirmoj që ky është një ushtrim edukativ i autorizuar."
+  ],
+  ["It reached its destination.", "Arriti në destinacion."],
+  ["Date", "Data"],
+  ["After", "Pas"],
+  ["LEVEL 1 MISSION CONTROL", "KONTROLLI I NIVELIT 1"],
+  ["Release the 10,000 ALL incident →", "Aktivizo incidentin e 10 000 ALL →"],
+  ["Demo", "Demonstrim"],
+  ["DEMO", "DEMONSTRIM"],
+  ["Request access ↗", "Kërko akses ↗"],
+  [
+    "DEMO · These are sample records. Transfers require an active account.",
+    "DEMONSTRIM · Të dhënat janë shembull. Transfertat kërkojnë llogari aktive."
+  ],
+  [
+    "Albanian lek · Virtual money · Monthly salary 50,000 ALL",
+    "Lekë shqiptare · Para virtuale · Pagë mujore 50.000 ALL"
+  ],
+  ["VIRTUAL DEBIT ↗", "DEBIT VIRTUAL ↗"],
+  ["TITANIUM EDITION / YOUR CARD", "TITANIUM EDITION / KARTA JOTE"],
+  ["VIRTUAL / TITANIUM", "VIRTUALE / TITANIUM"],
+  ["EDUCATIONAL EDITION", "EDICION EDUKATIV"],
+  ["Skip intro", "Kalo hyrjen"],
+  ["AFA EXPERIENCE / 01", "PËRVOJA AFA / 01"],
+  ["red", "i kuq"],
+  ["blue", "blu"],
+  ["Credential", "Autorizimi"],
+  ["Beneficiary", "Përfituesi"],
+  ["Service", "Shërbimi"],
+  ["Open policy", "Hap rregullat"],
+  ["AFA / SUPERVISED CYBER LAB", "AFA / LABORATOR KIBERNETIK I MBIKËQYRUR"],
+  ["Cyber Arena", "Arena Kibernetike"],
+  [
+    "EDUCATIONAL LAB · Fictional data · DEMO / NO REAL MONEY · Authorized exercises only.",
+    "LAB EDUKATIV · Të dhëna fiktive · DEMO / NO REAL MONEY · Vetëm ushtrime të autorizuara."
+  ],
+  ["Loading Arena…", "Duke ngarkuar Arena…"],
+  ["competitions", "gara"],
+  [
+    "Arena is ready for its first mission.",
+    "Arena është gati për misionin e parë."
+  ],
+  [
+    "The instructor creates and publishes the competition. No sample data is added automatically.",
+    "Instruktori krijon dhe publikon garën. Nuk shtohen të dhëna demonstrimi automatikisht."
+  ],
+  ["View competition", "Shiko garën"],
+  ["Create competition / template", "Krijo garë / template"],
+  [
+    "The template creates a draft with fictional materials only. It does not change bank accounts or balances.",
+    "Template-i krijon vetëm një draft me materiale fiktive. Nuk prek llogaritë ose bilancet bankare."
+  ],
+  ["Participants without a team", "Pjesëmarrës pa ekip"],
+  ["Allow", "Lejo"],
+  ["Request a team", "Kërko ekip"],
+  ["Rules and criteria", "Rregullat dhe kriteret"],
+  [
+    "Individual scores accumulate per mission, with one result per mission. A team’s total is the sum of its members; team size is shown beside scores. There is no time bonus. Each mission shows role objectives and points.",
+    "Pikët individuale mblidhen për çdo mision, maksimumi një rezultat për mision. Totali i ekipit është shuma e anëtarëve; madhësia e ekipit shfaqet krahas pikëve. Nuk ka bonus kohe. Objektivat dhe pikët për secilin rol shfaqen te misioni."
+  ],
+  ["Visible missions", "Misione të dukshme"],
+  ["Independent / Control", "I pavarur / Kontrolli"],
+  ["points", "pikë"],
+  ["visible submissions", "dorëzime të dukshme"],
+  [
+    "No missions are available for your role at this time.",
+    "Nuk ka misione të disponueshme për rolin tënd në këtë orar."
+  ],
+  ["Evaluation criteria ·", "Kriteret e vlerësimit ·"],
+  [
+    "No additional limit; mission dates apply.",
+    "Pa limit shtesë; vlejnë datat e misionit."
+  ],
+  ["Started:", "Nisur:"],
+  [
+    "Report / evidence (text, no secrets or real personal data)",
+    "Raport / evidencë (tekst, pa sekrete ose të dhëna personale reale)"
+  ],
+  ["My submission history", "Historiku im i dorëzimeve"],
+  ["Mission", "Mision"],
+  ["My Team / Independent", "Ekipi im / I pavarur"],
+  ["· Team leader", "· Drejtuesi i ekipit"],
+  [
+    "The instructor assigns teams and roles. Membership locks after the first submission.",
+    "Ekipet dhe rolet caktohen nga instruktori. Anëtarësia kyçet pas dorëzimit të parë."
+  ],
+  [
+    "Achievements appear after verified missions.",
+    "Arritjet shfaqen pas misioneve të verifikuara."
+  ],
+  ["members ·", "anëtarë ·"],
+  ["scored missions", "misione me pikë"],
+  ["missions", "misione"],
+  ["Competition announcement", "Njoftim për garën"],
+  ["SIMULATION", "SIMULIM"],
+  [
+    "Fictional events prepared by the instructor. Do not enter passwords, tokens or personal data.",
+    "Ngjarje fiktive të përgatitura nga instruktori. Mos vendosni fjalëkalime, token-e ose të dhëna personale."
+  ],
+  ["No authorized alerts.", "Nuk ka sinjalizime të autorizuara."],
+  [
+    "Incident timeline / analyst notes",
+    "Rrjedha e incidentit / shënimet e analistit"
+  ],
+  ["Investigation note / report", "Shënim / raport hetimi"],
+  ["Save to timeline", "Ruaj në timeline"],
+  ["Create fictional alert", "Krijo sinjalizim fiktiv"],
+  ["Fictional logs / events", "Log-e / ngjarje fiktive"],
+  ["Limit to team", "Kufizo te ekipi"],
+  ["Create alert", "Krijo sinjalizim"],
+  ["pending requests ·", "kërkesa në pritje ·"],
+  ["reports for review", "raporte për shqyrtim"],
+  ["Participant", "Pjesëmarrësi"],
+  ["· NEW REQUEST", "· KËRKESË E RE"],
+  ["Competition role", "Roli i garës"],
+  ["Approve and assign", "Mirato dhe cakto"],
+  [
+    "Delegate instructor (bank admin/owner only)",
+    "Delego instruktor (vetëm bank admin/owner)"
+  ],
+  ["Assign instructor for this competition", "Cakto instruktor për këtë garë"],
+  ["Create mission (draft only)", "Krijo mision (vetëm draft)"],
+  ["Instructions / fictional dataset", "Udhëzimet / dataset fiktiv"],
+  [
+    "Criteria and point distribution for this role",
+    "Kriteret dhe shpërndarja e pikëve për këtë rol"
+  ],
+  ["Authorized role", "Roli i autorizuar"],
+  ["Assigned team", "Ekip i caktuar"],
+  ["All teams with this role", "Të gjitha ekipet e rolit"],
+  [
+    "Options (one per line; choice only)",
+    "Alternativa (një për rresht; vetëm choice)"
+  ],
+  [
+    "Correct answer (choice/short/flag only; stored on the backend)",
+    "Përgjigjja e saktë (vetëm choice/short/flag; ruhet në backend)"
+  ],
+  [
+    "Time limit in seconds (optional, min 60)",
+    "Limit sekonda (opsional, min 60)"
+  ],
+  ["Mission start", "Fillimi i misionit"],
+  ["Mission end", "Përfundimi i misionit"],
+  ["Reason / feedback", "Arsyetimi / feedback"],
+  ["Review / change score", "Shqyrto / ndrysho pikët"],
+  ["Finance manager", "Shefi i financës"],
+  ["active", "aktive"],
+  ["pending", "në pritje"],
+  ["suspended", "e pezulluar"],
+  ["rejected", "e refuzuar"],
+  ["customer", "student"],
+  ["admin", "administrator"],
+  ["finance", "financë"],
+  ["owner", "drejtues"],
+  ["Prior grants invalidated", "Autorizimet e mëparshme u çaktivizuan"],
+  ["Credential generation used", "Versioni i autorizimit të përdorur"]
+]

@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import {
   useEffect,
   useRef,
@@ -52,7 +53,7 @@ function Field({
 }) {
   return (
     <label>
-      {label}
+      {tr(label)}
       <input name={name} type={type} defaultValue={value} required={required} />
     </label>
   );
@@ -70,7 +71,7 @@ function Area({
 }) {
   return (
     <label>
-      {label}
+      {tr(label)}
       <textarea
         name={name}
         defaultValue={value}
@@ -92,7 +93,7 @@ function Select({
 }) {
   return (
     <label>
-      {label}
+      {tr(label)}
       <select name={name}>{children}</select>
     </label>
   );
@@ -196,7 +197,7 @@ export default function Arena() {
       disabled={busy || disabled}
       onClick={fn}
     >
-      {label}
+      {tr(label)}
     </button>
   );
   return (
@@ -206,50 +207,62 @@ export default function Arena() {
         disabled={busy || loading}
         onClick={load}
       >
-        Rifresko Arena
+        {tr("Rifresko Arena")}
       </button>
       <header className="arena-hero">
         <div>
-          <span className="section-label">AFA / SUPERVISED CYBER LAB</span>
+          <span className="section-label">
+            {tr("AFA / SUPERVISED CYBER LAB")}
+          </span>
           <h1>
-            Cyber Arena<span>.</span>
+            {tr("Cyber Arena")}
+            <span>{tr(".")}</span>
           </h1>
-          <p>Learn. Defend. Compete.</p>
+          <p>{tr("Learn. Defend. Compete.")}</p>
         </div>
         <Shield size={62} />
       </header>
       <div className="arena-disclaimer">
-        <Radio size={16} /> LAB EDUKATIV · Të dhëna fiktive · DEMO / NO REAL
-        MONEY · Vetëm ushtrime të autorizuara.
+        <Radio size={16} />
+        {tr(
+          " LAB EDUKATIV · Të dhëna fiktive · DEMO / NO REAL MONEY · Vetëm ushtrime të autorizuara.",
+        )}
       </div>
       {error && (
         <div className="error" role="alert">
-          {error} <button onClick={load}>Rifresko</button>
+          {tr(error)} <button onClick={load}>{tr("Rifresko")}</button>
         </div>
       )}
       {notice && (
         <div className="arena-notice" role="status">
           <CheckCircle size={16} />
-          {notice}
-          <button aria-label="Mbyll njoftimin" onClick={() => setNotice("")}>
-            ×
+          {tr(notice)}
+          <button
+            aria-label={tr("Mbyll njoftimin")}
+            onClick={() => setNotice("")}
+          >
+            {tr("×")}
           </button>
         </div>
       )}
-      {loading && <p role="status">Duke ngarkuar Arena…</p>}
+      {loading && <p role="status">{tr("Duke ngarkuar Arena…")}</p>}
       {!id && listing && (
         <>
           <div className="arena-title">
-            <h2>Competition operations</h2>
-            <span>{listing.competitions.length} gara</span>
+            <h2>{tr("Competition operations")}</h2>
+            <span>
+              {listing.competitions.length}
+              {tr(" gara")}
+            </span>
           </div>
           {!listing.competitions.length && (
             <div className="arena-empty">
               <Target />
-              <h3>Arena është gati për misionin e parë.</h3>
+              <h3>{tr("Arena është gati për misionin e parë.")}</h3>
               <p>
-                Instruktori krijon dhe publikon garën. Nuk shtohen të dhëna
-                demonstrimi automatikisht.
+                {tr(
+                  "Instruktori krijon dhe publikon garën. Nuk shtohen të dhëna demonstrimi automatikisht.",
+                )}
               </p>
             </div>
           )}
@@ -275,13 +288,15 @@ export default function Arena() {
                           <h3>{v.title}</h3>
                           <p>{v.description}</p>
                           <small>
-                            {date(v.starts_at)} → {date(v.ends_at)}
+                            {date(v.starts_at)}
+                            {tr(" → ")}
+                            {date(v.ends_at)}
                           </small>
                           <strong>
                             {v.participation
                               ? labels[v.participation]
-                              : "Shiko garën"}{" "}
-                            ↗
+                              : tr("Shiko garën")}{" "}
+                            {tr("↗")}
                           </strong>
                         </button>
                       ))}
@@ -294,11 +309,13 @@ export default function Arena() {
           {listing.canCreate && (
             <details className="arena-block">
               <summary>
-                <Plus size={18} /> Krijo garë / template
+                <Plus size={18} />
+                {tr(" Krijo garë / template")}
               </summary>
               <p>
-                Template-i krijon vetëm një draft me materiale fiktive. Nuk prek
-                llogaritë ose bilancet bankare.
+                {tr(
+                  "Template-i krijon vetëm një draft me materiale fiktive. Nuk prek llogaritë ose bilancet bankare.",
+                )}
               </p>
               {btn("Krijo OPERATION BANK UNDER ATTACK", async () => {
                 const r = await act("template", {});
@@ -317,26 +334,26 @@ export default function Arena() {
                   if (r) selectCompetition(r.id);
                 }}
               >
-                <h3>Garë e re</h3>
-                <Field name="title" label="Titulli" />
-                <Area name="description" label="Përshkrimi" />
-                <Area name="rules" label="Rregullat" />
+                <h3>{tr("Garë e re")}</h3>
+                <Field name="title" label={tr("Titulli")} />
+                <Area name="description" label={tr("Përshkrimi")} />
+                <Area name="rules" label={tr("Rregullat")} />
                 <Field
                   name="starts_at"
-                  label="Fillimi (ora lokale)"
+                  label={tr("Fillimi (ora lokale)")}
                   type="datetime-local"
                 />
                 <Field
                   name="ends_at"
-                  label="Përfundimi (ora lokale)"
+                  label={tr("Përfundimi (ora lokale)")}
                   type="datetime-local"
                 />
-                <Select name="independent" label="Pjesëmarrës pa ekip">
-                  <option value="yes">Lejo</option>
-                  <option value="no">Kërko ekip</option>
+                <Select name="independent" label={tr("Pjesëmarrës pa ekip")}>
+                  <option value="yes">{tr("Lejo")}</option>
+                  <option value="no">{tr("Kërko ekip")}</option>
                 </Select>
                 <button className="button light" disabled={busy}>
-                  Krijo draft
+                  {tr("Krijo draft")}
                 </button>
               </form>
             </details>
@@ -354,18 +371,19 @@ export default function Arena() {
               <h2>{c.title}</h2>
               <p>{c.description}</p>
               <small>
-                {date(c.starts_at)} → {date(c.ends_at)}
+                {date(c.starts_at)}
+                {tr(" → ")}
+                {date(c.ends_at)}
               </small>
             </div>
           </div>
           <details className="arena-block">
-            <summary>Rregullat dhe kriteret</summary>
+            <summary>{tr("Rregullat dhe kriteret")}</summary>
             <p className="arena-pre">{c.rules}</p>
             <p>
-              Pikët individuale mblidhen për çdo mision, maksimumi një rezultat
-              për mision. Totali i ekipit është shuma e anëtarëve; madhësia e
-              ekipit shfaqet krahas pikëve. Nuk ka bonus kohe. Objektivat dhe
-              pikët për secilin rol shfaqen te misioni.
+              {tr(
+                "Pikët individuale mblidhen për çdo mision, maksimumi një rezultat për mision. Totali i ekipit është shuma e anëtarëve; madhësia e ekipit shfaqet krahas pikëve. Nuk ka bonus kohe. Objektivat dhe pikët për secilin rol shfaqen te misioni.",
+              )}
             </p>
           </details>
           {!p &&
@@ -373,7 +391,9 @@ export default function Arena() {
             btn("Kërko të marrësh pjesë", () => act("join", {}))}
           {p?.status === "requested" && (
             <p className="arena-empty">
-              Kërkesa u dërgua. Instruktori do të caktojë rolin dhe ekipin.
+              {tr(
+                "Kërkesa u dërgua. Instruktori do të caktojë rolin dhe ekipin.",
+              )}
             </p>
           )}
           {(manager || p?.status === "assigned") && (
@@ -382,7 +402,7 @@ export default function Arena() {
                 <div>
                   <Target />
                   <strong>{data.missions.length}</strong>
-                  <span>Misione të dukshme</span>
+                  <span>{tr("Misione të dukshme")}</span>
                 </div>
                 <div>
                   <Trophy />
@@ -390,18 +410,18 @@ export default function Arena() {
                     {data.individuals.find((v: Row) => v.user_id === p?.user_id)
                       ?.score || 0}
                   </strong>
-                  <span>My Score</span>
+                  <span>{tr("My Score")}</span>
                 </div>
                 <div>
                   <Users />
-                  <strong>{p?.role ? labels[p.role] : "Instructor"}</strong>
+                  <strong>{p?.role ? labels[p.role] : tr("Instructor")}</strong>
                   <span>
                     {data.teams.find((v: Row) => v.id === p?.team_id)?.name ||
-                      "Independent / Control"}
+                      tr("Independent / Control")}
                   </span>
                 </div>
               </div>
-              <nav className="tabs" aria-label="Cyber Arena">
+              <nav className="tabs" aria-label={tr("Cyber Arena")}>
                 {[
                   ["missions", "My Missions"],
                   ["team", "My Team"],
@@ -417,7 +437,7 @@ export default function Arena() {
                       v === "security" ? openSecurity() : setTab(v)
                     }
                   >
-                    {label}
+                    {tr(label)}
                   </button>
                 ))}
               </nav>
@@ -427,17 +447,24 @@ export default function Arena() {
                     {data.missions.map((m: Row) => (
                       <article className="arena-block" key={m.id}>
                         <span className="section-label">
-                          {m.category} / {m.difficulty}
+                          {m.category}
+                          {tr(" / ")}
+                          {m.difficulty}
                         </span>
                         <h3>{m.title}</h3>
                         <p>{m.description}</p>
                         <div className="arena-tags">
-                          <span>{m.points} points</span>
+                          <span>
+                            {m.points}
+                            {tr(" points")}
+                          </span>
                           <span>{labels[m.role]}</span>
                           <span>{m.format}</span>
                         </div>
                         <p>
-                          {date(m.starts_at)} — {date(m.ends_at)}
+                          {date(m.starts_at)}
+                          {tr(" — ")}
+                          {date(m.ends_at)}
                         </p>
                         {btn("Hap misionin", () => {
                           setMission(m);
@@ -449,15 +476,16 @@ export default function Arena() {
                               (v: Row) => v.challenge_id === m.id,
                             ).length
                           }{" "}
-                          dorëzime të dukshme
+                          {tr("dorëzime të dukshme")}
                         </small>
                       </article>
                     ))}
                   </div>
                   {!data.missions.length && (
                     <p className="arena-empty">
-                      Nuk ka misione të disponueshme për rolin tënd në këtë
-                      orar.
+                      {tr(
+                        "Nuk ka misione të disponueshme për rolin tënd në këtë orar.",
+                      )}
                     </p>
                   )}
                   {mission && (
@@ -466,15 +494,19 @@ export default function Arena() {
                         <h2>{mission.title}</h2>
                         {btn("Mbyll", () => setMission(undefined))}
                       </div>
-                      <h3>Instructions</h3>
+                      <h3>{tr("Instructions")}</h3>
                       <p className="arena-pre">{mission.instructions}</p>
-                      <h3>Learning objectives</h3>
+                      <h3>{tr("Learning objectives")}</h3>
                       <p>{mission.objectives}</p>
-                      <h3>Evaluation criteria · {mission.points} points</h3>
+                      <h3>
+                        {tr("Evaluation criteria · ")}
+                        {mission.points}
+                        {tr(" points")}
+                      </h3>
                       <p>{mission.criteria}</p>
                       {mission.hints && (
                         <details>
-                          <summary>Hint</summary>
+                          <summary>{tr("Hint")}</summary>
                           <p>{mission.hints}</p>
                         </details>
                       )}
@@ -483,7 +515,7 @@ export default function Arena() {
                           ? "Limit: " +
                             mission.time_limit +
                             " sekonda nga nisja."
-                          : "Pa limit shtesë; vlejnë datat e misionit."}
+                          : tr("Pa limit shtesë; vlejnë datat e misionit.")}
                       </p>
                       {!started ? (
                         btn(
@@ -519,7 +551,8 @@ export default function Arena() {
                           }}
                         >
                           <p>
-                            Nisur: {date(started)}
+                            {tr("Nisur: ")}
+                            {date(started)}
                             {mission.time_limit
                               ? " · Afati: " +
                                 date(
@@ -531,7 +564,7 @@ export default function Arena() {
                               : ""}
                           </p>
                           {mission.format === "choice" ? (
-                            <Select name="answer" label="Përgjigjja">
+                            <Select name="answer" label={tr("Përgjigjja")}>
                               {mission.choices.map((v: string) => (
                                 <option key={v}>{v}</option>
                               ))}
@@ -541,19 +574,21 @@ export default function Arena() {
                               name="answer"
                               label={
                                 ["report", "evidence"].includes(mission.format)
-                                  ? "Raport / evidencë (tekst, pa sekrete ose të dhëna personale reale)"
-                                  : "Përgjigjja"
+                                  ? tr(
+                                      "Raport / evidencë (tekst, pa sekrete ose të dhëna personale reale)",
+                                    )
+                                  : tr("Përgjigjja")
                               }
                             />
                           )}
                           <button className="button light" disabled={busy}>
-                            Dorëzo për verifikim
+                            {tr("Dorëzo për verifikim")}
                           </button>
                         </form>
                       )}
                     </section>
                   )}
-                  <h3>Historiku im i dorëzimeve</h3>
+                  <h3>{tr("Historiku im i dorëzimeve")}</h3>
                   {data.submissions
                     .filter((v: Row) => v.user_id === p?.user_id)
                     .map((v: Row) => (
@@ -561,11 +596,14 @@ export default function Arena() {
                         <span>
                           {data.missions.find(
                             (m: Row) => m.id === v.challenge_id,
-                          )?.title || "Mision"}
+                          )?.title || tr("Mision")}
                           <small>{date(v.created_at)}</small>
                         </span>
                         <b>
-                          {v.status} · {v.awarded}p
+                          {v.status}
+                          {tr(" · ")}
+                          {v.awarded}
+                          {tr("p")}
                         </b>
                       </div>
                     ))}
@@ -575,18 +613,18 @@ export default function Arena() {
                 <>
                   <h2>
                     {data.teams.find((v: Row) => v.id === p?.team_id)?.name ||
-                      "My Team / Independent"}
+                      tr("My Team / Independent")}
                   </h2>
                   {data.roster.map((v: Row) => (
                     <div key={v.user_id} className="arena-line">
                       <span>
                         {v.name}
                         <small>
-                          {labels[v.role] || "Pa caktim"}
+                          {labels[v.role] || tr("Pa caktim")}
                           {data.teams.some(
                             (t: Row) => t.leader_id === v.user_id,
                           )
-                            ? " · Team leader"
+                            ? tr(" · Team leader")
                             : ""}
                         </small>
                       </span>
@@ -594,22 +632,30 @@ export default function Arena() {
                     </div>
                   ))}
                   <p>
-                    Ekipet dhe rolet caktohen nga instruktori. Anëtarësia kyçet
-                    pas dorëzimit të parë.
+                    {tr(
+                      "Ekipet dhe rolet caktohen nga instruktori. Anëtarësia kyçet pas dorëzimit të parë.",
+                    )}
                   </p>
-                  <h3>Team mission history</h3>
+                  <h3>{tr("Team mission history")}</h3>
                   {data.teamHistory.map((v: Row) => (
                     <div className="arena-line" key={v.id}>
                       <span>
-                        {v.name} · {v.title}
+                        {v.name}
+                        {tr(" · ")}
+                        {v.title}
                         <small>
-                          {date(v.created_at)} · {v.status}
+                          {date(v.created_at)}
+                          {tr(" · ")}
+                          {v.status}
                         </small>
                       </span>
-                      <b>{v.points}p</b>
+                      <b>
+                        {v.points}
+                        {tr("p")}
+                      </b>
                     </div>
                   ))}
-                  <h3>Achievement badges</h3>
+                  <h3>{tr("Achievement badges")}</h3>
                   {data.achievements.length ? (
                     data.achievements.map((v: Row) => (
                       <span className="arena-badge" key={v.badge}>
@@ -618,38 +664,56 @@ export default function Arena() {
                       </span>
                     ))
                   ) : (
-                    <p>Arritjet shfaqen pas misioneve të verifikuara.</p>
+                    <p>
+                      {tr("Arritjet shfaqen pas misioneve të verifikuara.")}
+                    </p>
                   )}
                 </>
               )}
               {tab === "leaderboard" && (
                 <div className="arena-grid">
                   <section className="arena-block">
-                    <h2>Team leaderboard</h2>
+                    <h2>{tr("Team leaderboard")}</h2>
                     {data.teamLeaderboard.map((v: Row, i: number) => (
                       <div className="arena-line" key={v.id}>
                         <span>
-                          {i + 1}. {v.name}
+                          {i + 1}
+                          {tr(". ")}
+                          {v.name}
                           <small>
-                            {v.members}/{v.capacity} anëtarë · {v.completed}{" "}
-                            misione me pikë
+                            {v.members}
+                            {tr("/")}
+                            {v.capacity}
+                            {tr(" anëtarë · ")}
+                            {v.completed} {tr("misione me pikë")}
                           </small>
                         </span>
-                        <b>{v.score}p</b>
+                        <b>
+                          {v.score}
+                          {tr("p")}
+                        </b>
                       </div>
                     ))}
                   </section>
                   <section className="arena-block">
-                    <h2>Individual leaderboard</h2>
+                    <h2>{tr("Individual leaderboard")}</h2>
                     {data.individuals.map((v: Row, i: number) => (
                       <div className="arena-line" key={v.user_id}>
                         <span>
-                          {i + 1}. {v.name}
+                          {i + 1}
+                          {tr(". ")}
+                          {v.name}
                           <small>
-                            {labels[v.role]} · {v.completed} misione
+                            {labels[v.role]}
+                            {tr(" · ")}
+                            {v.completed}
+                            {tr(" misione")}
                           </small>
                         </span>
-                        <b>{v.score}p</b>
+                        <b>
+                          {v.score}
+                          {tr("p")}
+                        </b>
                       </div>
                     ))}
                   </section>
@@ -658,19 +722,22 @@ export default function Arena() {
               {tab === "announcements" && (
                 <>
                   {!data.announcements.length && (
-                    <p className="arena-empty">Nuk ka ende njoftime.</p>
+                    <p className="arena-empty">{tr("Nuk ka ende njoftime.")}</p>
                   )}
                   {data.announcements.map((v: Row) => (
                     <article className="arena-block" key={v.id}>
-                      <small>{v.created_at} UTC</small>
+                      <small>
+                        {v.created_at}
+                        {tr(" UTC")}
+                      </small>
                       <p className="arena-pre">{v.body}</p>
                     </article>
                   ))}
                   {manager && (
                     <form className="arena-block" onSubmit={form("announce")}>
-                      <Area name="body" label="Njoftim për garën" />
+                      <Area name="body" label={tr("Njoftim për garën")} />
                       <button className="button light" disabled={busy}>
-                        Publiko njoftimin
+                        {tr("Publiko njoftimin")}
                       </button>
                     </form>
                   )}
@@ -679,36 +746,46 @@ export default function Arena() {
               {tab === "security" && (
                 <>
                   <h2>
-                    Security Center <small>SIMULIM</small>
+                    {tr("Security Center ")}
+                    <small>{tr("SIMULIM")}</small>
                   </h2>
                   <p>
-                    Ngjarje fiktive të përgatitura nga instruktori. Mos vendosni
-                    fjalëkalime, token-e ose të dhëna personale.
+                    {tr(
+                      "Ngjarje fiktive të përgatitura nga instruktori. Mos vendosni fjalëkalime, token-e ose të dhëna personale.",
+                    )}
                   </p>
                   {!security ? (
-                    <p role="status">Duke ngarkuar sinjalizimet…</p>
+                    <p role="status">{tr("Duke ngarkuar sinjalizimet…")}</p>
                   ) : (
                     <>
                       {!security.alerts.length && (
                         <p className="arena-empty">
-                          Nuk ka sinjalizime të autorizuara.
+                          {tr("Nuk ka sinjalizime të autorizuara.")}
                         </p>
                       )}
                       {security.alerts.map((a: Row) => (
                         <article className="arena-block" key={a.id}>
                           <span className="arena-state">
-                            {a.severity} · {a.status}
+                            {a.severity}
+                            {tr(" · ")}
+                            {a.status}
                           </span>
                           <h3>{a.title}</h3>
                           <p className="arena-pre">{a.details}</p>
-                          <small>{a.created_at} UTC</small>
-                          <h4>Incident timeline / analyst notes</h4>
+                          <small>
+                            {a.created_at}
+                            {tr(" UTC")}
+                          </small>
+                          <h4>{tr("Incident timeline / analyst notes")}</h4>
                           {security.notes
                             .filter((n: Row) => n.alert_id === a.id)
                             .map((n: Row) => (
                               <div className="arena-note" key={n.id}>
                                 <b>{n.name}</b>
-                                <small>{n.created_at} UTC</small>
+                                <small>
+                                  {n.created_at}
+                                  {tr(" UTC")}
+                                </small>
                                 <p className="arena-pre">{n.body}</p>
                               </div>
                             ))}
@@ -726,11 +803,11 @@ export default function Arena() {
                             >
                               <Area
                                 name="body"
-                                label="Shënim / raport hetimi"
+                                label={tr("Shënim / raport hetimi")}
                               />
                               <Select
                                 name="status"
-                                label="Statusi i incidentit"
+                                label={tr("Statusi i incidentit")}
                               >
                                 {[
                                   "new",
@@ -749,7 +826,7 @@ export default function Arena() {
                                   ))}
                               </Select>
                               <button className="button light" disabled={busy}>
-                                Ruaj në timeline
+                                {tr("Ruaj në timeline")}
                               </button>
                             </form>
                           )}
@@ -769,14 +846,19 @@ export default function Arena() {
                         await openSecurity();
                       }}
                     >
-                      <h3>Krijo sinjalizim fiktiv</h3>
-                      <Field name="title" label="Titulli" />
-                      <Area name="details" label="Log-e / ngjarje fiktive" />
-                      <Select name="severity" label="Severity">
+                      <h3>{tr("Krijo sinjalizim fiktiv")}</h3>
+                      <Field name="title" label={tr("Titulli")} />
+                      <Area
+                        name="details"
+                        label={tr("Log-e / ngjarje fiktive")}
+                      />
+                      <Select name="severity" label={tr("Severity")}>
                         {Values(["low", "medium", "high", "critical"])}
                       </Select>
-                      <Select name="team_id" label="Kufizo te ekipi">
-                        <option value="">Të gjithë pjesëmarrësit</option>
+                      <Select name="team_id" label={tr("Kufizo te ekipi")}>
+                        <option value="">
+                          {tr("Të gjithë pjesëmarrësit")}
+                        </option>
                         {data.teams.map((t: Row) => (
                           <option key={t.id} value={t.id}>
                             {t.name}
@@ -784,7 +866,7 @@ export default function Arena() {
                         ))}
                       </Select>
                       <button className="button light" disabled={busy}>
-                        Krijo sinjalizim
+                        {tr("Krijo sinjalizim")}
                       </button>
                     </form>
                   )}
@@ -792,7 +874,7 @@ export default function Arena() {
               )}
               {tab === "instructor" && manager && (
                 <>
-                  <h2>Instructor control</h2>
+                  <h2>{tr("Instructor control")}</h2>
                   <div className="arena-tags">
                     {["registration", "upcoming", "active", "completed"]
                       .filter((v) => v !== c.status)
@@ -822,17 +904,17 @@ export default function Arena() {
                       data.roster.filter((v: Row) => v.status === "requested")
                         .length
                     }{" "}
-                    kërkesa në pritje ·{" "}
+                    {tr("kërkesa në pritje ·")}{" "}
                     {
                       data.submissions.filter(
                         (v: Row) => v.status === "pending",
                       ).length
                     }{" "}
-                    raporte për shqyrtim
+                    {tr("raporte për shqyrtim")}
                   </p>
                   <div className="arena-grid">
                     <details className="arena-block">
-                      <summary>Detajet e garës</summary>
+                      <summary>{tr("Detajet e garës")}</summary>
                       <form
                         onSubmit={form("edit", (b) => ({
                           ...b,
@@ -840,47 +922,55 @@ export default function Arena() {
                           ends_at: Date.parse(b.ends_at),
                         }))}
                       >
-                        <Field name="title" label="Titulli" value={c.title} />
+                        <Field
+                          name="title"
+                          label={tr("Titulli")}
+                          value={c.title}
+                        />
                         <Area
                           name="description"
-                          label="Përshkrimi"
+                          label={tr("Përshkrimi")}
                           value={c.description}
                         />
-                        <Area name="rules" label="Rregullat" value={c.rules} />
+                        <Area
+                          name="rules"
+                          label={tr("Rregullat")}
+                          value={c.rules}
+                        />
                         <Field
                           name="starts_at"
-                          label="Fillimi (ora lokale)"
+                          label={tr("Fillimi (ora lokale)")}
                           type="datetime-local"
                           value={local(c.starts_at)}
                         />
                         <Field
                           name="ends_at"
-                          label="Përfundimi (ora lokale)"
+                          label={tr("Përfundimi (ora lokale)")}
                           type="datetime-local"
                           value={local(c.ends_at)}
                         />
                         <button className="button light" disabled={busy}>
-                          Ruaj detajet
+                          {tr("Ruaj detajet")}
                         </button>
                       </form>
                     </details>
                     <details className="arena-block">
-                      <summary>Ekipe dhe pjesëmarrës</summary>
+                      <summary>{tr("Ekipe dhe pjesëmarrës")}</summary>
                       <form
                         onSubmit={form("team", (b) => ({
                           ...b,
                           capacity: Number(b.capacity),
                         }))}
                       >
-                        <Field name="name" label="Emri i ekipit" />
+                        <Field name="name" label={tr("Emri i ekipit")} />
                         <Field
                           name="capacity"
-                          label="Kapaciteti"
+                          label={tr("Kapaciteti")}
                           type="number"
                           value={8}
                         />
                         <button className="button light" disabled={busy}>
-                          Krijo ekip
+                          {tr("Krijo ekip")}
                         </button>
                       </form>
                       <form
@@ -889,7 +979,7 @@ export default function Arena() {
                           leader: b.leader === "yes",
                         }))}
                       >
-                        <Select name="user_id" label="Pjesëmarrësi">
+                        <Select name="user_id" label={tr("Pjesëmarrësi")}>
                           {data.candidates.map((v: Row) => (
                             <option key={v.id} value={v.id}>
                               {v.name}
@@ -898,34 +988,41 @@ export default function Arena() {
                                   p.user_id === v.id &&
                                   p.status === "requested",
                               )
-                                ? " · KËRKESË E RE"
+                                ? tr(" · KËRKESË E RE")
                                 : ""}
                             </option>
                           ))}
                         </Select>
-                        <Select name="role" label="Roli i garës">
+                        <Select name="role" label={tr("Roli i garës")}>
                           {Values(["red", "blue", "soc", "auditor"])}
                         </Select>
-                        <Select name="team_id" label="Ekipi">
-                          <option value="">Independent</option>
+                        <Select name="team_id" label={tr("Ekipi")}>
+                          <option value="">{tr("Independent")}</option>
                           {data.teams.map((t: Row) => (
                             <option key={t.id} value={t.id}>
-                              {t.name} ({t.members}/{t.capacity})
+                              {t.name}
+                              {tr(" (")}
+                              {t.members}
+                              {tr("/")}
+                              {t.capacity}
+                              {tr(")")}
                             </option>
                           ))}
                         </Select>
-                        <Select name="leader" label="Team leader">
-                          <option value="no">Jo</option>
-                          <option value="yes">Po</option>
+                        <Select name="leader" label={tr("Team leader")}>
+                          <option value="no">{tr("Jo")}</option>
+                          <option value="yes">{tr("Po")}</option>
                         </Select>
                         <button className="button light" disabled={busy}>
-                          Mirato dhe cakto
+                          {tr("Mirato dhe cakto")}
                         </button>
                       </form>
                       <form onSubmit={form("instructor")}>
                         <Select
                           name="user_id"
-                          label="Delego instruktor (vetëm bank admin/owner)"
+                          label={tr(
+                            "Delego instruktor (vetëm bank admin/owner)",
+                          )}
                         >
                           {data.candidates.map((v: Row) => (
                             <option key={v.id} value={v.id}>
@@ -934,13 +1031,13 @@ export default function Arena() {
                           ))}
                         </Select>
                         <button className="button outline" disabled={busy}>
-                          Cakto instruktor për këtë garë
+                          {tr("Cakto instruktor për këtë garë")}
                         </button>
                       </form>
                     </details>
                   </div>
                   <details className="arena-block">
-                    <summary>Krijo mision (vetëm draft)</summary>
+                    <summary>{tr("Krijo mision (vetëm draft)")}</summary>
                     <form
                       className="arena-form-grid"
                       onSubmit={form("challenge", (b) => ({
@@ -955,19 +1052,24 @@ export default function Arena() {
                           .filter(Boolean),
                       }))}
                     >
-                      <Field name="title" label="Titulli" />
-                      <Area name="description" label="Përshkrimi" />
+                      <Field name="title" label={tr("Titulli")} />
+                      <Area name="description" label={tr("Përshkrimi")} />
                       <Area
                         name="instructions"
-                        label="Udhëzimet / dataset fiktiv"
+                        label={tr("Udhëzimet / dataset fiktiv")}
                       />
-                      <Area name="objectives" label="Objektivat mësimore" />
+                      <Area
+                        name="objectives"
+                        label={tr("Objektivat mësimore")}
+                      />
                       <Area
                         name="criteria"
-                        label="Kriteret dhe shpërndarja e pikëve për këtë rol"
+                        label={tr(
+                          "Kriteret dhe shpërndarja e pikëve për këtë rol",
+                        )}
                       />
-                      <Area name="hints" label="Hints" required={false} />
-                      <Select name="category" label="Kategoria">
+                      <Area name="hints" label={tr("Hints")} required={false} />
+                      <Select name="category" label={tr("Kategoria")}>
                         {Values([
                           "phishing",
                           "logs",
@@ -979,21 +1081,23 @@ export default function Arena() {
                           "detection",
                         ])}
                       </Select>
-                      <Select name="difficulty" label="Vështirësia">
+                      <Select name="difficulty" label={tr("Vështirësia")}>
                         {Values(["easy", "medium", "hard"])}
                       </Select>
-                      <Select name="role" label="Roli i autorizuar">
+                      <Select name="role" label={tr("Roli i autorizuar")}>
                         {Values(["all", "red", "blue", "soc", "auditor"])}
                       </Select>
-                      <Select name="team_id" label="Ekip i caktuar">
-                        <option value="">Të gjitha ekipet e rolit</option>
+                      <Select name="team_id" label={tr("Ekip i caktuar")}>
+                        <option value="">
+                          {tr("Të gjitha ekipet e rolit")}
+                        </option>
                         {data.teams.map((v: Row) => (
                           <option key={v.id} value={v.id}>
                             {v.name}
                           </option>
                         ))}
                       </Select>
-                      <Select name="format" label="Formati">
+                      <Select name="format" label={tr("Formati")}>
                         {Values([
                           "report",
                           "evidence",
@@ -1004,36 +1108,38 @@ export default function Arena() {
                       </Select>
                       <Area
                         name="choices"
-                        label="Alternativa (një për rresht; vetëm choice)"
+                        label={tr("Alternativa (një për rresht; vetëm choice)")}
                         required={false}
                       />
                       <Field
                         name="answer"
-                        label="Përgjigjja e saktë (vetëm choice/short/flag; ruhet në backend)"
+                        label={tr(
+                          "Përgjigjja e saktë (vetëm choice/short/flag; ruhet në backend)",
+                        )}
                         type="password"
                         required={false}
                       />
                       <Field
                         name="points"
-                        label="Pikët maksimale"
+                        label={tr("Pikët maksimale")}
                         type="number"
                         value={100}
                       />
                       <Field
                         name="time_limit"
-                        label="Limit sekonda (opsional, min 60)"
+                        label={tr("Limit sekonda (opsional, min 60)")}
                         type="number"
                         required={false}
                       />
                       <Field
                         name="starts_at"
-                        label="Fillimi i misionit"
+                        label={tr("Fillimi i misionit")}
                         type="datetime-local"
                         value={local(c.starts_at)}
                       />
                       <Field
                         name="ends_at"
-                        label="Përfundimi i misionit"
+                        label={tr("Përfundimi i misionit")}
                         type="datetime-local"
                         value={local(c.ends_at)}
                       />
@@ -1041,21 +1147,33 @@ export default function Arena() {
                         className="button light"
                         disabled={busy || c.status !== "draft"}
                       >
-                        Krijo misionin
+                        {tr("Krijo misionin")}
                       </button>
                     </form>
                   </details>
-                  <h3>Submission review</h3>
-                  {!data.submissions.length && <p>Nuk ka ende dorëzime.</p>}
+                  <h3>{tr("Submission review")}</h3>
+                  {!data.submissions.length && (
+                    <p>{tr("Nuk ka ende dorëzime.")}</p>
+                  )}
                   {data.submissions.map((v: Row) => (
                     <details className="arena-block" key={v.id}>
                       <summary>
-                        {v.name} · {v.title} · {v.status} · {v.awarded}/
-                        {v.max_points}p
+                        {v.name}
+                        {tr(" · ")}
+                        {v.title}
+                        {tr(" · ")}
+                        {v.status}
+                        {tr(" · ")}
+                        {v.awarded}
+                        {tr("/")}
+                        {v.max_points}
+                        {tr("p")}
                       </summary>
                       <p className="arena-pre">{v.answer}</p>
                       <small>
-                        {date(v.created_at)} · {v.id}
+                        {date(v.created_at)}
+                        {tr(" · ")}
+                        {v.id}
                       </small>
                       {["pending", "reviewed"].includes(v.status) && (
                         <form
@@ -1085,26 +1203,34 @@ export default function Arena() {
                             type="number"
                             value={v.awarded}
                           />
-                          <Area name="reason" label="Arsyetimi / feedback" />
+                          <Area
+                            name="reason"
+                            label={tr("Arsyetimi / feedback")}
+                          />
                           <button className="button light" disabled={busy}>
-                            Shqyrto / ndrysho pikët
+                            {tr("Shqyrto / ndrysho pikët")}
                           </button>
                         </form>
                       )}
                     </details>
                   ))}
                   <details className="arena-block">
-                    <summary>Score audit trail</summary>
+                    <summary>{tr("Score audit trail")}</summary>
                     {data.scoreEvents.map((v: Row) => (
                       <div className="arena-line" key={v.id}>
                         <span>
                           {v.reason}
                           <small>
-                            {v.actor} · {v.created_at} UTC
+                            {v.actor}
+                            {tr(" · ")}
+                            {v.created_at}
+                            {tr(" UTC")}
                           </small>
                         </span>
                         <b>
-                          {v.previous_points} → {v.new_points}
+                          {v.previous_points}
+                          {tr(" → ")}
+                          {v.new_points}
                         </b>
                       </div>
                     ))}
@@ -1141,8 +1267,8 @@ export default function Arena() {
           aria-labelledby="arena-confirm"
         >
           <div>
-            <h2 id="arena-confirm">Konfirmo veprimin</h2>
-            <p>{confirm.label}</p>
+            <h2 id="arena-confirm">{tr("Konfirmo veprimin")}</h2>
+            <p>{tr(confirm.label)}</p>
             {btn("Anulo", () => setConfirm(undefined))}
             {btn("Konfirmo", async () => {
               const action = confirm.run;

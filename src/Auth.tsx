@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useState, type FormEvent } from "react";
 import {
   ArrowUpRight,
@@ -43,22 +44,23 @@ export default function Auth({
       <div className="auth-art">
         <LaunchBrand />
         <div className="auth-live">
-          <span className="status-dot" /> ACADEMIC CYBER ARENA
+          <span className="status-dot" />
+          {tr(" ACADEMIC CYBER ARENA")}
         </div>
         <Suspense fallback={null}>
           <LaunchScene />
         </Suspense>
         <div className="auth-statement">
-          <span className="eyebrow">YOUR NEXT DEPLOYMENT</span>
+          <span className="eyebrow">{tr("YOUR NEXT DEPLOYMENT")}</span>
           <h1>
-            Choose a side.
+            {tr("Choose a side.")}
             <br />
-            <em>Find the truth.</em>
+            <em>{tr("Find the truth.")}</em>
           </h1>
         </div>
         <div className="auth-bottom">
-          <span>AFA LAUNCH / SEASON 01</span>
-          <span>LEARN. INVESTIGATE. DEFEND.</span>
+          <span>{tr("AFA LAUNCH / SEASON 01")}</span>
+          <span>{tr("LEARN. INVESTIGATE. DEFEND.")}</span>
         </div>
       </div>
       <main tabIndex={-1} className="auth-form">
@@ -66,39 +68,50 @@ export default function Auth({
           <LaunchBrand />
         </div>
         <a className="back-link" href="#/">
-          <ArrowLeft size={16} /> Kryefaqja
+          <ArrowLeft size={16} />
+          {tr(" Kryefaqja")}
         </a>
         {done ? (
           <div className="auth-inner">
             <CheckCircle2 size={44} className="positive" />
-            <h1>Kërkesa u dërgua.</h1>
+            <h1>{tr("Kërkesa u dërgua.")}</h1>
             <p>
-              Administratori do të shqyrtojë kërkesën. Llogaria aktivizohet pas
-              miratimit.
+              {tr(
+                "Administratori do të shqyrtojë kërkesën. Llogaria aktivizohet pas miratimit.",
+              )}
             </p>
             <a href="#/login" className="button light">
-              Kthehu te hyrja <ArrowUpRight size={18} />
+              {tr("Kthehu te hyrja ")}
+              <ArrowUpRight size={18} />
             </a>
           </div>
         ) : (
           <div className="auth-inner">
             <div className="eyebrow">
-              {register ? "BËHU PJESË E AFA" : "HAPËSIRA JOTE PERSONALE"}
+              {register
+                ? tr("BËHU PJESË E AFA")
+                : tr("HAPËSIRA JOTE PERSONALE")}
             </div>
-            <h1>{register ? "Një fillim i ri." : "Mirë se u ktheve."}</h1>
+            <h1>
+              {register ? tr("Një fillim i ri.") : tr("Mirë se u ktheve.")}
+            </h1>
             <p>
               {register
-                ? "Kërko akses në AFA LAUNCH. Administratori miraton kërkesën përpara se të zgjedhësh ekipin."
-                : "Hyr në AFA LAUNCH. Faza 1 hapet kur administratori ose owner nis lojën."}
+                ? tr(
+                    "Kërko akses në AFA LAUNCH. Administratori miraton kërkesën përpara se të zgjedhësh ekipin.",
+                  )
+                : tr(
+                    "Hyr në AFA LAUNCH. Faza 1 hapet kur administratori ose owner nis lojën.",
+                  )}
             </p>
             <form onSubmit={submit}>
               {register && (
                 <label>
-                  Emri i plotë
+                  {tr("Emri i plotë")}
                   <input
                     name="name"
                     autoComplete="name"
-                    placeholder="Emri dhe mbiemri"
+                    placeholder={tr("Emri dhe mbiemri")}
                     minLength={2}
                     maxLength={80}
                     required
@@ -106,18 +119,18 @@ export default function Auth({
                 </label>
               )}
               <label>
-                Email
+                {tr("Email")}
                 <input
                   name="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="emri@shembull.al"
+                  placeholder={tr("emri@shembull.al")}
                   required
                   maxLength={254}
                 />
               </label>
               <label>
-                Fjalëkalimi
+                {tr("Fjalëkalimi")}
                 <div className="password-field">
                   <input
                     name="password"
@@ -126,7 +139,9 @@ export default function Auth({
                       register ? "new-password" : "current-password"
                     }
                     placeholder={
-                      register ? "Të paktën 12 karaktere" : "Fjalëkalimi juaj"
+                      register
+                        ? tr("Të paktën 12 karaktere")
+                        : tr("Fjalëkalimi juaj")
                     }
                     required
                     minLength={register ? 12 : 1}
@@ -135,7 +150,7 @@ export default function Auth({
                   <button
                     type="button"
                     aria-label={
-                      show ? "Fshih fjalëkalimin" : "Shfaq fjalëkalimin"
+                      show ? tr("Fshih fjalëkalimin") : tr("Shfaq fjalëkalimin")
                     }
                     onClick={() => setShow(!show)}
                   >
@@ -145,34 +160,36 @@ export default function Auth({
               </label>
               {register && (
                 <label className="checkbox-label">
-                  <input type="checkbox" required />E kuptoj që kjo platformë
-                  përdor vetëm para virtuale.
+                  <input type="checkbox" required />
+                  {tr("E kuptoj që kjo platformë përdor vetëm para virtuale.")}
                 </label>
               )}
               {error && (
                 <div role="alert" className="error">
-                  {error}
+                  {tr(error)}
                 </div>
               )}
               <button disabled={busy} className="button light wide">
                 {busy
-                  ? "Duke vazhduar…"
+                  ? tr("Duke vazhduar…")
                   : register
-                    ? "Dërgo kërkesën"
-                    : "Hyr në llogari"}
+                    ? tr("Dërgo kërkesën")
+                    : tr("Hyr në llogari")}
                 <ArrowUpRight size={18} />
               </button>
             </form>
             <div className="auth-switch">
-              {register ? "Ke një llogari?" : "Nuk ke ende një llogari?"}{" "}
+              {register
+                ? tr("Ke një llogari?")
+                : tr("Nuk ke ende një llogari?")}{" "}
               <a href={register ? "#/login" : "#/register"}>
-                {register ? "Identifikohu" : "Kërko akses"}
+                {register ? tr("Identifikohu") : tr("Kërko akses")}
               </a>
             </div>
           </div>
         )}
         <small className="auth-foot">
-          Platformë edukative · Asnjë para reale
+          {tr("Platformë edukative · Asnjë para reale")}
         </small>
       </main>
     </div>

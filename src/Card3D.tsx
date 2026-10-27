@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox, Environment, Lightformer } from "@react-three/drei";
@@ -170,9 +171,10 @@ export default function Card3D({
       <button
         className="card-flip"
         onClick={() => setFlipped(!flipped)}
-        aria-label="Rrotullo kartën"
+        aria-label={tr("Rrotullo kartën")}
       >
-        ↻ <span>Rrotullo kartën</span>
+        {tr("↻ ")}
+        <span>{tr("Rrotullo kartën")}</span>
       </button>
     </div>
   );

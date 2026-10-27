@@ -93,7 +93,7 @@ for (const [key, role] of [
     hash,
     role,
     role === "customer" ? "pending" : "active",
-    "AL-DEMO-" + a.id.replaceAll("-", ""),
+    "AL-DEMO-" + a.id.replaceAll("-", "").toUpperCase(),
   );
 }
 db.prepare("INSERT INTO launch_casepacks(id,payload) VALUES(?,?)").run(
@@ -145,6 +145,10 @@ try {
       reducedMotion: "reduce",
       viewport: { width: 1440, height: 1000 },
     });
+    await context.addInitScript(() => {
+      if (!localStorage.getItem("afa-language"))
+        localStorage.setItem("afa-language", "en");
+    });
     contexts[key] = context;
     const p = await context.newPage();
     pages[key] = p;
@@ -164,20 +168,60 @@ try {
     await p.goto(origin + "/#/login");
     await p.locator('input[name="email"]').fill(actors[key].email);
     await p.locator('input[name="password"]').fill(pass);
-    await p
-      .getByRole("button", { name: "Hyr në llogari", exact: true })
-      .click();
+    await p.getByRole("button", { name: "Sign in", exact: true }).click();
     await p.waitForURL("**/#/launch");
     await p.getByText("LIVE SYNC", { exact: true }).waitFor();
     check(key + " signs in using the real login form", true);
   }
+  async function checkStageLayout(page, stage) {
+    for (const language of ["sq", "en"]) {
+      await page
+        .getByRole("button", {
+          name: language === "sq" ? "Shqip" : "English",
+          exact: true,
+        })
+        .click();
+      for (const width of [390, 768, 1440]) {
+        await page.setViewportSize({ width, height: 1000 });
+        await page.evaluate(() => window.scrollTo(0, 0));
+        check(
+          language + " " + stage + " fits " + width + "px",
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth + 1,
+          ),
+        );
+      }
+      await page.screenshot({
+        path: path.join(output, stage + "-" + language + "-desktop.png"),
+        fullPage: true,
+      });
+    }
+  }
+  // Public entry is bilingual, with no session or private data needed.
+  await pages.admin.goto(origin + "/#/login");
+  await pages.admin.getByRole("button", { name: "Shqip", exact: true }).click();
+  await pages.admin
+    .getByRole("button", { name: "Hyr në llogari", exact: true })
+    .waitFor();
+  check(
+    "Albanian login labels and document language are available",
+    await pages.admin.evaluate(() => document.documentElement.lang === "sq"),
+  );
+  await pages.admin.reload();
+  await pages.admin
+    .getByRole("button", { name: "Hyr në llogari", exact: true })
+    .waitFor();
+  check("Language preference survives reload", true);
+  await pages.admin
+    .getByRole("button", { name: "English", exact: true })
+    .click();
   await login("admin");
   await pages.admin
     .getByRole("complementary")
     .getByRole("button", { name: "Bank administration", exact: true })
     .click();
   await pages.admin
-    .getByRole("button", { name: "Administrimi", exact: true })
+    .getByRole("button", { name: "Administration", exact: true })
     .click();
   for (const key of ["red", "blue"]) {
     const row = pages.admin
@@ -185,9 +229,9 @@ try {
       .filter({ hasText: actors[key].email });
     await row.locator("summary").click();
     await row
-      .getByRole("button", { name: "Prano kërkesën", exact: true })
+      .getByRole("button", { name: "Approve request", exact: true })
       .click();
-    await row.getByText("active", { exact: true }).waitFor();
+    await row.locator(".badge.active").waitFor();
     check(
       "Administrator approves " + key + " using the user-list button",
       true,
@@ -253,7 +297,20 @@ try {
         .isEnabled()),
     );
   }
+  await pages.red.getByRole("button", { name: "Shqip", exact: true }).click();
+  await pages.red
+    .getByRole("button", { name: "Nuk jam ende gati", exact: true })
+    .waitFor();
+  check(
+    "Student lobby switches language without losing readiness",
+    await pages.red
+      .locator(".student-stage-guide")
+      .innerText()
+      .then((t) => t.includes("Je gati")),
+  );
+  await pages.red.getByRole("button", { name: "English", exact: true }).click();
   await pages.owner.getByText("Ready to launch", { exact: true }).waitFor();
+  await checkStageLayout(pages.red, "lobby");
   check(
     "Owner launch enables only with ready Red and Blue students",
     await launch.isEnabled(),
@@ -267,6 +324,10 @@ try {
   const sharedContext = await browser.newContext({
     reducedMotion: "reduce",
     viewport: { width: 1440, height: 1000 },
+  });
+  await sharedContext.addInitScript(() => {
+    if (!localStorage.getItem("afa-language"))
+      localStorage.setItem("afa-language", "en");
   });
   const oldTab = await sharedContext.newPage();
   oldTab.setDefaultTimeout(15000);
@@ -302,7 +363,7 @@ try {
     .getByRole("button", { name: "Mark not ready", exact: true })
     .click();
   await oldTab
-    .getByRole("heading", { name: "Llogaria ndryshoi në një dritare tjetër." })
+    .getByRole("heading", { name: "Your account changed in another window." })
     .waitFor();
   check(
     "Stale tab replaces the misleading identity with an explicit shared-session warning",
@@ -325,7 +386,7 @@ try {
     fullPage: true,
   });
   await oldTab
-    .getByRole("button", { name: "Hap llogarinë aktive", exact: true })
+    .getByRole("button", { name: "Open active account", exact: true })
     .click();
   await oldTab.getByText("LIVE SYNC", { exact: true }).waitFor();
   check(
@@ -343,7 +404,7 @@ try {
     "Two tabs using the same account remain usable",
     !(await sameUserTab
       .getByRole("heading", {
-        name: "Llogaria ndryshoi në një dritare tjetër.",
+        name: "Your account changed in another window.",
       })
       .count()),
   );
@@ -366,6 +427,16 @@ try {
       .getByRole("button", { name: "Next: responsibility & security" })
       .waitFor();
     check(key + " automatically moves to contract page 1", true);
+    if (key === "red") {
+      await p.getByRole("button", { name: "Shqip", exact: true }).click();
+      await p
+        .locator(".lr-contract-main article")
+        .getByRole("heading", { name: "1. Një simulim akademik", exact: true })
+        .waitFor();
+      check("Contract page one has Albanian educational rules", true);
+      await checkStageLayout(p, "contract-page-one");
+      await p.getByRole("button", { name: "English", exact: true }).click();
+    }
   }
   check(
     "Bank stays blocked before contract acceptance",
@@ -378,6 +449,21 @@ try {
     await p
       .getByRole("button", { name: "Next: responsibility & security" })
       .click();
+    if (key === "red") {
+      await p.getByRole("button", { name: "Shqip", exact: true }).click();
+      await p
+        .getByRole("heading", {
+          name: "6. Siguria e fjalëkalimit",
+          exact: true,
+        })
+        .waitFor();
+      check(
+        "Contract page two translates responsibility and password security",
+        true,
+      );
+      await checkStageLayout(p, "contract-page-two");
+      await p.getByRole("button", { name: "English", exact: true }).click();
+    }
     await p
       .getByRole("checkbox", { name: "I agree to the Terms of Service." })
       .check();
@@ -405,6 +491,46 @@ try {
     .getByText("CURRENT BALANCE / DEMO ALL", { exact: true })
     .waitFor();
   check("Student refresh preserves session and banking stage", true);
+  await checkStageLayout(pages.red, "banking");
+  // Verify the actual student transfer UI and its oversized-amount guidance.
+  await pages.red
+    .getByRole("button", { name: "Send demo money", exact: true })
+    .click();
+  const transfer = pages.red.getByRole("dialog");
+  const blueIban = db
+    .prepare("SELECT iban FROM launch_wallets WHERE round_id=? AND user_id=?")
+    .get(round, actors.blue.id).iban;
+  await transfer.getByRole("textbox").fill(blueIban);
+  await transfer
+    .getByRole("button", { name: "Verify recipient", exact: true })
+    .click();
+  await transfer
+    .getByRole("button", { name: "Review transfer", exact: true })
+    .waitFor();
+  await transfer.getByRole("textbox").fill("500000");
+  await transfer
+    .getByRole("button", { name: "Review transfer", exact: true })
+    .click();
+  await transfer
+    .getByRole("alert")
+    .filter({ hasText: "does not have enough funds" })
+    .waitFor();
+  check("Oversized transfer shows a clear error before confirmation", true);
+  await transfer.getByRole("textbox").fill("1000");
+  await transfer
+    .getByRole("button", { name: "Review transfer", exact: true })
+    .click();
+  await transfer
+    .getByRole("button", { name: "Confirm demo transfer", exact: true })
+    .click();
+  await transfer
+    .getByRole("heading", { name: "Transfer confirmed.", exact: true })
+    .waitFor();
+  check(
+    "Student sends 1000 ALL through verified recipient, review and confirmation",
+    true,
+  );
+  await transfer.getByRole("button", { name: "Done", exact: true }).click();
   await pages.owner
     .getByRole("button", { name: "Launch simulated transfer", exact: true })
     .click();
@@ -425,6 +551,102 @@ try {
       .click();
     await p.getByRole("textbox", { name: "Search case evidence" }).waitFor();
     check(key + " investigation button opens searchable records", true);
+    await p
+      .locator(".evidence-navigation")
+      .getByRole("button", { name: /^Requests/ })
+      .click();
+    check(
+      key + " category change replaces stale detail with a request",
+      (await p.locator("#evidence-detail .lr-pill").innerText()) === "Requests",
+    );
+    const linked = p
+      .locator("#evidence-detail .evidence-reference")
+      .filter({ hasText: /AUTH-/ })
+      .first();
+    await linked.click();
+    check(
+      key + " linked reference opens matching authentication evidence",
+      (await p.locator("#evidence-detail .lr-pill").innerText()) ===
+        "Authentication",
+    );
+    await p
+      .getByRole("textbox", { name: "Search case evidence" })
+      .fill("no-such-record-xyz");
+    await p
+      .getByRole("heading", { name: "No matching records", exact: true })
+      .waitFor();
+    check(
+      key + " empty search does not show an unrelated evidence detail",
+      (await p.locator("#evidence-detail").count()) === 0,
+    );
+    await p
+      .getByRole("button", { name: "Show all evidence", exact: true })
+      .click();
+    if (key === "red") {
+      await p.getByRole("button", { name: "Shqip", exact: true }).click();
+      await p
+        .getByRole("heading", { name: "Hapi yt i radhës", exact: true })
+        .count();
+      check(
+        "Five investigation steps and field helpers switch to Albanian",
+        (await p.locator(".investigation-guide").innerText()).includes(
+          "Ndiq paratë",
+        ),
+      );
+      for (const width of [390, 768, 1440, 1920]) {
+        await p.setViewportSize({ width, height: 1000 });
+        await p.waitForTimeout(150);
+        const layout = await p.evaluate(() => {
+          const overflow =
+            document.documentElement.scrollWidth > innerWidth + 1;
+          const fields = [
+            ...document.querySelectorAll(".lr-record-fields>div"),
+          ].map((row) => {
+            const a = row.querySelector("dt").getBoundingClientRect(),
+              b = row.querySelector("dd").getBoundingClientRect();
+            return a.right <= b.left + 1 || a.bottom <= b.top + 1;
+          });
+          const buttons = [
+            ...document.querySelectorAll(
+              ".investigation-guide button,.evidence-navigation button,.language-switcher button",
+            ),
+          ]
+            .filter((b) => b.getBoundingClientRect().height > 0)
+            .every((b) => b.getBoundingClientRect().height >= 43.9);
+          return { overflow, fields, buttons };
+        });
+        check(
+          "Albanian investigation has no horizontal overflow at " +
+            width +
+            "px",
+          !layout.overflow,
+        );
+        check(
+          "Evidence labels and values do not collide at " + width + "px",
+          layout.fields.length > 0 && layout.fields.every(Boolean),
+        );
+        check(
+          "Guide, category and language buttons have accessible tap sizes at " +
+            width +
+            "px",
+          layout.buttons,
+        );
+        if (width === 390 || width === 1440)
+          await p.evaluate(() => window.scrollTo(0, 0));
+        if (width === 390 || width === 1440)
+          await p.screenshot({
+            path: path.join(output, "investigation-sq-" + width + ".png"),
+            fullPage: true,
+          });
+      }
+      await p.setViewportSize({ width: 1440, height: 1000 });
+      await p.getByRole("button", { name: "English", exact: true }).click();
+      await p.evaluate(() => window.scrollTo(0, 0));
+      await p.screenshot({
+        path: path.join(output, "investigation-en-desktop.png"),
+        fullPage: true,
+      });
+    }
     for (let i = 0; i < 3; i++) {
       await p.locator(".lr-record-list > button").nth(i).click();
       await p
@@ -466,6 +688,7 @@ try {
   for (const key of ["red", "blue"]) {
     const p = pages[key];
     await p.getByRole("button", { name: "Team report", exact: true }).click();
+    if (key === "red") await checkStageLayout(p, "report");
     for (const [name, value] of Object.entries({
       beneficiary: answer.beneficiary,
       service: answer.service,
@@ -539,7 +762,8 @@ try {
     .all(round);
   check(
     "Incident debits only students by 10000 ALL",
-    wallets.filter((w) => w.user_id).every((w) => w.balance === 4000000),
+    wallets.find((w) => w.user_id === actors.red.id).balance === 3900000 &&
+      wallets.find((w) => w.user_id === actors.blue.id).balance === 4100000,
   );
   check(
     "Beneficiary receives exactly 20000 ALL",

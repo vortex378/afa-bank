@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   Search,
@@ -67,38 +68,41 @@ export default function Staff({
     <section className="staff-workspace">
       <div className="staff-personal-balance">
         <span>
-          LLOGARIA JOTE <small>PAGË VIRTUALE · 50.000 ALL / MUAJ</small>
+          {tr("LLOGARIA JOTE ")}
+          <small>{tr("PAGË VIRTUALE · 50.000 ALL / MUAJ")}</small>
         </span>
         <strong>
-          {money(user.balance)} <small>ALL</small>
+          {money(user.balance)} <small>{tr("ALL")}</small>
         </strong>
         <i />
       </div>
       <div className="section-label">
         {user.role === "owner"
-          ? "OWNER / EXECUTIVE OVERVIEW"
+          ? tr("OWNER / EXECUTIVE OVERVIEW")
           : user.role === "finance"
-            ? "FINANCE / OPERATIONS"
-            : "ADMIN / ACCOUNT OPERATIONS"}
+            ? tr("FINANCE / OPERATIONS")
+            : tr("ADMIN / ACCOUNT OPERATIONS")}
       </div>
       <h1>
         {user.role === "owner"
-          ? "Perspektiva e plotë."
-          : "Çdo detaj, në kontroll."}
+          ? tr("Perspektiva e plotë.")
+          : tr("Çdo detaj, në kontroll.")}
       </h1>
       <p className="muted">
-        Mirë se erdhe, {user.name}. Të gjitha veprimet përdorin para virtuale.
+        {tr("Mirë se erdhe, ")}
+        {user.name}
+        {tr(". Të gjitha veprimet përdorin para virtuale.")}
       </p>
       <div className="staff-metrics">
         <div>
           <Users size={20} />
           <strong>{customers.length}</strong>
-          <span>Klientë aktivë</span>
+          <span>{tr("Klientë aktivë")}</span>
         </div>
         <div>
           <ArrowUpRight size={20} />
           <strong>{pending.length}</strong>
-          <span>Kërkesa në pritje</span>
+          <span>{tr("Kërkesa në pritje")}</span>
         </div>
         <div>
           <ShieldAlert size={20} />
@@ -106,10 +110,14 @@ export default function Staff({
             {data?.incidents.filter((i: any) => i.status === "open").length ||
               0}
           </strong>
-          <span>Incidente të hapura</span>
+          <span>{tr("Incidente të hapura")}</span>
         </div>
       </div>
-      <div className="tabs" role="tablist" aria-label="Seksionet operative">
+      <div
+        className="tabs"
+        role="tablist"
+        aria-label={tr("Seksionet operative")}
+      >
         {[
           ["overview", "Llogaritë"],
           ...(manage
@@ -132,18 +140,18 @@ export default function Staff({
             aria-selected={tab === id}
             onClick={() => setTab(id)}
           >
-            {label}
+            {tr(label)}
             {id === "requests" && pending.length > 0 && <b>{pending.length}</b>}
           </button>
         ))}
       </div>
       {error && (
         <div className="error" role="alert">
-          {error}
+          {tr(error)}
         </div>
       )}
       {!data ? (
-        <p role="status">Duke ngarkuar të dhënat…</p>
+        <p role="status">{tr("Duke ngarkuar të dhënat…")}</p>
       ) : (
         <>
           {(tab === "overview" || tab === "requests") && (
@@ -151,8 +159,8 @@ export default function Staff({
               <label className="search">
                 <Search size={18} />
                 <input
-                  aria-label="Kërko klient"
-                  placeholder="Kërko sipas emrit, email-it ose IBAN-it"
+                  aria-label={tr("Kërko klient")}
+                  placeholder={tr("Kërko sipas emrit, email-it ose IBAN-it")}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
@@ -174,16 +182,22 @@ export default function Staff({
                           {u.name}
                           <small>{u.email}</small>
                         </span>
-                        <span className={"badge " + u.status}>{u.status}</span>
+                        <span className={"badge " + u.status}>
+                          {tr(u.status)}
+                        </span>
                         <b>
-                          {money(u.balance)} <small>ALL</small>
+                          {money(u.balance)} <small>{tr("ALL")}</small>
                         </b>
                         <Plus size={16} />
                       </summary>
                       <div className="account-detail">
                         <p>{u.iban}</p>
                         <p>
-                          Roli: {u.role} · Paga e fundit: {money(u.salary)} ALL
+                          {tr("Roli: ")}
+                          {tr(u.role)}
+                          {tr(" · Paga e fundit: ")}
+                          {money(u.salary)}
+                          {tr(" ALL")}
                         </p>
                         {manage &&
                           u.id !== user.id &&
@@ -203,8 +217,8 @@ export default function Staff({
                                 >
                                   <Check size={15} />{" "}
                                   {u.status === "pending"
-                                    ? "Prano kërkesën"
-                                    : "Aktivizo"}
+                                    ? tr("Prano kërkesën")
+                                    : tr("Aktivizo")}
                                 </button>
                               )}
                               {u.status === "active" && (
@@ -218,7 +232,7 @@ export default function Staff({
                                     })
                                   }
                                 >
-                                  Pezullo
+                                  {tr("Pezullo")}
                                 </button>
                               )}
                               {u.status === "pending" && (
@@ -232,14 +246,14 @@ export default function Staff({
                                     })
                                   }
                                 >
-                                  Refuzo
+                                  {tr("Refuzo")}
                                 </button>
                               )}
                               {user.role === "owner" && (
                                 <label>
-                                  Roli
+                                  {tr("Roli")}
                                   <select
-                                    value={u.role}
+                                    value={tr(u.role)}
                                     disabled={busy}
                                     onChange={(e) =>
                                       perform("account", {
@@ -252,10 +266,14 @@ export default function Staff({
                                       })
                                     }
                                   >
-                                    <option value="customer">Customer</option>
-                                    <option value="admin">Administrator</option>
+                                    <option value="customer">
+                                      {tr("Customer")}
+                                    </option>
+                                    <option value="admin">
+                                      {tr("Administrator")}
+                                    </option>
                                     <option value="finance">
-                                      Finance manager
+                                      {tr("Finance manager")}
                                     </option>
                                   </select>
                                 </label>
@@ -269,25 +287,25 @@ export default function Staff({
               {tab === "requests" && !pending.length && (
                 <div className="empty">
                   <Check size={28} />
-                  <h3>Gjithçka është e përditësuar.</h3>
-                  <p>Nuk ka kërkesa në pritje.</p>
+                  <h3>{tr("Gjithçka është e përditësuar.")}</h3>
+                  <p>{tr("Nuk ka kërkesa në pritje.")}</p>
                 </div>
               )}
             </>
           )}
           {tab === "add" && (
             <form className="staff-form" onSubmit={create}>
-              <h2>Një anëtar i ri.</h2>
+              <h2>{tr("Një anëtar i ri.")}</h2>
               <label>
-                Emri i plotë
+                {tr("Emri i plotë")}
                 <input name="name" minLength={2} maxLength={80} required />
               </label>
               <label>
-                Email
+                {tr("Email")}
                 <input name="email" type="email" required />
               </label>
               <label>
-                Fjalëkalim fillestar
+                {tr("Fjalëkalim fillestar")}
                 <input
                   name="password"
                   type="password"
@@ -298,11 +316,13 @@ export default function Staff({
                 />
               </label>
               <p className="muted">
-                Ndani kredencialet në një kanal të sigurt. Klienti krijohet me
-                pagë virtuale 50.000 ALL. Kushtet pranohen në hyrjen e parë.
+                {tr(
+                  "Ndani kredencialet në një kanal të sigurt. Klienti krijohet me pagë virtuale 50.000 ALL. Kushtet pranohen në hyrjen e parë.",
+                )}
               </p>
               <button className="button light" disabled={busy}>
-                Krijo klientin <Plus size={16} />
+                {tr("Krijo klientin ")}
+                <Plus size={16} />
               </button>
             </form>
           )}
@@ -314,12 +334,13 @@ export default function Staff({
                 perform("salary", { id: selected, amount });
               }}
             >
-              <h2>Pagë virtuale.</h2>
+              <h2>{tr("Pagë virtuale.")}</h2>
               <div className="payroll-fixed">
                 <strong>
-                  50.000 <small>ALL</small>
+                  {tr("50.000 ")}
+                  <small>{tr("ALL")}</small>
                 </strong>
-                <span>për çdo llogari aktive · çdo muaj</span>
+                <span>{tr("për çdo llogari aktive · çdo muaj")}</span>
               </div>
               <button
                 type="button"
@@ -327,20 +348,22 @@ export default function Staff({
                 disabled={busy}
                 onClick={() => perform("payroll", {})}
               >
-                Kontrollo dhe ekzekuto për të gjithë <ArrowUpRight size={17} />
+                {tr("Kontrollo dhe ekzekuto për të gjithë ")}
+                <ArrowUpRight size={17} />
               </button>
               <p className="muted">
-                Një pagesë për klient në muaj kalendarik (UTC). Dublikatat
-                bllokohen nga databaza.
+                {tr(
+                  "Një pagesë për klient në muaj kalendarik (UTC). Dublikatat bllokohen nga databaza.",
+                )}
               </p>
               <label>
-                Klienti
+                {tr("Klienti")}
                 <select
                   required
                   value={selected}
                   onChange={(e) => setSelected(e.target.value)}
                 >
-                  <option value="">Zgjidh klientin</option>
+                  <option value="">{tr("Zgjidh klientin")}</option>
                   {users
                     .filter((u) => u.status === "active")
                     .map((u) => (
@@ -351,18 +374,19 @@ export default function Staff({
                 </select>
               </label>
               <label>
-                Shuma në ALL
+                {tr("Shuma në ALL")}
                 <input
                   required
                   inputMode="decimal"
                   value="50000"
                   readOnly
                   onChange={(e) => setAmount(e.target.value)}
-                  placeholder="85000.00"
+                  placeholder={tr("85000.00")}
                 />
               </label>
               <button disabled={busy} className="button light">
-                Ekzekuto pagën virtuale <ArrowUpRight size={17} />
+                {tr("Ekzekuto pagën virtuale ")}
+                <ArrowUpRight size={17} />
               </button>
             </form>
           )}
@@ -371,11 +395,11 @@ export default function Staff({
               <div className="incident-warning">
                 <ShieldAlert />
                 <div>
-                  <b>Laborator trajnimi</b>
+                  <b>{tr("Laborator trajnimi")}</b>
                   <p>
-                    Simuloni një debit të paautorizuar për edukim. Klienti do të
-                    shohë një transaksion të shënuar qartë si simulim. Rikthimi
-                    është i auditueshëm.
+                    {tr(
+                      "Simuloni një debit të paautorizuar për edukim. Klienti do të shohë një transaksion të shënuar qartë si simulim. Rikthimi është i auditueshëm.",
+                    )}
                   </p>
                 </div>
               </div>
@@ -387,22 +411,25 @@ export default function Staff({
                 }}
               >
                 <label>
-                  Klienti
+                  {tr("Klienti")}
                   <select
                     required
                     value={selected}
                     onChange={(e) => setSelected(e.target.value)}
                   >
-                    <option value="">Zgjidh klientin</option>
+                    <option value="">{tr("Zgjidh klientin")}</option>
                     {customers.map((u) => (
                       <option key={u.id} value={u.id}>
-                        {u.name} — {money(u.balance)} ALL
+                        {u.name}
+                        {tr(" — ")}
+                        {money(u.balance)}
+                        {tr(" ALL")}
                       </option>
                     ))}
                   </select>
                 </label>
                 <label>
-                  Debiti virtual (ALL)
+                  {tr("Debiti virtual (ALL)")}
                   <input
                     required
                     inputMode="decimal"
@@ -412,19 +439,25 @@ export default function Staff({
                 </label>
                 <label className="checkbox-label">
                   <input required type="checkbox" />
-                  Konfirmoj që ky është një ushtrim edukativ i autorizuar.
+                  {tr(
+                    "Konfirmoj që ky është një ushtrim edukativ i autorizuar.",
+                  )}
                 </label>
                 <button disabled={busy} className="button outline">
-                  Nis simulimin <ShieldAlert size={17} />
+                  {tr("Nis simulimin ")}
+                  <ShieldAlert size={17} />
                 </button>
               </form>
-              <h2>Regjistri i incidenteve</h2>
+              <h2>{tr("Regjistri i incidenteve")}</h2>
               {data.incidents.map((i: any) => (
                 <div className="incident-row" key={i.id}>
                   <span>
                     <b>{i.name}</b>
                     <small>
-                      {i.id} · {i.created_at} UTC
+                      {i.id}
+                      {tr(" · ")}
+                      {i.created_at}
+                      {tr(" UTC")}
                     </small>
                   </span>
                   <span className="badge">{i.status}</span>
@@ -434,7 +467,7 @@ export default function Staff({
                       disabled={busy}
                       onClick={() => perform("resolve", { id: i.id })}
                     >
-                      Zgjidh dhe rikthe fondet
+                      {tr("Zgjidh dhe rikthe fondet")}
                     </button>
                   )}
                 </div>
@@ -444,7 +477,7 @@ export default function Staff({
           {tab === "audit" && (
             <div className="audit-list">
               {data.audit.length === 0 ? (
-                <p className="empty">Nuk ka ende veprime.</p>
+                <p className="empty">{tr("Nuk ka ende veprime.")}</p>
               ) : (
                 data.audit.map((a: any) => (
                   <div key={a.id}>
@@ -452,10 +485,15 @@ export default function Staff({
                     <span>
                       <b>{a.action}</b>
                       <small>
-                        {a.name || "Sistemi"} · {a.target}
+                        {a.name || tr("Sistemi")}
+                        {tr(" · ")}
+                        {a.target}
                       </small>
                     </span>
-                    <time>{a.created_at} UTC</time>
+                    <time>
+                      {a.created_at}
+                      {tr(" UTC")}
+                    </time>
                   </div>
                 ))
               )}

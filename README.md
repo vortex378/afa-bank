@@ -24,6 +24,12 @@ Open http://localhost:8787. The public homepage is a procedural 3D AFA LAUNCH po
 
 ## Roles and flows
 
+The interface opens in Albanian. The persistent **Shqip / English** control switches authored interface copy without signing out, and remembers the preference in this browser. Record IDs, Demo IBANs, prepared source code and participant-written notes/reports keep their original values. Translation is local; nothing is sent to a translation service.
+
+Students receive a **What to do now** panel for the lobby, contract, bank and review. The investigation workspace offers five method steps, linked evidence references, readable fields and a report-writing guide. Changing a category or searching always shows details from the visible results. The guide teaches correlation and evidence-backed reasoning; the private instructor answer remains protected by the existing owner-only API boundary. See [STUDENT_GUIDE.md](STUDENT_GUIDE.md).
+
+Run the isolated browser regression with `node tests/security/start-flow.mjs` after `pnpm build`. Set `PLAYWRIGHT_MODULE` and `CHROME_PATH` if Playwright or Chrome are installed outside this project. It creates its own local database, synthetic assessment and five test identities; it never tests against the production database. The regression covers the full room flow, shared-session collision, both languages, a real virtual transfer, reference navigation, responsive investigation layouts and the final verdict.
+
 - Student/customer: approval-based registration → AFA LAUNCH hub → Red/Blue selection → ready → instructor launch → two-page contract → Phase 1 bank and investigation. Ordinary bank APIs cannot bypass the game.
 - Administrator: review registrations, create customers, activate/suspend/reject customer accounts. Cannot issue money or promote roles.
 - Finance manager: customer activity, one virtual salary per active account/month (UTC), educational incident debit and audited reversal. Cannot manage accounts.

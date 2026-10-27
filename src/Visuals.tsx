@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import {
   Component,
   lazy,
@@ -12,7 +13,7 @@ import { motion, useReducedMotion } from "motion/react";
 const ThreeCard = lazy(() => import("./Card3D"));
 export function Logo() {
   return (
-    <a href="#/" className="logo" aria-label="AFA BANK — Kryefaqja">
+    <a href="#/" className="logo" aria-label={tr("AFA BANK — Kryefaqja")}>
       <svg viewBox="0 0 44 34" fill="none" aria-hidden="true">
         <path
           d="M3 29 16 4 29 29M10 20h12M24 4h17M25 4v24M25 15h12"
@@ -21,7 +22,8 @@ export function Logo() {
         />
       </svg>
       <span>
-        AFA <b>BANK</b>
+        {tr("AFA ")}
+        <b>{tr("BANK")}</b>
       </span>
     </a>
   );
@@ -95,18 +97,19 @@ export function StaticCard({ name = "AFA MEMBER" }: { name?: string }) {
     <div className="static-card">
       <div>
         <strong>
-          AFA <small>BANK</small>
+          {tr("AFA ")}
+          <small>{tr("BANK")}</small>
         </strong>
-        <span>VIRTUAL / TITANIUM</span>
+        <span>{tr("VIRTUAL / TITANIUM")}</span>
       </div>
-      <div className="chip">▥</div>
-      <p>••••　••••　••••　2048</p>
+      <div className="chip">{tr("▥")}</div>
+      <p>{tr("••••　••••　••••　2048")}</p>
       <footer>
         <span>
           {name}
-          <small>EDUCATIONAL EDITION</small>
+          <small>{tr("EDUCATIONAL EDITION")}</small>
         </span>
-        <b>afa</b>
+        <b>{tr("afa")}</b>
       </footer>
     </div>
   );
@@ -186,7 +189,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
       }}
     >
       <button onClick={onDone}>
-        Kalo hyrjen <span>↗</span>
+        {tr("Kalo hyrjen ")}
+        <span>{tr("↗")}</span>
       </button>
       <div className="intro-light" />
       <motion.div
@@ -205,7 +209,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
             transition={{ duration: 1.25, ease: "easeInOut" }}
           />
         </svg>
-        <span>AFA BANK</span>
+        <span>{tr("AFA BANK")}</span>
       </motion.div>
       <motion.div
         className="intro-card"
@@ -214,11 +218,11 @@ export function Intro({ onDone }: { onDone: () => void }) {
         transition={{ duration: 1.8, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
       >
         <Card cinematic />
-        <p>Një dimension i ri.</p>
+        <p>{tr("Një dimension i ri.")}</p>
       </motion.div>
       <div className="intro-loading">
         <span />
-        <small>AFA EXPERIENCE / 01</small>
+        <small>{tr("AFA EXPERIENCE / 01")}</small>
       </div>
     </motion.div>
   );

@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Check, ArrowLeft, Download } from "lucide-react";
 import { api, money, type User } from "./lib";
@@ -72,14 +73,18 @@ export default function Transfer({
   }
   return (
     <section className="transfer-panel">
-      <div className="section-label">PARA VIRTUALE / TRANSFERTË E RE</div>
+      <div className="section-label">
+        {tr("PARA VIRTUALE / TRANSFERTË E RE")}
+      </div>
       <h1>
-        {step === 3 ? "Arriti në destinacion." : "Një lidhje e thjeshtë."}
+        {step === 3
+          ? tr("Arriti në destinacion.")
+          : tr("Një lidhje e thjeshtë.")}
       </h1>
       <p className="muted">
         {step === 3
-          ? "Transferta është konfirmuar nga sistemi."
-          : "Dërgo para virtuale te një llogari aktive AFA."}
+          ? tr("Transferta është konfirmuar nga sistemi.")
+          : tr("Dërgo para virtuale te një llogari aktive AFA.")}
       </p>
       <div className="stepper">
         {["Përfituesi", "Shuma", "Konfirmimi"].map((s, i) => (
@@ -95,19 +100,26 @@ export default function Transfer({
             <Check size={32} />
           </div>
           <h2>
-            {money(receipt.amount)} <small>ALL</small>
+            {money(receipt.amount)} <small>{tr("ALL")}</small>
           </h2>
-          <p>Për {recipient.name}</p>
+          <p>
+            {tr("Për ")}
+            {recipient.name}
+          </p>
           <dl>
-            <dt>Referenca</dt>
+            <dt>{tr("Referenca")}</dt>
             <dd>{receipt.id}</dd>
-            <dt>Data</dt>
-            <dd>{receipt.created_at} UTC</dd>
-            <dt>Statusi</dt>
-            <dd className="positive">Përfunduar</dd>
+            <dt>{tr("Data")}</dt>
+            <dd>
+              {receipt.created_at}
+              {tr(" UTC")}
+            </dd>
+            <dt>{tr("Statusi")}</dt>
+            <dd className="positive">{tr("Përfunduar")}</dd>
           </dl>
           <button className="button outline" onClick={download}>
-            <Download size={17} /> Shkarko dëftesën
+            <Download size={17} />
+            {tr(" Shkarko dëftesën")}
           </button>
           <button
             className="text-link"
@@ -119,22 +131,23 @@ export default function Transfer({
               setKey(crypto.randomUUID());
             }}
           >
-            Transfertë e re <ArrowRight size={16} />
+            {tr("Transfertë e re ")}
+            <ArrowRight size={16} />
           </button>
         </div>
       ) : (
         <form onSubmit={next} className="transfer-form">
           {step === 0 ? (
             <label>
-              IBAN i simuluar i përfituesit
+              {tr("IBAN i simuluar i përfituesit")}
               <input
                 value={iban}
                 onChange={(e) => setIban(e.target.value)}
-                placeholder="AL-DEMO-…"
+                placeholder={tr("AL-DEMO-…")}
                 required
                 maxLength={40}
               />
-              <small>Kopjo IBAN-in nga profili i përfituesit.</small>
+              <small>{tr("Kopjo IBAN-in nga profili i përfituesit.")}</small>
             </label>
           ) : step === 1 ? (
             <>
@@ -149,50 +162,55 @@ export default function Transfer({
                 <Check size={18} className="positive" />
               </div>
               <label>
-                Shuma në ALL
+                {tr("Shuma në ALL")}
                 <input
                   className="amount-input"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   inputMode="decimal"
-                  placeholder="0.00"
+                  placeholder={tr("0.00")}
                   required
                 />
-                <small>Në dispozicion: {money(user.balance)} ALL</small>
+                <small>
+                  {tr("Në dispozicion: ")}
+                  {money(user.balance)}
+                  {tr(" ALL")}
+                </small>
               </label>
               <label>
-                Përshkrimi (opsional)
+                {tr("Përshkrimi (opsional)")}
                 <input
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   maxLength={160}
-                  placeholder="Për çfarë është transferta?"
+                  placeholder={tr("Për çfarë është transferta?")}
                 />
               </label>
             </>
           ) : (
             <div className="review">
               <h2>
-                {money(Math.round(Number(amount) * 100))} <small>ALL</small>
+                {money(Math.round(Number(amount) * 100))}{" "}
+                <small>{tr("ALL")}</small>
               </h2>
               <dl>
-                <dt>Nga</dt>
+                <dt>{tr("Nga")}</dt>
                 <dd>{user.name}</dd>
-                <dt>Për</dt>
+                <dt>{tr("Për")}</dt>
                 <dd>{recipient.name}</dd>
-                <dt>IBAN</dt>
+                <dt>{tr("IBAN")}</dt>
                 <dd>{recipient.iban}</dd>
-                <dt>Tarifa</dt>
-                <dd>0,00 ALL</dd>
-                <dt>Përshkrimi</dt>
-                <dd>{note || "Transfertë virtuale"}</dd>
+                <dt>{tr("Tarifa")}</dt>
+                <dd>{tr("0,00 ALL")}</dd>
+                <dt>{tr("Përshkrimi")}</dt>
+                <dd>{note || tr("Transfertë virtuale")}</dd>
               </dl>
-              <p>Kontrolloni të dhënat përpara konfirmimit.</p>
+              <p>{tr("Kontrolloni të dhënat përpara konfirmimit.")}</p>
             </div>
           )}
           {error && (
             <div className="error" role="alert">
-              {error}
+              {tr(error)}
             </div>
           )}
           <div className="form-actions">
@@ -203,17 +221,18 @@ export default function Transfer({
                 className="button outline"
                 onClick={() => setStep(step - 1)}
               >
-                <ArrowLeft size={16} /> Pas
+                <ArrowLeft size={16} />
+                {tr(" Pas")}
               </button>
             )}
             <button className="button light" disabled={busy}>
               {busy
-                ? "Duke verifikuar…"
+                ? tr("Duke verifikuar…")
                 : step === 2
-                  ? "Konfirmo transfertën"
+                  ? tr("Konfirmo transfertën")
                   : step === 0
-                    ? "Verifiko përfituesin"
-                    : "Rishiko transfertën"}
+                    ? tr("Verifiko përfituesin")
+                    : tr("Rishiko transfertën")}
               <ArrowRight size={17} />
             </button>
           </div>

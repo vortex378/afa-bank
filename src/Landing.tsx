@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { lazy, Suspense, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -26,7 +27,11 @@ import "./portal-motion.css";
 const LaunchScene = lazy(() => import("./LaunchScene"));
 export function LaunchBrand() {
   return (
-    <a className="portal-brand" href="#/" aria-label="AFA LAUNCH homepage">
+    <a
+      className="portal-brand"
+      href="#/"
+      aria-label={tr("AFA LAUNCH homepage")}
+    >
       <svg className="launch-logomark" viewBox="0 0 40 40" aria-hidden="true">
         <path
           d="M20 3 37 34H3L20 3Z M20 14l9 16H11l9-16Z"
@@ -37,7 +42,8 @@ export function LaunchBrand() {
         <path d="m20 3 0 11M3 34l8-4m26 4-8-4" stroke="currentColor" />
       </svg>
       <span>
-        AFA <b>LAUNCH</b>
+        {tr("AFA ")}
+        <b>{tr("LAUNCH")}</b>
       </span>
     </a>
   );
@@ -73,7 +79,7 @@ export default function Landing() {
       ?.scrollIntoView({ behavior: reduced ? "instant" : "smooth" });
   }
   return (
-    <div className="portal portal-v3" lang="en">
+    <div className="portal portal-v3">
       <motion.div
         className="portal-progress"
         style={{ scaleX: pageProgress }}
@@ -81,14 +87,20 @@ export default function Landing() {
       />
       <header className="portal-header">
         <LaunchBrand />
-        <nav aria-label="Main navigation">
-          <button onClick={() => scrollTo("teams")}>01 / The teams</button>
-          <button onClick={() => scrollTo("mission")}>02 / The mission</button>
+        <nav aria-label={tr("Main navigation")}>
+          <button onClick={() => scrollTo("teams")}>
+            {tr("01 / The teams")}
+          </button>
+          <button onClick={() => scrollTo("mission")}>
+            {tr("02 / The mission")}
+          </button>
           <a href="#/login">
-            Sign in <ArrowUpRight size={14} />
+            {tr("Sign in ")}
+            <ArrowUpRight size={14} />
           </a>
           <a className="portal-small-cta" href="#/register">
-            Request access <ArrowUpRight size={14} />
+            {tr("Request access ")}
+            <ArrowUpRight size={14} />
           </a>
         </nav>
       </header>
@@ -107,7 +119,8 @@ export default function Landing() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.15, duration: 0.8 }}
                 >
-                  <span /> ACADEMIC CYBER OPERATIONS / SEASON 01
+                  <span />
+                  {tr(" ACADEMIC CYBER OPERATIONS / SEASON 01")}
                 </motion.div>
                 <h1>
                   {["Outthink", "the breach."].map((word, i) => (
@@ -121,7 +134,7 @@ export default function Landing() {
                           ease: motionTokens.ease,
                         }}
                       >
-                        {i === 1 ? <em>{word}</em> : word}
+                        {i === 1 ? <em>{tr(word)}</em> : tr(word)}
                       </motion.span>
                     </span>
                   ))}
@@ -132,24 +145,27 @@ export default function Landing() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                 >
                   <p>
-                    Step inside a world built to be investigated.
+                    {tr("Step inside a world built to be investigated.")}
                     <br />
-                    Two teams. One incident. Nothing without evidence.
+                    {tr("Two teams. One incident. Nothing without evidence.")}
                   </p>
                   <div className="portal-actions">
                     <Magnetic className="portal-cta" href="#/register">
-                      Request access{" "}
+                      {tr("Request access")}{" "}
                       <span>
                         <ArrowUpRight size={19} />
                       </span>
                     </Magnetic>
                     <a className="portal-secondary" href="#/login">
-                      Enter the arena <ArrowRight size={16} />
+                      {tr("Enter the arena ")}
+                      <ArrowRight size={16} />
                     </a>
                   </div>
                   <div className="portal-access">
-                    <Shield size={13} /> Instructor approved <i /> Entirely
-                    simulated
+                    <Shield size={13} />
+                    {tr(" Instructor approved ")}
+                    <i />
+                    {tr(" Entirely simulated")}
                   </div>
                 </motion.div>
               </motion.div>
@@ -168,39 +184,43 @@ export default function Landing() {
                   />
                 </Suspense>
                 <div className="portal-coordinate top">
-                  <span>NETWORK / A—01</span>
-                  <span>SCROLL PREVIEW</span>
+                  <span>{tr("NETWORK / A—01")}</span>
+                  <span>{tr("SCROLL PREVIEW")}</span>
                 </div>
                 <div className="portal-orbit-tag red">
                   <span />
-                  <Swords size={13} /> OFFENSE / RED
+                  <Swords size={13} />
+                  {tr(" OFFENSE / RED")}
                 </div>
                 <div className="portal-orbit-tag blue">
                   <span />
-                  <Shield size={13} /> DEFENSE / BLUE
+                  <Shield size={13} />
+                  {tr(" DEFENSE / BLUE")}
                 </div>
                 <div className="portal-network-controls">
                   <button
                     onClick={() => setPreviewLaunchAt(Date.now() + 5000)}
-                    aria-label="Preview the network-to-bank transformation"
+                    aria-label={tr(
+                      "Preview the network-to-bank transformation",
+                    )}
                   >
                     <Play size={11} />
                     {previewLaunchAt
-                      ? "Replay transformation"
-                      : "Preview the launch"}
+                      ? tr("Replay transformation")
+                      : tr("Preview the launch")}
                   </button>
                   {previewLaunchAt && (
                     <button onClick={() => setPreviewLaunchAt(undefined)}>
-                      Follow scroll
+                      {tr("Follow scroll")}
                     </button>
                   )}
-                  <small>VISUAL PREVIEW / NO GAME STARTS</small>
+                  <small>{tr("VISUAL PREVIEW / NO GAME STARTS")}</small>
                 </div>
-                <div className="portal-world-cross x-one">+</div>
-                <div className="portal-world-cross x-two">+</div>
+                <div className="portal-world-cross x-one">{tr("+")}</div>
+                <div className="portal-world-cross x-two">{tr("+")}</div>
                 <div className="portal-coordinate bottom">
-                  <span>INTERACTIVE 3D / MOVE TO EXPLORE</span>
-                  <span>EST. 2026</span>
+                  <span>{tr("INTERACTIVE 3D / MOVE TO EXPLORE")}</span>
+                  <span>{tr("EST. 2026")}</span>
                 </div>
               </motion.div>
               <motion.div
@@ -212,20 +232,22 @@ export default function Landing() {
                 }
                 aria-hidden="true"
               >
-                <span>THE NETWORK BECOMES THE BANK.</span>
-                <strong>AFA BANK. Level 01.</strong>
+                <span>{tr("THE NETWORK BECOMES THE BANK.")}</span>
+                <strong>{tr("AFA BANK. Level 01.")}</strong>
               </motion.div>
               <div className="portal-hero-footer">
                 <span>
-                  <Radio size={13} /> A LIVE MULTIPLAYER INVESTIGATION
+                  <Radio size={13} />
+                  {tr(" A LIVE MULTIPLAYER INVESTIGATION")}
                 </span>
                 <button onClick={() => scrollTo("teams")}>
                   <span className="scroll-mouse">
                     <i />
                   </span>{" "}
-                  SCROLL TO DEPLOY <ArrowDown size={13} />
+                  {tr("SCROLL TO DEPLOY ")}
+                  <ArrowDown size={13} />
                 </button>
-                <span>LEARN TODAY. DEFEND TOMORROW.</span>
+                <span>{tr("LEARN TODAY. DEFEND TOMORROW.")}</span>
               </div>
             </div>
           </div>
@@ -234,8 +256,11 @@ export default function Landing() {
           <div>
             {[0, 1, 2, 3].map((n) => (
               <span key={n}>
-                THINK LIKE AN ATTACKER <i>✳</i> PROVE IT LIKE A DEFENDER{" "}
-                <i>✳</i> AFA LAUNCH <i>✳</i>
+                {tr("THINK LIKE AN ATTACKER ")}
+                <i>{tr("✳")}</i>
+                {tr(" PROVE IT LIKE A DEFENDER")} <i>{tr("✳")}</i>
+                {tr(" AFA LAUNCH ")}
+                <i>{tr("✳")}</i>
               </span>
             ))}
           </div>
@@ -244,17 +269,18 @@ export default function Landing() {
           <Reveal className="portal-section-heading">
             <div>
               <span className="portal-kicker">
-                01 / CHOOSE YOUR PERSPECTIVE
+                {tr("01 / CHOOSE YOUR PERSPECTIVE")}
               </span>
               <h2>
-                Different instincts.
+                {tr("Different instincts.")}
                 <br />
-                <em>One pursuit of truth.</em>
+                <em>{tr("One pursuit of truth.")}</em>
               </h2>
             </div>
             <p>
-              Reconstruct the attack. Understand the failed defense. Your team’s
-              conclusion is only as strong as the evidence behind it.
+              {tr(
+                "Reconstruct the attack. Understand the failed defense. Your team’s conclusion is only as strong as the evidence behind it.",
+              )}
             </p>
           </Reveal>
           <div className="portal-team-grid">
@@ -268,14 +294,18 @@ export default function Landing() {
                   onClick={() => setTeam(t)}
                 >
                   <span className="portal-team-top">
-                    <span>UNIT / 0{i + 1}</span>
+                    <span>
+                      {tr("UNIT / 0")}
+                      {i + 1}
+                    </span>
                     <span>
                       {team === t ? (
                         <>
-                          <Check size={12} /> EXPLORING
+                          <Check size={12} />
+                          {tr(" EXPLORING")}
                         </>
                       ) : (
-                        "EXPLORE TEAM"
+                        tr("EXPLORE TEAM")
                       )}
                     </span>
                   </span>
@@ -290,18 +320,18 @@ export default function Landing() {
                     <i />
                   </div>
                   <span className="portal-team-name">
-                    {t === "red" ? "Red" : "Blue"}
-                    <em>Team.</em>
+                    {t === "red" ? tr("Red") : tr("Blue")}
+                    <em>{tr("Team.")}</em>
                   </span>
                   <span className="portal-team-desc">
                     {t === "red"
-                      ? "Follow the attack. Reconstruct the sequence."
-                      : "Examine the controls. Explain what failed."}
+                      ? tr("Follow the attack. Reconstruct the sequence.")
+                      : tr("Examine the controls. Explain what failed.")}
                   </span>
                   <span className="portal-team-bottom">
                     {t === "red"
-                      ? "ADVERSARIAL THINKING"
-                      : "DEFENSIVE REASONING"}
+                      ? tr("ADVERSARIAL THINKING")
+                      : tr("DEFENSIVE REASONING")}
                     <ArrowUpRight size={20} />
                   </span>
                 </button>
@@ -312,34 +342,38 @@ export default function Landing() {
             <span className={"portal-team-indicator " + team} />
             <p>
               {team === "red"
-                ? "Red perspective: which credential opened the door?"
-                : "Blue perspective: which control should have closed it?"}
+                ? tr("Red perspective: which credential opened the door?")
+                : tr("Blue perspective: which control should have closed it?")}
             </p>
-            <small>Team preview · choose your team after approval.</small>
+            <small>
+              {tr("Team preview · choose your team after approval.")}
+            </small>
           </div>
         </section>
         <section className="portal-mission-v3" id="mission">
           <Reveal className="portal-mission-intro">
-            <span className="portal-kicker">02 / YOUR FIRST DEPLOYMENT</span>
+            <span className="portal-kicker">
+              {tr("02 / YOUR FIRST DEPLOYMENT")}
+            </span>
             <h2>
-              Welcome to
+              {tr("Welcome to")}
               <br />
-              <em>the inside.</em>
+              <em>{tr("the inside.")}</em>
             </h2>
             <p>
-              Every world has its rules.
+              {tr("Every world has its rules.")}
               <br />
-              Your first mission begins in a bank.
+              {tr("Your first mission begins in a bank.")}
             </p>
           </Reveal>
           <Reveal className="portal-mission-stage">
             <div className="portal-mission-grid" aria-hidden="true" />
             <div className="portal-mission-top">
               <span>
-                <span className="portal-mini-dot" /> LEVEL 01 / INSTRUCTOR
-                CONTROLLED
+                <span className="portal-mini-dot" />
+                {tr(" LEVEL 01 / INSTRUCTOR CONTROLLED")}
               </span>
-              <span>ACADEMIC SIMULATION</span>
+              <span>{tr("ACADEMIC SIMULATION")}</span>
             </div>
             <div className="portal-bank-sculpture" aria-hidden="true">
               <div className="portal-bank-ring ring-one" />
@@ -362,55 +396,63 @@ export default function Landing() {
             </div>
             <div className="portal-mission-details">
               <div>
-                <span className="portal-kicker">THE SILENT TRANSFER</span>
+                <span className="portal-kicker">
+                  {tr("THE SILENT TRANSFER")}
+                </span>
                 <h3>
-                  AFA BANK<span>01</span>
+                  {tr("AFA BANK")}
+                  <span>{tr("01")}</span>
                 </h3>
                 <p>
-                  A balance changes. The trail remains.
+                  {tr("A balance changes. The trail remains.")}
                   <br />
-                  Trace the records. Build the case. Prove what happened.
+                  {tr(
+                    "Trace the records. Build the case. Prove what happened.",
+                  )}
                 </p>
               </div>
               <a
                 href="#/login"
                 className="portal-round-link"
-                aria-label="Enter the player hub"
+                aria-label={tr("Enter the player hub")}
               >
                 <ArrowUpRight size={30} />
               </a>
             </div>
             <div className="portal-mission-tags">
               <span>
-                <Fingerprint size={13} /> FORENSIC EVIDENCE
+                <Fingerprint size={13} />
+                {tr(" FORENSIC EVIDENCE")}
               </span>
               <span>
-                <Swords size={13} /> TWO COMPETING TEAMS
+                <Swords size={13} />
+                {tr(" TWO COMPETING TEAMS")}
               </span>
               <span>
-                <Radio size={13} /> LIVE INSTRUCTOR LAUNCH
+                <Radio size={13} />
+                {tr(" LIVE INSTRUCTOR LAUNCH")}
               </span>
             </div>
           </Reveal>
           <Reveal className="portal-next-mission">
             <span>
               <Lock size={20} />
-              <span>LEVEL 02</span>
+              <span>{tr("LEVEL 02")}</span>
             </span>
-            <strong>The story continues.</strong>
-            <p>Future phases. New worlds. Not unlocked yet.</p>
-            <span className="portal-kicker">COMING LATER</span>
+            <strong>{tr("The story continues.")}</strong>
+            <p>{tr("Future phases. New worlds. Not unlocked yet.")}</p>
+            <span className="portal-kicker">{tr("COMING LATER")}</span>
           </Reveal>
         </section>
         <section className="portal-method-v3">
           <Reveal>
             <span className="portal-kicker">
-              03 / FROM INVITATION TO INVESTIGATION
+              {tr("03 / FROM INVITATION TO INVESTIGATION")}
             </span>
             <h2>
-              The room moves
+              {tr("The room moves")}
               <br />
-              <em>together.</em>
+              <em>{tr("together.")}</em>
             </h2>
           </Reveal>
           <div className="portal-method-steps">
@@ -448,8 +490,8 @@ export default function Landing() {
                 <span className="portal-step-number">{step.n}</span>
                 <div>
                   <step.icon size={21} />
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
+                  <h3>{tr(step.title)}</h3>
+                  <p>{tr(step.text)}</p>
                 </div>
                 <ArrowDown size={16} />
               </Reveal>
@@ -459,28 +501,30 @@ export default function Landing() {
         <section className="portal-ending">
           <div className="portal-ending-orbit" aria-hidden="true" />
           <Reveal>
-            <span className="portal-kicker">YOUR NEXT MOVE MATTERS.</span>
+            <span className="portal-kicker">
+              {tr("YOUR NEXT MOVE MATTERS.")}
+            </span>
             <h2>
-              Don’t just study it.
+              {tr("Don’t just study it.")}
               <br />
-              <em>Step inside it.</em>
+              <em>{tr("Step inside it.")}</em>
             </h2>
             <Magnetic className="portal-cta" href="#/register">
-              Request access{" "}
+              {tr("Request access")}{" "}
               <span>
                 <ArrowUpRight size={20} />
               </span>
             </Magnetic>
-            <p>Supervised learning. Real reasoning. Virtual worlds.</p>
+            <p>{tr("Supervised learning. Real reasoning. Virtual worlds.")}</p>
           </Reveal>
         </section>
       </main>
       <footer className="portal-footer">
         <LaunchBrand />
         <p>
-          AFA LAUNCH · Academic cybersecurity simulation.
+          {tr("AFA LAUNCH · Academic cybersecurity simulation.")}
           <br />
-          Fictional accounts, virtual funds and prepared evidence.
+          {tr("Fictional accounts, virtual funds and prepared evidence.")}
         </p>
         <button
           onClick={() =>
@@ -490,7 +534,8 @@ export default function Landing() {
             })
           }
         >
-          BACK TO TOP <ArrowUpRight size={13} />
+          {tr("BACK TO TOP ")}
+          <ArrowUpRight size={13} />
         </button>
       </footer>
     </div>

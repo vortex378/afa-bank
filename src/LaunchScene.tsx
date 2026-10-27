@@ -1,3 +1,4 @@
+import { tr } from "./i18n";
 import { useEffect, useRef } from "react";
 import { useReducedMotion, type MotionValue } from "motion/react";
 import * as THREE from "three";
@@ -63,7 +64,7 @@ function StaticNetwork() {
           fontSize="12"
           letterSpacing="3"
         >
-          AFA BANK
+          {tr("AFA BANK")}
         </text>
       </svg>
     </div>
