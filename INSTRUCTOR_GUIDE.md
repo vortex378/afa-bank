@@ -10,6 +10,8 @@ Open https://afa-bank-next.cobra-public-community.workers.dev/ . Students see AF
 1. Students choose Request access. The administrator signs in, opens Bank administration → Administrimi, and approves pending accounts (or creates student accounts).
 2. Administrator or owner opens AFA LAUNCH and creates a Level 1 lobby with the desired team capacity.
 3. Approved students sign in, acknowledge the simulation, choose Red or Blue and mark ready. Both teams need at least one player; every enrolled student must be ready.
+
+   Signing in alone does not enroll a student. The training checkbox is above the team choices. The owner’s live launch checklist identifies missing teams and students who have not marked ready; Launch Level 1 stays disabled until the roster is eligible. Clicking an already-selected team does not reset readiness.
 4. Administrator or owner chooses Launch Level 1 and confirms. Connected students automatically receive a five-second countdown and the two-page contract.
 5. Each student chooses Next, reads page 2, checks the agreement and accepts. The owner checks all contracts are accepted, then chooses Open the bank and confirms. Each round wallet starts at 50,000 DEMO ALL.
 6. Students may transfer virtual funds using another enrolled student's Demo IBAN.

@@ -594,7 +594,9 @@ export default function LaunchGame({
     if (r.stage === "completed") setBriefing(false);
     if (lastStage.current !== r.stage) {
       lastStage.current = r.stage;
-      setTab(r.stage === "completed" ? "reports" : "overview");
+      setTab(
+        ["review", "completed"].includes(r.stage) ? "reports" : "overview",
+      );
       window.scrollTo(0, 0);
     }
     if (
@@ -668,6 +670,18 @@ export default function LaunchGame({
     evidence.find((v: Row) => v.ref === selectedEvidence) || evidence[0];
   const ready = (data?.players || []).filter((v: Row) => v.ready).length;
   const accepted = (data?.players || []).filter((v: Row) => v.terms_at).length;
+  const roster: Row[] = data?.players || [];
+  const activeStudents = roster.filter(
+    (v) => v.role === "customer" && v.status === "active",
+  );
+  const hasRed = activeStudents.some((v) => v.team === "red");
+  const hasBlue = activeStudents.some((v) => v.team === "blue");
+  const waitingStudents = activeStudents.filter((v) => !v.ready);
+  const ineligibleStudents = roster.filter(
+    (v) => v.role !== "customer" || v.status !== "active",
+  );
+  const canStart =
+    hasRed && hasBlue && !waitingStudents.length && !ineligibleStudents.length;
   const reportsByTeam = (team: string) =>
     (data?.reports || []).find((v: Row) => v.team === team);
   const canInvestigate = caseOpen && (p || manager);
@@ -693,6 +707,7 @@ export default function LaunchGame({
     title: string,
     description: string,
     body: unknown = {},
+    disabled = false,
   ) =>
     button(
       title,
@@ -701,6 +716,7 @@ export default function LaunchGame({
           await act(action, body);
         }),
       "primary",
+      disabled,
     );
   if (loading && !data)
     return (
@@ -1000,10 +1016,71 @@ export default function LaunchGame({
                           readiness. Starting locks the roster and broadcasts a
                           five-second countdown.
                         </p>
+                        <div
+                          className="lr-document-notice"
+                          role="status"
+                          aria-label="Launch readiness"
+                        >
+                          <Shield size={18} />
+                          <div>
+                            <strong>
+                              {canStart
+                                ? "Ready to launch"
+                                : "Launch blocked — finish student setup"}
+                            </strong>
+                            <ul>
+                              <li>
+                                {hasRed ? "✓" : "○"} Red team:{" "}
+                                {
+                                  activeStudents.filter((v) => v.team === "red")
+                                    .length
+                                }{" "}
+                                enrolled
+                              </li>
+                              <li>
+                                {hasBlue ? "✓" : "○"} Blue team:{" "}
+                                {
+                                  activeStudents.filter(
+                                    (v) => v.team === "blue",
+                                  ).length
+                                }{" "}
+                                enrolled
+                              </li>
+                              <li>
+                                {ready} / {roster.length} students marked ready
+                              </li>
+                            </ul>
+                            {!roster.length && (
+                              <p>
+                                Signing in does not join a team. Each student
+                                must confirm the training notice, choose Red or
+                                Blue, then press “I am ready” in their own
+                                window.
+                              </p>
+                            )}
+                            {!!waitingStudents.length && (
+                              <p>
+                                Still needs to press “I am ready”:{" "}
+                                {waitingStudents.map((v) => v.name).join(", ")}.
+                              </p>
+                            )}
+                            {!!ineligibleStudents.length && (
+                              <p>
+                                Restore active student access before launching:{" "}
+                                {ineligibleStudents
+                                  .map((v) => v.name)
+                                  .join(", ")}
+                                .
+                              </p>
+                            )}
+                          </div>
+                        </div>
                         {stageButton(
                           "start",
                           "Launch Level 1",
                           "Launch the countdown for all enrolled students? Teams lock and every connected student moves to the bank contract.",
+                          {},
+                          !canStart,
                         )}
                         <small>
                           Requires at least one student on each team and
@@ -1022,6 +1099,11 @@ export default function LaunchGame({
                           "banking",
                           "Open the bank",
                           "Open round banking for all enrolled students? Each has 50,000 DEMO ALL in their separate round account.",
+                          {},
+                          !roster.length ||
+                            accepted !== roster.length ||
+                            !!ineligibleStudents.length ||
+                            clock < r.launch_at,
                         )}
                       </>
                     ) : r.stage === "banking" ? (
@@ -1291,19 +1373,26 @@ export default function LaunchGame({
                       <br />
                       <em>your side.</em>
                     </h1>
-                    <p>One incident. Two perspectives. Prove what happened.</p>
+                    <p>
+                      1. Confirm the training notice. 2. Join Red or Blue. 3.
+                      Press “I am ready”.
+                    </p>
                   </div>
                   <Pill tone="live">
-                    {
-                      data.players.filter((v: Row) =>
-                        data.connected.includes(v.user_id),
-                      ).length
-                    }{" "}
-                    students connected
+                    {data.players.length} students enrolled
                   </Pill>
                 </div>
                 <div className="lr-lobby-grid">
                   <div>
+                    <label className="lr-check lr-training">
+                      <input
+                        type="checkbox"
+                        checked={training}
+                        onChange={(e) => setTraining(e.target.checked)}
+                      />
+                      I understand this is a supervised educational simulation
+                      with fictional money and prepared security incidents.
+                    </label>
                     <div className="lr-teams">
                       {["red", "blue"].map((t) => (
                         <article
@@ -1336,6 +1425,7 @@ export default function LaunchGame({
                             disabled={
                               busy ||
                               !training ||
+                              p?.team === t ||
                               (data.players.filter((v: Row) => v.team === t)
                                 .length >= r.team_size &&
                                 p?.team !== t)
@@ -1367,15 +1457,6 @@ export default function LaunchGame({
                         </article>
                       ))}
                     </div>
-                    <label className="lr-check lr-training">
-                      <input
-                        type="checkbox"
-                        checked={training}
-                        onChange={(e) => setTraining(e.target.checked)}
-                      />
-                      I understand this is a supervised educational simulation
-                      with fictional money and prepared security incidents.
-                    </label>
                     {p && (
                       <div className="lr-ready-strip">
                         <div>

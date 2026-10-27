@@ -49,6 +49,12 @@ The Playwright API test trusts the generated self-signed loopback certificate on
 
 ## Coverage and interpretation
 
+### Empty-lobby launch and actual browser controls
+
+Run `node tests/security/start-flow.mjs` after building. Set `PLAYWRIGHT_MODULE` and `CHROME_PATH` as above if using an existing installation. Port 8811 must be free. This standalone test provisions its own disposable database under ignored `tools/`, using only the local security configuration and a synthetic case. It never connects to production.
+
+Five separate browser contexts verify actual login forms, administrator approval, empty/unready launch blocking, team selection, readiness, owner confirmation, synchronized countdowns, both contract pages, bank opening, refresh recovery, incident notification, evidence pins and private notes, report submission, report freeze and owner verdict. Screenshots, endpoint statuses and results are saved under ignored `artifacts/start-flow-*/`. The local server is stopped when the run finishes.
+
 Primary accounts: 1 owner, 2 admins, 1 finance, 4 Red, 4 Blue and 1 pending. The app creates the round-only AnOnYmOuS-RuSsIa beneficiary, without login credentials. Two auxiliary users exercise outsider/unready cases; 150 additional unique students exercise load and the 40-login classroom-IP test. Accounts created by registration/XSS probes are also local and disposable.
 
 Sessions are seeded to isolate role tests from login throttling; actual login, logout and password-minimum requests are separately exercised. Rate-limit records are cleared between unrelated test families, never within brute-force or shared-IP tests. No existing production account or balance is changed by testing.
