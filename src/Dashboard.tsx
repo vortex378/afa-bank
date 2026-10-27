@@ -444,7 +444,18 @@ export default function Dashboard({
               <span>
                 {tr("AFA-LAUNCH ·")}{" "}
                 {round
-                  ? round.stage.toUpperCase()
+                  ? tr(
+                      (
+                        {
+                          lobby: "Live lobby",
+                          contract: "Bank contract",
+                          banking: "Banking",
+                          investigation: "Investigation",
+                          review: "Owner review",
+                          completed: "Debrief",
+                        } as Record<string, string>
+                      )[round.stage] || round.stage,
+                    ).toUpperCase()
                   : tr("LEVEL 1 MISSION CONTROL")}
               </span>
               <button className="text-link" onClick={() => navigate("launch")}>
