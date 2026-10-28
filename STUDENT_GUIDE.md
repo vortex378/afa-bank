@@ -15,7 +15,9 @@ This guide describes the learning method, not the answer to a classroom case. Ca
    - **Kodi dhe rregullat:** krahaso fragmentin e përgatitur me rregullat. Cili kontroll duhej të zbatohej?
    - **Raporti:** fikso të paktën tri prova që lidhen me shpjegimin, shkruaj arsyetimin, rrjedhën kohore dhe masat parandaluese.
 6. Referencat me shigjetë janë lidhje të klikueshme. Shënimet dhe provat e fiksuara ndahen vetëm me ekipin tënd. Tri prova të rastësishme nuk mjaftojnë për një shpjegim të saktë.
-7. Dorëzo raportin përpara mbylljes nga instruktori. Prit vlerësimin dhe lexo shpjegimin përfundimtar. Niveli 2 nuk është aktiv ende.
+7. Dorëzo raportin përpara mbylljes nga instruktori. Prit vlerësimin dhe lexo shpjegimin përfundimtar. Nëse owner-i hap Fazën 2, faqja ndryshon automatikisht pa dalë nga llogaria. Lexo misionin, shtyp **Jam gati** dhe ndiq udhëzimin e [Fazës 2](PHASE_TWO.md).
+
+Në hetim, **Hap transfertat** dhe **Ndihmë: shfaq kodin** të çojnë te provat përkatëse. **Më trego butonin** thekson butonin e fiksimit të provës. Ti e vendos vetë cilën provë të ruash dhe si ta shpjegosh.
 
 Gjuha ndryshohet me **Shqip / English** pa dalë nga llogaria. Referencat, kodi dhe shënimet e pjesëmarrësve ruhen në formën origjinale që të mund të krahasohen saktë.
 
@@ -32,6 +34,8 @@ Gjuha ndryshohet me **Shqip / English** pa dalë nga llogaria. Referencat, kodi 
    - **Code and policy:** compare the prepared handler with the policy. Which control should have been enforced?
    - **Report:** pin at least three relevant records, explain the cause and timeline, and propose concrete prevention.
 6. Arrow-marked references open the linked record. Notes and pins are private to your team. Three arbitrary pins do not establish a supported conclusion.
-7. Submit before the instructor freezes reports, then wait for the verdict and debrief. Level 2 is not enabled yet.
+7. Submit before the instructor freezes reports, then wait for the verdict and debrief. When the owner opens Phase 2, the page changes automatically while you remain signed in. Read the mission, mark ready and follow [the Phase 2 guide](PHASE_TWO.md).
+
+Use **Open the transfers** or **Help: show the code** to navigate to relevant evidence. **Show me the button** highlights the actual evidence-pin control. You choose which records support your explanation.
 
 Use **Shqip / English** to change the interface language without signing out. References, source code and participant-written work preserve their original text.

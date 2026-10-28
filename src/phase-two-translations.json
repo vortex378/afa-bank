@@ -1,0 +1,515 @@
+[
+  ["Briefing", "Udhëzimi"],
+  ["Round A", "Raundi A"],
+  ["Swap tasks", "Ndërro detyrat"],
+  ["Round B", "Raundi B"],
+  ["Instructor review", "Vlerësimi i instruktorit"],
+  ["Results", "Rezultatet"],
+  ["Test authorization", "Provo autorizimin"],
+  ["Build the defense", "Ndërto mbrojtjen"],
+  ["Active identity", "Identiteti aktiv"],
+  ["Approval role", "Roli i miratuesit"],
+  ["Payment organization", "Organizata e pagesës"],
+  ["No self approval", "Pa vetë-miratim"],
+  ["Amount and second approval", "Shuma dhe miratimi i dytë"],
+  ["OWNER CONFIRMATION", "KONFIRMIMI I DREJTUESIT"],
+  [
+    "This changes the exercise for every connected participant. Your decision is recorded.",
+    "Ky veprim ndryshon ushtrimin për të gjithë pjesëmarrësit e lidhur. Vendimi yt regjistrohet."
+  ],
+  ["LEVEL 02 / THE FALSE APPROVAL", "NIVELI 02 / MIRATIMI I RREMË"],
+  ["PHASE 1 COMPLETE · PHASE 2 OPENING", "FAZA 1 PËRFUNDOI · FAZA 2 PO HAPET"],
+  ["YOUR TEAM IS READY", "EKIPI YT ËSHTË GATI"],
+  ["The false approval.", "Miratimi i rremë."],
+  ["Same team. A new challenge.", "I njëjti ekip. Një sfidë e re."],
+  [
+    "Started by the owner. Everyone enters together.",
+    "Nisur nga drejtuesi. Të gjithë hyjnë së bashku."
+  ],
+  [
+    "Your account, team and Phase 1 scores are preserved.",
+    "Llogaria, ekipi dhe pikët e Fazës 1 ruhen."
+  ],
+  ["Owner / instructor", "Drejtuesi / instruktori"],
+  ["Observer", "Vëzhgues"],
+  ["MISSION CONTROL", "DREJTIMI I LOJËS"],
+  ["Phase 2 navigation", "Menuja e Fazës 2"],
+  ["Director", "Drejtimi"],
+  ["Team progress", "Progresi i ekipeve"],
+  ["Bank", "Banka"],
+  ["Laboratory", "Laboratori"],
+  ["AUTHORIZATION LABORATORY", "LABORATORI I AUTORIZIMIT"],
+  [
+    "Isolated simulation. Fictional payments and identities.",
+    "Simulim i izoluar. Pagesa dhe identitete fiktive."
+  ],
+  ["Phase progress", "Ecuria e fazës"],
+  [
+    "The owner paused the exercise. Your work is saved; changes are temporarily frozen.",
+    "Drejtuesi e pauzoi ushtrimin. Puna jote është ruajtur; ndryshimet janë bllokuar përkohësisht."
+  ],
+  [
+    "Time is up. Your work is saved. Wait for the owner to advance the exercise.",
+    "Koha përfundoi. Puna jote është ruajtur. Prit që drejtuesi të vazhdojë ushtrimin."
+  ],
+  ["PHASE 2 / THE FALSE APPROVAL", "FAZA 2 / MIRATIMI I RREMË"],
+  ["You launch. They solve.", "Ti nis fazën. Ata zgjidhin sfidën."],
+  ["The next challenge awaits.", "Sfida e radhës po pret."],
+  [
+    "Coordinate the room, swap tasks, review the reasoning and publish the result.",
+    "Koordino sallën, ndërro detyrat, shqyrto arsyetimin dhe publiko rezultatin."
+  ],
+  [
+    "Being signed in does not give permission to approve every payment.",
+    "Të qenët i identifikuar nuk të jep leje të miratosh çdo pagesë."
+  ],
+  ["PAUSED", "NË PAUZË"],
+  ["TIME REMAINING", "KOHA E MBETUR"],
+  ["OWNER CONTROL", "KONTROLLI I DREJTUESIT"],
+  [
+    "Connected participants follow every stage change automatically. Students perform the laboratory tasks.",
+    "Pjesëmarrësit e lidhur kalojnë automatikisht në çdo etapë. Studentët kryejnë detyrat e laboratorit."
+  ],
+  ["Start Round A", "Nis Raundin A"],
+  ["Start Round A for everyone?", "Ta nis Raundin A për të gjithë?"],
+  ["Start Round B", "Nis Raundin B"],
+  [
+    "Start Round B with the tasks swapped?",
+    "Ta nis Raundin B me detyrat e ndërruara?"
+  ],
+  ["Resume", "Vazhdo"],
+  ["Resume the exercise timer?", "Ta vazhdoj kohën e ushtrimit?"],
+  ["Pause", "Pauzo"],
+  ["Pause the exercise for everyone?", "Ta pauzoj ushtrimin për të gjithë?"],
+  [
+    "Freeze Round A and swap the team tasks?",
+    "Ta mbyll Raundin A dhe t'i ndërroj detyrat e ekipeve?"
+  ],
+  ["Freeze reports & review", "Mbyll raportet dhe vlerëso"],
+  [
+    "Freeze all Phase 2 reports and start judging?",
+    "T'i mbyll raportet e Fazës 2 dhe të nis vlerësimin?"
+  ],
+  ["Review the reports", "Shqyrto raportet"],
+  ["View results", "Shiko rezultatet"],
+  ["End Phase 2", "Mbyll Fazën 2"],
+  ["End Phase 2 without a verdict?", "Ta mbyll Fazën 2 pa vendim?"],
+  [
+    "Instructor ended the Phase 2 classroom exercise.",
+    "Instruktori e mbylli ushtrimin e Fazës 2."
+  ],
+  ["students connected", "studentë të lidhur"],
+  ["ready", "gati"],
+  ["Keep the room together", "Mbaje sallën të sinkronizuar"],
+  [
+    "First let every student read the briefing and mark ready. Start Round A, then swap tasks, start Round B and freeze reports before judging.",
+    "Fillimisht çdo student lexon udhëzimin dhe konfirmon gatishmërinë. Nis Raundin A, ndërro detyrat, nis Raundin B dhe mbyll raportet përpara vlerësimit."
+  ],
+  ["Reading the briefing", "Po lexon udhëzimin"],
+  [
+    "This phase uses the Phase 1 roster.",
+    "Kjo fazë përdor pjesëmarrësit e Fazës 1."
+  ],
+  [
+    "You are not enrolled in this exercise. Ask the instructor about the next session.",
+    "Nuk je i regjistruar në këtë ushtrim. Pyet instruktorin për sesionin e radhës."
+  ],
+  ["READ THE MISSION", "LEXO MISIONIN"],
+  [
+    "A payment should require the right permission.",
+    "Një pagesë kërkon lejen e duhur."
+  ],
+  [
+    "Observe one legitimate approval, then test whether an unauthorized identity can approve a payment. In your defense task, enforce the bank policy and run the validation tests.",
+    "Shqyrto një miratim të ligjshëm, pastaj provo nëse një identitet pa leje mund të miratojë pagesën. Në detyrën e mbrojtjes zbato rregullat e bankës dhe ekzekuto testet e verifikimit."
+  ],
+  [
+    "Round A: Red tests authorization; Blue builds the defense.",
+    "Raundi A: Kuqtë testojnë autorizimin; Blutë ndërtojnë mbrojtjen."
+  ],
+  [
+    "Round B: the teams swap tasks. Both teams do both jobs.",
+    "Raundi B: ekipet ndërrojnë detyrat. Të dy ekipet kryejnë të dyja detyrat."
+  ],
+  [
+    "Pin a probe and a defense test, explain the evidence, then submit your team report.",
+    "Fikso një provë miratimi dhe një test mbrojtjeje, shpjego provat, pastaj dorëzo raportin e ekipit."
+  ],
+  [
+    "Bank policy: active approvers may approve payments only in their own organization. Self approval is forbidden. Amounts above 5000 ALL need a senior approver and a second approval.",
+    "Rregullat e bankës: miratuesit aktivë mund të miratojnë pagesa vetëm brenda organizatës së tyre. Vetë-miratimi ndalohet. Shumat mbi 5000 ALL kërkojnë miratues të lartë dhe një miratim të dytë."
+  ],
+  ["Ready to begin?", "Gati për të filluar?"],
+  [
+    "Read the mission above, then press I am ready. Your own readiness does not mark your teammates ready.",
+    "Lexo misionin më sipër, pastaj shtyp Jam gati. Gatishmëria jote nuk shënon automatikisht shokët e ekipit si gati."
+  ],
+  [
+    "Switch perspective. Keep your evidence.",
+    "Ndrysho këndvështrimin. Ruaj provat."
+  ],
+  [
+    "The first task is frozen. The owner will start Round B; your team will take the other task. Your pinned runs remain available for the final report.",
+    "Detyra e parë u mbyll. Drejtuesi do të nisë Raundin B dhe ekipi yt do të marrë detyrën tjetër. Provat e fiksuara mbeten të disponueshme për raportin përfundimtar."
+  ],
+  ["Start with a normal payment", "Fillo me një pagesë të zakonshme"],
+  [
+    "Open a payment below to send it to the laboratory. Try an authorized approver first, then compare a different fictional identity.",
+    "Hap një nga pagesat më poshtë për ta dërguar në laborator. Fillimisht provo një miratues me leje, pastaj krahaso një identitet tjetër fiktiv."
+  ],
+  ["Open a sample payment", "Hap një pagesë shembull"],
+  ["VIRTUAL LAB BUDGET", "BUXHETI VIRTUAL I LABORATORIT"],
+  [
+    "Sample payments do not change your Phase 1 balance.",
+    "Pagesat shembull nuk ndryshojnë bilancin tënd të Fazës 1."
+  ],
+  ["Create sample payment", "Krijo pagesë prove"],
+  ["Fictional supplier", "Furnizuesi fiktiv"],
+  ["Create payment", "Krijo pagesën"],
+  ["Requested", "Kërkuar"],
+  ["Approved in a test", "Miratuar në provë"],
+  ["Blocked in a test", "Bllokuar në provë"],
+  ["Fictional requester", "Kërkuesi fiktiv"],
+  ["Inspect payment", "Shiko kërkesën"],
+  [
+    "Compare identities, then save the result",
+    "Krahaso identitetet, pastaj ruaj rezultatin"
+  ],
+  [
+    "Change a rule, test it, then save the result",
+    "Ndrysho një rregull, testo dhe ruaj rezultatin"
+  ],
+  [
+    "Choose a sample payment and a fictional lab identity. Send the probe. Read the decision and its checks, then pin a useful run for your team report.",
+    "Zgjidh një pagesë shembull dhe një identitet fiktiv. Dërgo provën. Lexo vendimin dhe kontrollet, pastaj fikso një rezultat të dobishëm për raportin e ekipit."
+  ],
+  [
+    "Read the bank policy. Configure the rules, run all ten validation cases and inspect failures. A defense must allow legitimate payments as well as block unauthorized ones.",
+    "Lexo rregullat e bankës. Konfiguro kontrollet, ekzekuto të dhjeta rastet e verifikimit dhe shqyrto dështimet. Mbrojtja duhet të lejojë pagesat e ligjshme dhe të bllokojë ato pa leje."
+  ],
+  ["ISOLATED REQUEST SIMULATOR", "SIMULATOR I IZOLUAR I KËRKESAVE"],
+  ["Test the permission boundary", "Provo kufirin e lejes"],
+  ["Payment", "Pagesa"],
+  ["Fictional lab identity", "Identiteti fiktiv i laboratorit"],
+  ["Second approval recorded", "Miratimi i dytë është regjistruar"],
+  ["Identity", "Identiteti"],
+  ["Send approval probe", "Dërgo provën e miratimit"],
+  [
+    "This sends only a simulated request. It cannot grant a real app role or debit a real account.",
+    "Dërgohet vetëm një kërkesë e simuluar. Ajo nuk jep role reale në aplikacion dhe nuk debiton llogari reale."
+  ],
+  ["DEFENSE RULES", "RREGULLAT E MBROJTJES"],
+  ["Protect it. Then prove it.", "Mbroje. Pastaj provoje."],
+  ["Require an active identity", "Kërko identitet aktiv"],
+  ["Require an approval role", "Kërko rol miratuesi"],
+  ["Match the payment organization", "Kontrollo organizatën e pagesës"],
+  ["Prevent self approval", "Ndalo vetë-miratimin"],
+  [
+    "Second approval above this amount (ALL)",
+    "Miratim i dytë mbi këtë shumë (ALL)"
+  ],
+  ["Run defense tests", "Testo mbrojtjen"],
+  [
+    "Blocking every request is not a solution.",
+    "Bllokimi i çdo kërkese nuk është zgjidhje."
+  ],
+  ["ACTUAL SIMULATION RESULTS", "REZULTATET E SIMULIMIT"],
+  ["Read the response", "Lexo përgjigjen"],
+  ["APPROVED", "MIRATUAR"],
+  ["BLOCKED", "BLLOKUAR"],
+  [
+    "An unauthorized approval was demonstrated. Explain which check allowed it.",
+    "U demonstrua një miratim pa leje. Shpjego cili kontroll e lejoi këtë veprim."
+  ],
+  [
+    "This was a legitimate approval. Compare a different identity or payment.",
+    "Ky ishte një miratim i ligjshëm. Krahaso një identitet ose pagesë tjetër."
+  ],
+  [
+    "The simulator blocked this request. Compare the recorded checks.",
+    "Simulatori e bllokoi këtë kërkesë. Krahaso kontrollet e regjistruara."
+  ],
+  ["Passed", "Kaloi"],
+  ["Blocked", "Bllokuar"],
+  ["Lab identity", "Identiteti i laboratorit"],
+  ["Expected", "Pritet"],
+  ["Actual", "Rezultati"],
+  ["allow", "lejohet"],
+  ["block", "bllokohet"],
+  ["inactive", "joaktiv"],
+  ["approver", "miratues"],
+  ["senior", "miratues i lartë"],
+  ["Pin this result", "Fikso këtë rezultat"],
+  ["Keep the evidence", "Ruaj provën"],
+  [
+    "Pin this result to preserve the request and response for your team. Later, cite its reference in the report.",
+    "Fikso këtë rezultat për të ruajtur kërkesën dhe përgjigjen për ekipin tënd. Më pas cito referencën e tij në raport."
+  ],
+  [
+    "Run a probe or defense test to see the recorded result here.",
+    "Ekzekuto një provë miratimi ose test mbrojtjeje që rezultati i regjistruar të shfaqet këtu."
+  ],
+  [
+    "Build an explanation from your runs",
+    "Ndërto shpjegimin nga provat e kryera"
+  ],
+  [
+    "Open a saved run to compare its request and response. Pin useful results and share observations in the team notebook. Opposing teams cannot read this work.",
+    "Hap një provë të regjistruar për të krahasuar kërkesën dhe përgjigjen. Fikso rezultatet e dobishme dhe shkruaj vëzhgimet te shënimet e ekipit. Ekipi kundërshtar nuk mund ta lexojë këtë punë."
+  ],
+  ["Your team runs", "Provat e ekipit tënd"],
+  ["Approval probe", "Provë miratimi"],
+  ["Defense test", "Test mbrojtjeje"],
+  ["Round", "Raundi"],
+  ["Inspect saved evidence", "Shiko provën e ruajtur"],
+  ["No runs have been recorded yet.", "Ende nuk ka prova të regjistruara."],
+  ["results pinned", "rezultate të fiksuara"],
+  ["Observation or question", "Vëzhgim ose pyetje"],
+  ["Phase 2 complete", "Faza 2 përfundoi"],
+  ["Phase 2 ended", "Faza 2 u mbyll"],
+  ["WINNER", "FITUESI"],
+  ["Campaign total", "Pikët e përgjithshme"],
+  ["The lesson", "Mësimi kryesor"],
+  [
+    "The instructor ended this phase without a verdict.",
+    "Instruktori e mbylli këtë fazë pa vendim."
+  ],
+  ["Level 3 · A future mission", "Niveli 3 · Mision i ardhshëm"],
+  ["Review the evidence, then publish", "Shqyrto provat, pastaj publiko"],
+  [
+    "Technical points come from recorded runs. Award reasoning and documentation points only for submitted reports, then confirm the final result.",
+    "Pikët teknike dalin nga provat e regjistruara. Jep pikë për arsyetimin dhe dokumentimin vetëm kur ka raport të dorëzuar, pastaj konfirmo rezultatin përfundimtar."
+  ],
+  ["Automatic technical points", "Pikët teknike automatike"],
+  [
+    "Publish the Phase 2 verdict for everyone?",
+    "Ta publikoj vendimin e Fazës 2 për të gjithë?"
+  ],
+  ["Instructor assessment", "Vlerësimi i instruktorit"],
+  ["Reasoning (0–25)", "Arsyetimi (0–25)"],
+  ["Documentation (0–10)", "Dokumentimi (0–10)"],
+  ["Explain the verdict", "Shpjego vendimin"],
+  ["Publish Phase 2 verdict", "Publiko vendimin e Fazës 2"],
+  [
+    "Freeze reports from Mission Control before grading.",
+    "Mbyll raportet nga Drejtimi i lojës përpara vlerësimit."
+  ],
+  ["Explain what you proved", "Shpjego çfarë provove"],
+  [
+    "Use a pinned approval probe and a pinned defense test. Explain the missing permission check, the rule you changed and which legitimate payment still worked.",
+    "Përdor një provë miratimi dhe një test mbrojtjeje të fiksuar. Shpjego kontrollin e munguar të lejes, rregullin që ndryshove dhe cilën pagesë të ligjshme sistemi ende e lejoi."
+  ],
+  ["Your team conclusion", "Përfundimi i ekipit tënd"],
+  [
+    "What permission check failed? Cite an approval probe.",
+    "Cili kontroll i lejes dështoi? Cito një provë miratimi."
+  ],
+  [
+    "How did your defense fix it while preserving legitimate payments?",
+    "Si e zgjidhi mbrojtja problemin duke lejuar pagesat e ligjshme?"
+  ],
+  [
+    "Which saved references support your conclusion?",
+    "Cilat referenca të ruajtura mbështesin përfundimin tënd?"
+  ],
+  [
+    "Submit in Round B with both a probe and a defense test pinned.",
+    "Dorëzoje në Raundin B pasi të kesh fiksuar një provë miratimi dhe një test mbrojtjeje."
+  ],
+  ["Submit Phase 2 report", "Dorëzo raportin e Fazës 2"],
+  ["Your submitted report", "Raporti yt i dorëzuar"],
+  [
+    "Submissions are closed. Wait for the instructor verdict.",
+    "Dorëzimet janë mbyllur. Prit vendimin e instruktorit."
+  ],
+  [
+    "Academic simulation · no real payments, credentials or bank access.",
+    "Simulim akademik · pa pagesa reale, kredenciale apo akses bankar real."
+  ],
+  [
+    "This control becomes available at the next exercise step.",
+    "Ky veprim bëhet i disponueshëm në hapin tjetër të ushtrimit."
+  ],
+  [
+    "The control is highlighted. Use it when you are ready.",
+    "Butoni është theksuar. Përdore kur të jesh gati."
+  ],
+  ["Student help", "Ndihmë për studentin"],
+  ["HELP / YOUR NEXT ACTION", "NDIHMË / VEPRIMI I RADHËS"],
+  ["Show me the button", "Më trego butonin"],
+  ["Continue with your class", "Vazhdo me klasën tënde"],
+  [
+    "Phase 1 scores and teams carry forward. Opening Phase 2 moves every enrolled student to the new briefing without signing in again.",
+    "Pikët dhe ekipet e Fazës 1 ruhen. Hapja e Fazës 2 i kalon të gjithë studentët e regjistruar te udhëzimi i ri pa hyrë sërish në llogari."
+  ],
+  ["Open Phase 2", "Hap Fazën 2"],
+  ["Open Phase 2 for everyone?", "Ta hap Fazën 2 për të gjithë?"],
+  [
+    "Every enrolled student will enter the authorization laboratory. Teams and Phase 1 scores are preserved.",
+    "Çdo student i regjistruar do të hyjë në laboratorin e autorizimit. Ekipet dhe pikët e Fazës 1 ruhen."
+  ],
+  ["A new permission challenge awaits.", "Të pret një sfidë e re për lejet."],
+  [
+    "Stay signed in. The owner opens Phase 2 after publishing the Phase 1 verdict.",
+    "Qëndro i identifikuar. Drejtuesi hap Fazën 2 pasi publikon vendimin e Fazës 1."
+  ],
+  ["Use evidence in your explanation", "Përdor prova në shpjegimin tënd"],
+  [
+    "Name the failed control, cite the pinned record references and explain the order of events. Use the code and policy records to support the proposed fix.",
+    "Emërto kontrollin që dështoi, cito referencat e provave të fiksuara dhe shpjego radhën e ngjarjeve. Përdor kodin dhe rregullat për të mbështetur zgjidhjen që propozon."
+  ],
+  ["Return to the evidence", "Kthehu te provat"],
+  ["Not sure where to begin?", "Nuk di nga t'ia fillosh?"],
+  [
+    "Start with the transfer. Then open its linked batch, authorization and code records. Pin the records that support your explanation.",
+    "Fillo me transfertën. Pastaj hap grupin e transfertave, autorizimin dhe kodin që lidhen me të. Fikso provat që mbështesin shpjegimin tënd."
+  ],
+  ["Open the transfers", "Hap transfertat"],
+  ["Help: show the code", "Ndihmë: shiko kodin"],
+  ["Help: open the notebook", "Ndihmë: hap shënimet"],
+  ["Save this evidence for your team", "Ruaje këtë provë për ekipin tënd"],
+  [
+    "Use Pin evidence to keep this record on the team board. A pin saves its reference; add your own explanation in the notebook.",
+    "Shtyp Fikso provën për ta ruajtur këtë regjistrim në tabelën e ekipit. Fiksimi ruan referencën; shto shpjegimin tënd te shënimet."
+  ],
+  [
+    "The simulator checked the account and amount but did not require an approval role. Authentication did not establish permission to approve.",
+    "Simulatori kontrolloi llogarinë dhe shumën, por nuk kërkoi rol miratuesi. Identifikimi nuk përbënte leje për të miratuar."
+  ],
+  [
+    "The simulator accepted a valid approver from a different organization. Every approval must also be bound to the payment organization.",
+    "Simulatori pranoi një miratues të vlefshëm nga një organizatë tjetër. Çdo miratim duhet të lidhet edhe me organizatën e pagesës."
+  ],
+  ["Phase 2 is unavailable.", "Faza 2 nuk është e disponueshme."],
+  [
+    "Use the displayed exercise fields only.",
+    "Përdor vetëm fushat e shfaqura të ushtrimit."
+  ],
+  [
+    "Team and identity are assigned by the server.",
+    "Ekipi dhe identiteti caktohen nga serveri."
+  ],
+  ["Only the owner controls Phase 2.", "Vetëm drejtuesi kontrollon Fazën 2."],
+  ["Confirm the instructor action.", "Konfirmo veprimin e instruktorit."],
+  [
+    "Complete Phase 1 and publish its winner first.",
+    "Përfundo Fazën 1 dhe publiko fituesin e saj fillimisht."
+  ],
+  [
+    "A Phase 1 verdict and active students on both teams are required.",
+    "Kërkohet vendimi i Fazës 1 dhe studentë aktivë në të dy ekipet."
+  ],
+  ["Open Phase 2 first.", "Hap Fazën 2 fillimisht."],
+  [
+    "The exercise is paused, timed out or not open yet.",
+    "Ushtrimi është në pauzë, koha ka përfunduar ose ende nuk është hapur."
+  ],
+  [
+    "This instructor action is not available yet.",
+    "Ky veprim i instruktorit ende nuk është i disponueshëm."
+  ],
+  [
+    "Every enrolled student must be active and ready.",
+    "Çdo student i regjistruar duhet të jetë aktiv dhe gati."
+  ],
+  [
+    "The phase changed. Refresh and try again.",
+    "Faza ndryshoi. Rifresko dhe provo përsëri."
+  ],
+  [
+    "Freeze the reports before publishing a verdict.",
+    "Mbyll raportet përpara se të publikosh vendimin."
+  ],
+  ["The phase already ended.", "Faza ka përfunduar tashmë."],
+  [
+    "Readiness is available during the briefing.",
+    "Gatishmëria konfirmohet gjatë udhëzimit."
+  ],
+  [
+    "This lab already has enough sample payments.",
+    "Ky laborator ka mjaftueshëm pagesa shembull."
+  ],
+  [
+    "Sample payments cannot exceed the 50000 ALL lab budget.",
+    "Pagesat shembull nuk mund të tejkalojnë buxhetin e laboratorit prej 50 000 ALL."
+  ],
+  [
+    "This task belongs to the other role. Wait for the instructor to swap roles.",
+    "Kjo detyrë i përket rolit tjetër. Prit që instruktori të ndërrojë detyrat."
+  ],
+  [
+    "Request key already used for another exercise.",
+    "Kjo referencë kërkese është përdorur për një provë tjetër."
+  ],
+  ["Check the second-approval field.", "Kontrollo fushën e miratimit të dytë."],
+  [
+    "Choose a fictional lab identity.",
+    "Zgjidh një identitet fiktiv të laboratorit."
+  ],
+  [
+    "Payment not found in your team laboratory.",
+    "Pagesa nuk u gjet në laboratorin e ekipit tënd."
+  ],
+  [
+    "Evidence not found in your team laboratory.",
+    "Prova nuk u gjet në laboratorin e ekipit tënd."
+  ],
+  [
+    "Complete both tasks before submitting the team report.",
+    "Përfundo të dyja detyrat përpara dorëzimit të raportit."
+  ],
+  [
+    "Pin an approval probe and a defense test before submitting.",
+    "Fikso një provë miratimi dhe një test mbrojtjeje përpara dorëzimit."
+  ],
+  [
+    "Request key already used for another report.",
+    "Kjo referencë kërkese është përdorur për një raport tjetër."
+  ],
+  ["Check the defense rules.", "Kontrollo rregullat e mbrojtjes."],
+  [
+    "The exercise case is unavailable.",
+    "Skenari i ushtrimit nuk është i disponueshëm."
+  ],
+  ["Legitimate approval", "Miratim i ligjshëm"],
+  ["Customer cannot approve", "Klienti nuk mund të miratojë"],
+  [
+    "Other organization cannot approve",
+    "Organizata tjetër nuk mund të miratojë"
+  ],
+  ["Inactive approver is blocked", "Miratuesi joaktiv bllokohet"],
+  ["Self approval is blocked", "Vetë-miratimi bllokohet"],
+  [
+    "Large payment needs a second approval",
+    "Pagesa e madhe kërkon miratim të dytë"
+  ],
+  [
+    "Senior with second approval is allowed",
+    "Miratuesi i lartë me miratim të dytë lejohet"
+  ],
+  [
+    "Senior without second approval is blocked",
+    "Miratuesi i lartë pa miratim të dytë bllokohet"
+  ],
+  [
+    "A legitimate 4000 ALL payment is allowed",
+    "Pagesa e ligjshme prej 4000 ALL lejohet"
+  ],
+  [
+    "An approver in their own organization is allowed",
+    "Miratuesi brenda organizatës së tij lejohet"
+  ],
+  [
+    "A team needs a submitted report before receiving report points.",
+    "Ekipi duhet të ketë dorëzuar raport për të marrë pikë raporti."
+  ],
+  [
+    "The exercise changed or was frozen. Refresh and try again.",
+    "Ushtrimi ndryshoi ose u bllokua. Rifresko dhe provo përsëri."
+  ],
+  ["Create a new Level 1 lobby", "Krijo një holl të ri për Nivelin 1"],
+  ["cause", "shkaku"],
+  ["Mismatch accepted", "Mospërputhje e pranuar"],
+  ["defense", "mbrojtja"],
+  ["references", "referencat"]
+]

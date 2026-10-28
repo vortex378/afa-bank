@@ -639,19 +639,23 @@ const worker = {
       return json({ error: "Nuk u gjet." }, 404);
     } catch (error: any) {
       const msg = error.message || "";
+      const phaseConstraint = !error.status && /Phase 2 /.test(msg);
       const safe =
         error.status ||
-        (/UNIQUE/.test(msg)
+        (phaseConstraint
           ? 409
-          : /Insufficient balance|Account is not active|Recipient is not active|Arena score limit|Arena submission is not eligible|Arena membership is locked|Launch /.test(
-                msg,
-              )
-            ? 400
-            : 500);
+          : /UNIQUE/.test(msg)
+            ? 409
+            : /Insufficient balance|Account is not active|Recipient is not active|Arena score limit|Arena submission is not eligible|Arena membership is locked|Launch /.test(
+                  msg,
+                )
+              ? 400
+              : 500);
       return json(
         {
-          error:
-            safe === 500
+          error: phaseConstraint
+            ? "The exercise changed or was frozen. Refresh and try again."
+            : safe === 500
               ? "Gabim i brendshëm. Provoni përsëri."
               : /UNIQUE/.test(msg)
                 ? "Ky veprim ose regjistrim ekziston tashmë."

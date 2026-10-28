@@ -47,6 +47,7 @@ import "./launch.css";
 import "./student-experience.css";
 import InvestigationWorkspace from "./InvestigationWorkspace";
 import { tr } from "./i18n";
+import LearningHelp from "./LearningHelp";
 const LaunchScene = lazy(() => import("./LaunchScene"));
 type Director = ReturnType<typeof useLaunchDirector>;
 type Row = Record<string, any>;
@@ -689,6 +690,9 @@ export default function LaunchGame({
       setTab("overview");
       setSelectedEvidence("");
       setTransfer(false);
+      setTraining(Boolean(p));
+      setConfirm(undefined);
+      setError("");
       seenBrief.current = "";
     }
     if (r.stage === "completed") setBriefing(false);
@@ -2202,16 +2206,41 @@ export default function LaunchGame({
                         )}
                       </p>
                     )}
+                    {owner && data.verdict && (
+                      <section className="lr-panel">
+                        <h2>{tr("Continue with your class")}</h2>
+                        <p>
+                          {tr(
+                            "Phase 1 scores and teams carry forward. Opening Phase 2 moves every enrolled student to the new briefing without signing in again.",
+                          )}
+                        </p>
+                        {button(
+                          "Open Phase 2",
+                          () =>
+                            ask(
+                              "Open Phase 2 for everyone?",
+                              "Every enrolled student will enter the authorization laboratory. Teams and Phase 1 scores are preserved.",
+                              async () => {
+                                await api("launch/" + r.id + "/phase2/open", {
+                                  confirm: true,
+                                });
+                                await refresh();
+                              },
+                            ),
+                          "primary",
+                        )}
+                      </section>
+                    )}
                     <section className="lr-next-level">
                       <Lock size={32} />
                       <div>
                         <span className="lr-eyebrow">
-                          {tr("LEVEL 02 / LOCKED")}
+                          {tr("LEVEL 02 / THE FALSE APPROVAL")}
                         </span>
-                        <h2>{tr("Containment starts next.")}</h2>
+                        <h2>{tr("A new permission challenge awaits.")}</h2>
                         <p>
                           {tr(
-                            "Awaiting the next briefing. No Level 2 gameplay is enabled yet.",
+                            "Stay signed in. The owner opens Phase 2 after publishing the Phase 1 verdict.",
                           )}
                         </p>
                       </div>
@@ -2435,6 +2464,12 @@ export default function LaunchGame({
                           );
                         }}
                       >
+                        <LearningHelp
+                          title="Use evidence in your explanation"
+                          text="Name the failed control, cite the pinned record references and explain the order of events. Use the code and policy records to support the proposed fix."
+                          action="Return to the evidence"
+                          onAction={() => navigate("investigation")}
+                        />
                         <div className="report-writing-guide">
                           <BookOpen size={23} />
                           <div>

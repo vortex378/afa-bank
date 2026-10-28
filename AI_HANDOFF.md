@@ -9,7 +9,7 @@ This is an existing bachelor-level academic cybersecurity app. Preserve the work
 
 ## Required journey
 
-Public AFA LAUNCH → sign in or request access → administrator approval → player hub → Red/Blue choice and readiness → administrator/owner synchronized start → countdown → two-page explicit contract → owner opens Phase 1 bank → owner releases virtual incident → team investigation and reports → owner verdict and debrief → locked future phases.
+Public AFA LAUNCH → sign in or request access → administrator approval → player hub → Red/Blue choice and readiness → administrator/owner synchronized start → countdown → two-page explicit contract → owner opens Phase 1 bank → owner releases virtual incident → team investigation and reports → owner verdict and debrief → owner opens Phase 2 → authorization lab/task swap/reports → owner verdict → locked Phase 3.
 
 Owner has all management permissions and exclusively releases the round incident, freezes reports and publishes the verdict. Administrator approves/creates users and can create/start rounds. Finance retains bank finance operations and is excluded from theft. Team selection never changes bank roles. Staff credentials are supplied privately; never put them in code or public docs.
 
@@ -19,7 +19,7 @@ Each enrolled student starts at 50,000 DEMO ALL in an isolated round wallet. Dem
 
 Students must discover the fictional legacy-service flaw using records, not guess: CRED-017 remains active after EVT-219 password rotation; BATCH-041 / REQ-041 uses generation 1 against current generation 2; LEGACY-01 shows missing revocation/generation validation. Actual round TX references correlate debits with that batch and beneficiary. No real authentication vulnerability or usable credential is introduced. The contract is educational context, never technical authorization for theft. Terms remain visible, truthful and explicitly accepted.
 
-Both teams have fair access to the case, private shared notes/pins and evidence-backed reports. Owner scores root cause 35, evidence 30, timeline 20, remediation 10; backend awards timing up to 5 only to sufficiently correct reports. An override needs a reason. Completed-round debrief supplies the explanation; future levels remain locked. Do not invent Phase 2 without discussing it with the owner.
+Both teams have fair access to the case, private shared notes/pins and evidence-backed reports. Owner scores root cause 35, evidence 30, timeline 20, remediation 10; backend awards timing up to 5 only to sufficiently correct reports. An override needs a reason. Completed-round debrief supplies the explanation. The user approved Phase 2; it is implemented as described in [PHASE_TWO.md](PHASE_TWO.md). Keep its intentionally flawed simulator isolated from real app authorization and the Phase 1 ledger. Both levels now provide actionable bilingual learning help. Phase 3 has no gameplay yet.
 
 ## Technical map
 

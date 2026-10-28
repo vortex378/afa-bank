@@ -14,6 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { tr, useLanguage } from "./i18n";
+import LearningHelp from "./LearningHelp";
 type RecordRow = {
   ref: string;
   category: string;
@@ -218,15 +219,12 @@ export default function InvestigationWorkspace({
     const index = steps.findIndex((step) => step.category === target.category);
     if (index >= 0) setGuideStep(index);
     requestAnimationFrame(() =>
-      document
-        .getElementById("evidence-detail")
-        ?.scrollIntoView({
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-            .matches
-            ? "instant"
-            : "smooth",
-          block: "start",
-        }),
+      document.getElementById("evidence-detail")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+        block: "start",
+      }),
     );
   }
   async function copyReference(ref: string) {
@@ -319,6 +317,23 @@ export default function InvestigationWorkspace({
           )}
         </p>
       </section>
+      <LearningHelp
+        title="Not sure where to begin?"
+        text="Start with the transfer. Then open its linked batch, authorization and code records. Pin the records that support your explanation."
+        action="Open the transfers"
+        onAction={() => chooseStep(0)}
+      >
+        <div className="learning-quick-links">
+          <button type="button" onClick={() => chooseStep(3)}>
+            {tr("Help: show the code")}
+            <ArrowRight size={15} />
+          </button>
+          <button type="button" onClick={onNotebook}>
+            {tr("Help: open the notebook")}
+            <ArrowRight size={15} />
+          </button>
+        </div>
+      </LearningHelp>
       <div className="investigation-content">
         <aside className="evidence-navigation">
           <span className="lr-eyebrow">{tr("EVIDENCE LIBRARY")}</span>
@@ -460,6 +475,7 @@ export default function InvestigationWorkspace({
                 </div>
                 {team && (
                   <button
+                    id="phase1-pin-evidence"
                     type="button"
                     className={
                       "lr-button " +
@@ -553,6 +569,13 @@ export default function InvestigationWorkspace({
                 </button>
               </div>
             </article>
+          )}
+          {team && (
+            <LearningHelp
+              title="Save this evidence for your team"
+              text="Use Pin evidence to keep this record on the team board. A pin saves its reference; add your own explanation in the notebook."
+              targetId="phase1-pin-evidence"
+            />
           )}
           {answerKey && (
             <details className="lr-answer-key">

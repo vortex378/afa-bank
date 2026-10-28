@@ -9,6 +9,8 @@ Live app: https://afa-bank-next.cobra-public-community.workers.dev
 
 An academic multiplayer cybersecurity platform. AFA LAUNCH is the public entrance; AFA BANK is the world inside Phase 1. React + TypeScript + Three.js frontend; Cloudflare Workers API; D1 transactional ledger. No real money, payment network, or genuine bank account integration.
 
+**Phase 2 is implemented:** after publishing the Phase 1 winner, the owner opens **The False Approval**, a supervised payments-authorization lab with task swapping, evidence, team reports and a second verdict. Both levels include contextual help that opens the relevant view or highlights the actual button. See [PHASE_TWO.md](PHASE_TWO.md) for the bilingual classroom flow, isolation boundaries and reproducible tests. Phase 3 remains locked.
+
 ## Run locally
 
 Requires Node 22+ and pnpm.

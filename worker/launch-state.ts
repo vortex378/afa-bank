@@ -1,5 +1,6 @@
 type Row = Record<string, any>;
 import { problem } from "./launch-policy";
+import { phaseTwoSnapshot } from "./phase-two";
 type Actor = { id: string; role: string };
 /** Private in-memory cache owned by the authenticated synchronization DO. Never a CDN cache. */
 export class LaunchSnapshots {
@@ -34,6 +35,7 @@ export class LaunchSnapshots {
             )
       ).first<Row>();
       if (!r) return null;
+      if (r.level === 2) return { r, phaseTwo: true };
       const q = (s: string) => this.db.prepare(s).bind(r.id);
       const rows = await this.db.batch([
         q(
@@ -117,8 +119,9 @@ export class LaunchSnapshots {
     );
   }
   async recipient(actor: Actor, round: string, iban: string) {
-    const b = await this.base(round),
-      p = b?.players.find((v: Row) => v.user_id === actor.id);
+    const b = await this.base(round);
+    if (b?.phaseTwo) problem("Use the Phase 2 workspace for this round.", 409);
+    const p = b?.players.find((v: Row) => v.user_id === actor.id);
     if (actor.role !== "customer" || !p)
       problem("Enrolled student required.", 403);
     if (!["banking", "investigation"].includes(b.r.stage))
@@ -146,6 +149,7 @@ export class LaunchSnapshots {
     const manager = ["owner", "admin"].includes(actor.role),
       owner = actor.role === "owner";
     if (!b) return { round: null, manager, owner, serverNow: Date.now() };
+    if (b.phaseTwo) return phaseTwoSnapshot(this.db, b.r, actor, connected);
     const { r } = b,
       p = b.players.find((v: Row) => v.user_id === actor.id),
       permitted = manager || !!p || r.stage === "lobby";

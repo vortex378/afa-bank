@@ -1,5 +1,9 @@
 # AFA BANK verification
 
+## Current release — 28 October 2026
+
+Phase 2 and actionable bilingual help are implemented. The final isolated combined Phase 1 → Phase 2 rehearsal passed **307 browser/API/database assertions**, with **0 failures and 0 uncaught browser errors**. **53 unit tests**, TypeScript and the production build passed. See [tests/security/PHASE_TWO_VERIFICATION.md](tests/security/PHASE_TWO_VERIFICATION.md) for methods, actual evidence and NOT RUN limits. Older release notes below are historical; migration 0009 is the current schema addition.
+
 Deployment: https://afa-bank-next.cobra-public-community.workers.dev
 
 Hosted D1: afa-bank, schema migrations 0001–0003 applied. Previous afa-bank Worker and its separate database are preserved.

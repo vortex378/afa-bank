@@ -20,7 +20,7 @@ For a rehearsal with multiple accounts, use separate browser profiles, different
 7. Only the owner releases the incident. Check eligible headcount, 10,000 ALL per student and the total before confirming. Staff and unenrolled accounts are excluded. A student with insufficient funds blocks the incident atomically.
 8. Students receive an incident briefing and investigate the case records. They pin at least three relevant records, discuss private team notes and submit a report explaining beneficiary, service, credential, root cause, timeline and remediation.
 9. The owner opens Reports & verdict, freezes reports, assesses both teams with the rubric, selects a winner and publishes a reasoned verdict. A justified explicit override is required if the decision differs from the totals.
-10. Everyone sees the debrief. Phase 2 remains locked; create a fresh round for a new exercise.
+10. Everyone sees the debrief. The owner can now choose **Open Phase 2** and confirm. Students keep their sessions, teams and Phase 1 scores. Follow [PHASE_TWO.md](PHASE_TWO.md): briefing/readiness → Round A → swap → Round B → freeze/review → verdict. Only the owner controls Phase 2 transitions. Creating a fresh Level 1 lobby remains available after either level ends.
 
 ## Instructor-only solution (source repository is public)
 

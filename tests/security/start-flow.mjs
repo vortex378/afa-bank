@@ -551,6 +551,13 @@ try {
       .click();
     await p.getByRole("textbox", { name: "Search case evidence" }).waitFor();
     check(key + " investigation button opens searchable records", true);
+    await p.getByRole('button',{name:'Open the transfers',exact:true}).click();
+    check(key+' help opens an actual transfer record',(await p.locator('#evidence-detail .lr-pill').innerText())==='Transactions');
+    await p.getByRole('button',{name:'Help: show the code',exact:true}).click();
+    check(key+' help opens an actual code record',(await p.locator('#evidence-detail .lr-pill').innerText())==='Code');
+    await p.getByRole('button',{name:'Show me the button',exact:true}).click();
+    await p.waitForFunction(()=>document.getElementById('phase1-pin-evidence')?.classList.contains('learning-highlight'));
+    check(key+' help highlights and focuses the real evidence pin',await p.locator('#phase1-pin-evidence').evaluate(e=>document.activeElement===e));
     await p
       .locator(".evidence-navigation")
       .getByRole("button", { name: /^Requests/ })
@@ -773,6 +780,10 @@ try {
     "Round money is conserved",
     wallets.reduce((n, w) => n + w.balance, 0) === 10000000,
   );
+  if(process.env.INCLUDE_PHASE_TWO==='1'){
+    const {phaseTwoFlow}=await import('./phase-two-flow.mjs');
+    await phaseTwoFlow({pages,contexts,actors,round,db,check,output,origin,sleep,browser,pass,hash});
+  }
   check("Browser pages have no uncaught errors", errors.length === 0);
 } catch (e) {
   checks.push({ name: "Flow completed", passed: false, error: e.stack });

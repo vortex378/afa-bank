@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { Languages } from "lucide-react";
 import pairs from "./translations.json";
+import phaseTwoPairs from "./phase-two-translations.json";
 export type Language = "sq" | "en";
 const storageKey = "afa-language";
 function initialLanguage(): Language {
@@ -19,7 +20,7 @@ function subscribe(listener: () => void) {
   };
 }
 const dictionary = new Map<string, [string, string]>();
-for (const [en, sq] of pairs) {
+for (const [en, sq] of [...pairs, ...phaseTwoPairs]) {
   dictionary.set(en, [en, sq]);
   dictionary.set(sq, [en, sq]);
 }

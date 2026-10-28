@@ -31,6 +31,7 @@ import Terms, { TERMS_VERSION } from "./Terms";
 import Atmosphere from "./Atmosphere";
 import { useLaunchDirector } from "./useLaunchDirector";
 const LaunchGame = lazy(() => import("./LaunchGame"));
+const PhaseTwoGame = lazy(() => import("./PhaseTwoGame"));
 const Arena = lazy(() => import("./Arena"));
 const demoUser: User = {
   id: "demo",
@@ -250,6 +251,7 @@ export default function Dashboard({
     round &&
     (director.snapshot?.player || round.stage === "lobby") &&
     dismissedRound !== round.id;
+  const GameWorkspace = round?.level === 2 ? PhaseTwoGame : LaunchGame;
   if (
     !preview &&
     !user.must_change_password &&
@@ -259,7 +261,7 @@ export default function Dashboard({
       <Suspense
         fallback={<div className="loading">{tr("Opening AFA-LAUNCH…")}</div>}
       >
-        <LaunchGame
+        <GameWorkspace
           user={user}
           director={director}
           onLogout={logout}

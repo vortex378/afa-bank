@@ -49,6 +49,10 @@ The Playwright API test trusts the generated self-signed loopback certificate on
 
 ## Coverage and interpretation
 
+### Phase 2 and contextual help
+
+After building, set `INCLUDE_PHASE_TWO=1` and run `node tests/security/start-flow.mjs` for the complete Phase 1 → Phase 2 browser/API/database regression. `phase-two-flow.mjs` exercises the new owner/student controls; `phase-two-security.mjs` adds a separately labelled four-student SQL fixture for concurrency/authorization. Both run on the parent harness's isolated local database. The faster standalone `phase-two-fixture.mjs` uses port 8812 and a **Phase-1-completed SQL precondition**, not a full Phase 1 UI rehearsal. Do not run both harnesses simultaneously or against production. See [../../PHASE_TWO.md](../../PHASE_TWO.md). Artifacts remain ignored.
+
 ### Empty-lobby launch and actual browser controls
 
 Run `node tests/security/start-flow.mjs` after building. Set `PLAYWRIGHT_MODULE` and `CHROME_PATH` as above if using an existing installation. Port 8811 must be free. This standalone test provisions its own disposable database under ignored `tools/`, using only the local security configuration and a synthetic case. It never connects to production.

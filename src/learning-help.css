@@ -1,0 +1,105 @@
+.learning-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  border: 1px solid #518576;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #163a34, #102c40);
+  padding: 20px 22px;
+  margin: 20px 0;
+  color: #e9f8f2;
+}
+.learning-help > svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: #a6e8c9;
+}
+.learning-help > div {
+  flex: 1;
+  min-width: 0;
+}
+.learning-help span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #a6e8c9;
+}
+.learning-help h3 {
+  font-size: 19px !important;
+  line-height: 1.4;
+  margin: 5px 0 6px !important;
+  color: #f4fff9 !important;
+}
+.learning-help p {
+  font-size: 14px !important;
+  line-height: 1.7;
+  margin: 0 !important;
+  color: #cbdedb !important;
+  max-width: 850px;
+}
+.learning-help-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 12px 17px;
+  border: 1px solid #a6e8c9;
+  border-radius: 9px;
+  background: #a6e8c9;
+  color: #0b2c23;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.learning-help p.learning-help-status {
+  color: #abefd0 !important;
+  margin-top: 9px !important;
+}
+.learning-highlight {
+  outline: 4px solid #f2ba5b !important;
+  outline-offset: 6px !important;
+  box-shadow: 0 0 0 10px #f2ba5b28 !important;
+  transition: outline 0.2s;
+}
+.learning-help-action:focus-visible {
+  outline: 3px solid #edbf6c;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .learning-help {
+    flex-wrap: wrap;
+    padding: 17px;
+  }
+  .learning-help > div {
+    min-width: calc(100% - 50px);
+  }
+  .learning-help-action {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learning-highlight {
+    transition: none;
+  }
+}
+.learning-quick-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.learning-quick-links button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 13px;
+  border: 1px solid #67968a;
+  border-radius: 7px;
+  background: #12372f;
+  color: #d2f1e4;
+  font-size: 12px;
+  cursor: pointer;
+}

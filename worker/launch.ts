@@ -1,5 +1,6 @@
 import { parseAmount } from "./money";
 import { assignCase, incidentEvidence } from "./launch-cases";
+import { phaseTwo } from "./phase-two";
 import {
   BANK_TERMS,
   ROUND_TERMS,
@@ -96,6 +97,11 @@ export async function launch(
   if (!["GET", "POST"].includes(req.method))
     problem("Method not allowed.", 405);
   if (post) await rate();
+  const phaseTwoPath = path.match(/^\/([^/]+)\/phase2\/([a-z]+)$/);
+  if (phaseTwoPath)
+    return phaseTwo(req, db, user, phaseTwoPath[1], phaseTwoPath[2], body, () =>
+      notify(),
+    );
   if (path === "/state" && !post) {
     const target = new URL("https://launch.internal/snapshot");
     target.searchParams.set("round", url.searchParams.get("round") || "");
@@ -146,6 +152,7 @@ export async function launch(
   const [, id, action] = match;
   const r = await one("SELECT * FROM launch_rounds WHERE id=?", id);
   if (!r) problem("Round not found.", 404);
+  if (r.level === 2) problem("Use the Phase 2 workspace for this round.", 409);
   const p = await one(
     "SELECT * FROM launch_players WHERE round_id=? AND user_id=?",
     id,
