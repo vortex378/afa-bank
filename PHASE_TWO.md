@@ -19,6 +19,8 @@ The lab is a deterministic authorization simulator, not an unrestricted terminal
 
 The defense editor exposes active identity, approval role, organization, self-approval and a second-approval threshold. Its validation contains both allowed and forbidden payments. The server computes the score, assigns teams/tasks and scopes every saved item. A changed `team`, user ID, payment ID or round ID cannot grant privileges.
 
+Saved team rules update clean teammate editors automatically. Unsaved local edits are preserved when a teammate saves a different configuration; the student must explicitly load the latest team rules before submitting. Defense requests include the baseline policy in `base_policy`. A conditional database update and its immutable run are committed in the same transaction, so stale concurrent submissions receive 409 without overwriting the winning policy. Identical request-key replays return the original result. After pinning a result, contextual help opens the real notebook rather than focusing the disabled pin button.
+
 This is an open-source teaching exercise. Although the active case selection is not included in student state payloads, the simulator and validation rules are public source code. It should not be represented as a secret examination whose solution cannot be inferred from the repository.
 
 ## Shqip — udhëzimi praktik
@@ -52,6 +54,7 @@ After installing dependencies and building, run:
 pnpm test
 pnpm build
 $env:INCLUDE_PHASE_TWO='1'
+$env:CLASSROOM_FOUR='1'
 node tests/security/start-flow.mjs
 ```
 

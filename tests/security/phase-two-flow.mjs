@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
-export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,origin,sleep,browser,pass,hash}){
+export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,origin,sleep,browser,pass,hash,students=['red','blue']}){
+ const peers=students.filter(key=>key.endsWith('Peer')),teamOf=key=>key.startsWith('red')?'red':'blue';
  assert.equal(new URL(origin).hostname,'127.0.0.1');
  const endpoint='/api/launch/'+round+'/phase2/';
  const evidence=[];
@@ -43,7 +44,7 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
   await pages.red.getByRole('button',{name:'I am ready',exact:true}).waitFor();
   check('Phase 2 transition reaches Red without signing in again',true);
   await pages.red.reload();
-  for(const actor of ['red','blue']){
+  for(const actor of students){
    await pages[actor].getByRole('button',{name:'I am ready',exact:true}).waitFor();
    check(actor+' automatically enters the Phase 2 briefing',true);
   }
@@ -56,12 +57,12 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
   await pages.red.getByRole('button',{name:'Mark not ready',exact:true}).waitFor();
   check('Phase 2 readiness remains individual',(await state('blue')).player.ready===0);
   await pages.blue.getByRole('button',{name:'I am ready',exact:true}).click();
+  for(const actor of peers){await pages[actor].getByRole('button',{name:'I am ready',exact:true}).click();await pages[actor].getByRole('button',{name:'Mark not ready',exact:true}).waitFor();check(actor+' independently marks ready for Phase 2',true);}
   await layout(pages.red,'briefing');await layout(pages.owner,'owner');
   await ownerClick('Start Round A');
-  for(const actor of ['red','blue'])await pages[actor].getByRole('button',{name:'Open a sample payment',exact:true}).waitFor();
+  for(const actor of students)await pages[actor].getByRole('button',{name:'Open a sample payment',exact:true}).waitFor();
   check('Round A assigns Red to testing and Blue to defense',(await state('red')).phase2.task==='attack'&&(await state('blue')).phase2.task==='defense');
-  const privateCase=JSON.parse(db.prepare('SELECT private_case FROM phase2_sessions WHERE round_id=?').get(round).private_case);
-  const exploitActor=privateCase.fault==='role'?'customer-08':'approver-09';
+  const exploitActor='customer-08'; // A public lab identity, not an instructor answer.
   const redState=await state('red'),blueState=await state('blue');
   const redPayment=redState.phase2.payments.find(p=>p.leg===1&&p.amount===200000),bluePayment=blueState.phase2.payments.find(p=>p.leg===1&&p.amount===200000);
   const probeBody={payment_id:redPayment.id,actor_key:exploitActor,second_approval:false,key:randomUUID()};
@@ -102,8 +103,15 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
     await page.getByRole('button',{name:'Send approval probe',exact:true}).click();
     await page.getByText('This was a legitimate approval.',{exact:false}).waitFor();
     check(actor+' verifies a legitimate baseline approval',true);
-    await page.getByRole('combobox',{name:'Fictional lab identity',exact:true}).selectOption(exploitActor);
-    await page.getByRole('button',{name:'Send approval probe',exact:true}).click();
+    let found=false;
+    for(const candidate of ['customer-08','approver-09']){
+      await page.getByRole('combobox',{name:'Fictional lab identity',exact:true}).selectOption(candidate);
+      const response=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/phase2/probe'));
+      await page.getByRole('button',{name:'Send approval probe',exact:true}).click();
+      const r=await response;assert.equal(r.status(),201);const result=await r.json();
+      if(result.response.unauthorizedApproval){found=true;break;}
+    }
+    assert.ok(found,'Student must discover an unauthorized approval using visible lab identities.');
     await page.getByText('An unauthorized approval was demonstrated.',{exact:false}).waitFor();
     check(actor+' demonstrates the authorization weakness in the simulator',true);
    }else{
@@ -112,19 +120,40 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
     await page.getByRole('checkbox',{name:'Match the payment organization',exact:true}).check();
     await page.getByRole('checkbox',{name:'Prevent self approval',exact:true}).check();
     await page.getByRole('spinbutton',{name:'Second approval above this amount (ALL)',exact:true}).fill('5000');
+    const response=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/phase2/defense'));
     await page.getByRole('button',{name:'Run defense tests',exact:true}).click();
+    const result=await response;assert.equal(result.status(),201);const run=await result.json();await page.locator('.p2-run-id').filter({hasText:run.id}).waitFor();
     await page.locator('.p2-result-status').filter({hasText:'10 / 10'}).waitFor();
     check(actor+' validates all ten legitimate and unauthorized payment cases',true);
    }
    const help=page.locator('.learning-help').filter({hasText:'Keep the evidence'});
    await help.getByRole('button',{name:'Show me the button',exact:true}).click();
+   await page.waitForFunction(()=>document.activeElement?.id==='p2-pin'&&document.getElementById('p2-pin').classList.contains('learning-highlight'));
    check(actor+' contextual help highlights the real pin button',await page.evaluate(()=>document.activeElement?.id==='p2-pin'&&document.getElementById('p2-pin').classList.contains('learning-highlight')));
    await page.getByRole('button',{name:'Pin this result',exact:true}).click();await page.getByRole('button',{name:'Pinned to team',exact:true}).waitFor();
    if(actor==='red'&&kind==='attack')await layout(page,'attack');
    if(actor==='blue'&&kind==='defense')await layout(page,'defense');
-   const snapshot=await state(actor);check(actor+' receives only its own team runs and pins',snapshot.phase2.runs.every(r=>r.team===actor)&&snapshot.phase2.pins.every(p=>p.team===actor));
+   await page.locator('.learning-help').filter({hasText:'Evidence saved'}).getByRole('button',{name:'Open team notebook',exact:true}).click();await page.getByRole('heading',{name:'Your team runs',exact:true}).waitFor();check(actor+' saved-evidence help opens the actual team notebook',true);
+   const snapshot=await state(actor);check(actor+' receives only its own team runs and pins',snapshot.phase2.runs.every(r=>r.team===teamOf(actor))&&snapshot.phase2.pins.every(p=>p.team===teamOf(actor)));
   }
+  if(peers.length)await pages.bluePeer.getByRole('button',{name:'Laboratory',exact:true}).click();
   await completeTask('red','attack');await completeTask('blue','defense');
+  if(peers.length){
+    await pages.bluePeer.waitForFunction(()=>document.querySelector('input[type="number"]')?.value==='5000');
+    check('Blue teammate automatically receives the saved defense configuration',await pages.bluePeer.getByRole('checkbox',{name:'Require an approval role',exact:true}).isChecked());
+    await pages.bluePeer.screenshot({path:path.join(output,'blue-peer-synchronized-defense.png'),fullPage:true});
+    await pages.bluePeer.getByRole('spinbutton',{name:'Second approval above this amount (ALL)',exact:true}).fill('4500');
+    await pages.blue.getByRole('button',{name:'Laboratory',exact:true}).click();
+    await pages.blue.getByRole('spinbutton',{name:'Second approval above this amount (ALL)',exact:true}).fill('6000');
+    const saved=pages.blue.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/phase2/defense'));
+    await pages.blue.getByRole('button',{name:'Run defense tests',exact:true}).click();assert.equal((await saved).status(),201);
+    await pages.bluePeer.getByRole('button',{name:'Load latest team rules',exact:true}).waitFor();
+    check('Incoming team update preserves an unsaved draft and blocks stale submission',await pages.bluePeer.getByRole('spinbutton',{name:'Second approval above this amount (ALL)',exact:true}).inputValue()==='4500'&&!(await pages.bluePeer.getByRole('button',{name:'Run defense tests',exact:true}).isEnabled()));
+    await pages.bluePeer.screenshot({path:path.join(output,'blue-peer-preserved-draft-conflict.png'),fullPage:true});
+    await pages.bluePeer.getByRole('button',{name:'Load latest team rules',exact:true}).click();
+    check('Student explicitly loads the latest shared defense',await pages.bluePeer.getByRole('spinbutton',{name:'Second approval above this amount (ALL)',exact:true}).inputValue()==='6000');
+    await completeTask('redPeer','attack');await completeTask('bluePeer','defense');
+  }
   await call('red','report',{cause:'A sufficiently detailed preliminary explanation of this exercise.',defense:'A sufficiently detailed defense explanation for this exercise.',references:'not enough task evidence',key:randomUUID()},409);
   for(const actor of ['red','blue']){
    await pages[actor].getByRole('button',{name:'Team evidence',exact:true}).click();
@@ -135,13 +164,16 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
   }
   check('Red cannot read Blue private notes',!(await state('red')).phase2.notes.some(n=>n.body.includes('blue private note')));
   check('Blue cannot read Red private notes',!(await state('blue')).phase2.notes.some(n=>n.body.includes('red private note')));
+  for(const actor of peers){await pages[actor].getByRole('button',{name:'Team evidence',exact:true}).click();await pages[actor].locator('.p2-note').filter({hasText:teamOf(actor)+' private note'}).waitFor();check(actor+' automatically receives teammate notebook work',true);}
   await ownerClick('Swap tasks');
-  for(const actor of ['red','blue'])await pages[actor].getByRole('heading',{name:'Switch perspective. Keep your evidence.',exact:true}).waitFor();
+  if(peers.length){await contexts.bluePeer.setOffline(true);await contexts.bluePeer.setOffline(false);await pages.bluePeer.reload();await pages.bluePeer.getByRole('heading',{name:'Switch perspective. Keep your evidence.',exact:true}).waitFor();check('A student rejoins the current phase after offline/online and reload',true);}
+  for(const actor of students)await pages[actor].getByRole('heading',{name:'Switch perspective. Keep your evidence.',exact:true}).waitFor();
   await call('red','probe',{...probeBody,key:randomUUID()},409);
   await ownerClick('Start Round B');
-  for(const actor of ['red','blue'])await pages[actor].getByRole('button',{name:'Open a sample payment',exact:true}).waitFor();
+  for(const actor of students)await pages[actor].getByRole('button',{name:'Open a sample payment',exact:true}).waitFor();
   check('Round B swaps tasks for both teams',(await state('red')).phase2.task==='defense'&&(await state('blue')).phase2.task==='attack');
   await completeTask('red','defense');await completeTask('blue','attack');
+  for(const actor of peers)await completeTask(actor,teamOf(actor)==='red'?'defense':'attack');
   for(const actor of ['red','blue']){
    const page=pages[actor];await page.getByRole('button',{name:'Team report',exact:true}).click();
    await page.getByRole('textbox',{name:'What permission check failed? Cite an approval probe.',exact:true}).fill('The recorded approval probe demonstrates a missing authorization control. <script>window.__phase2xss=1</script>');
@@ -155,7 +187,7 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
    check(actor+' cannot read the opposing report',(await state(actor)).phase2.reports.every(r=>r.team===actor));
   }
   await ownerClick('Freeze reports & review');
-  for(const actor of ['red','blue'])await pages[actor].getByRole('heading',{name:'Your submitted report',exact:true}).waitFor();
+  for(const actor of students)await pages[actor].getByRole('heading',{name:'Your submitted report',exact:true}).waitFor();
   await call('red','note',{body:'Post-review mutation must be rejected'},409);
   await pages.owner.getByRole('button',{name:'Reports & verdict',exact:true}).click();
   check('Owner review escapes student report markup',await pages.owner.evaluate(()=>!window.__phase2xss&&document.querySelectorAll('.p2-readable-fields script').length===0));
@@ -165,7 +197,7 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
   }
   await pages.owner.getByRole('textbox',{name:'Explain the verdict',exact:true}).fill('Both teams completed both roles. Red provided stronger evidence-backed reasoning and documentation.');
   await ownerClick('Publish Phase 2 verdict');
-  for(const actor of ['red','blue']){
+  for(const actor of students){
    await pages[actor].getByRole('heading',{name:'Phase 2 complete',exact:true}).waitFor();
    check(actor+' automatically receives the Phase 2 verdict',true);
    const result=await state(actor);check(actor+' receives preserved Phase 1 and new Phase 2 scores',result.phase2.verdict.grades.red.total===97&&result.phase2.verdict.grades.blue.total===93&&result.phase2.verdict.winner==='red'&&result.phase2.phase1.grades.red.total>0);
@@ -179,7 +211,7 @@ export async function phaseTwoFlow({pages,contexts,actors,round,db,check,output,
   await pages.owner.getByRole('button',{name:'Create a new Level 1 lobby',exact:true}).click();
   await pages.owner.getByRole('button',{name:'Launch Level 1',exact:true}).waitFor();
   const fresh=await state('owner');check('Owner can restart at a fresh Level 1 lobby',fresh.round.id!==round&&fresh.round.level===1&&fresh.round.stage==='lobby');
-  for(const actor of ['red','blue']){await pages[actor].getByRole('button',{name:'Join red team',exact:true}).waitFor();check(actor+' automatically leaves completed Phase 2 for the fresh lobby',true);}
+  for(const actor of students){await pages[actor].getByRole('button',{name:'Join red team',exact:true}).waitFor();check(actor+' automatically leaves completed Phase 2 for the fresh lobby',true);}
   const closedLobby=await contexts.owner.request.post(origin+'/api/launch/'+fresh.round.id+'/cancel',{headers:{Origin:origin},data:{confirm:true,reason:'Closing the isolated fresh-lobby regression before the next fixture.'}});check('Owner can close the newly created test lobby',closedLobby.status()===200);
   const {phaseTwoSecurity}=await import('./phase-two-security.mjs');await phaseTwoSecurity({contexts,actors,db,check,output,origin,sleep,browser,hash});
  }finally{await fs.writeFile(path.join(output,'phase-two-api-evidence.json'),JSON.stringify(evidence,null,2));}

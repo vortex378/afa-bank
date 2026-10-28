@@ -570,13 +570,22 @@ export default function InvestigationWorkspace({
               </div>
             </article>
           )}
-          {team && (
-            <LearningHelp
-              title="Save this evidence for your team"
-              text="Use Pin evidence to keep this record on the team board. A pin saves its reference; add your own explanation in the notebook."
-              targetId="phase1-pin-evidence"
-            />
-          )}
+          {team &&
+            selected &&
+            (pinned.has(selected.ref) ? (
+              <LearningHelp
+                title="Evidence saved"
+                text="This result is already on your team board. Open the notebook to inspect it and explain why it matters."
+                action="Open team notebook"
+                onAction={onNotebook}
+              />
+            ) : (
+              <LearningHelp
+                title="Save this evidence for your team"
+                text="Use Pin evidence to keep this record on the team board. A pin saves its reference; add your own explanation in the notebook."
+                targetId="phase1-pin-evidence"
+              />
+            ))}
           {answerKey && (
             <details className="lr-answer-key">
               <summary>{tr("Owner answer key")}</summary>

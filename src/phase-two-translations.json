@@ -509,6 +509,32 @@
   ],
   ["Create a new Level 1 lobby", "Krijo një holl të ri për Nivelin 1"],
   ["cause", "shkaku"],
+  ["Evidence saved", "Prova u ruajt"],
+  [
+    "This result is already on your team board. Open the notebook to inspect it and explain why it matters.",
+    "Kjo provë është ruajtur te tabela e ekipit. Hap shënimet për ta shqyrtuar dhe shpjeguar rëndësinë e saj."
+  ],
+  [
+    "This control is unavailable in the current exercise state.",
+    "Ky buton nuk është i disponueshëm në gjendjen aktuale të ushtrimit."
+  ],
+  [
+    "The team defense changed. Load the latest team rules before testing.",
+    "Mbrojtja e ekipit ndryshoi. Ngarko rregullat e fundit të ekipit përpara testimit."
+  ],
+  [
+    "A teammate saved different rules. Your unsaved draft is preserved. Load the latest team rules before testing.",
+    "Një shok ekipi ruajti rregulla të ndryshme. Ndryshimet e tua të paruajtura mbeten këtu. Ngarko rregullat e fundit të ekipit përpara testimit."
+  ],
+  [
+    "Unsaved changes: run defense tests to share these rules with your team.",
+    "Ndryshime të paruajtura: testo mbrojtjen për t’i ndarë këto rregulla me ekipin."
+  ],
+  [
+    "Using the saved team defense. Teammate updates appear automatically.",
+    "Po përdor mbrojtjen e ruajtur të ekipit. Përditësimet e shokëve shfaqen automatikisht."
+  ],
+  ["Load latest team rules", "Ngarko rregullat e fundit të ekipit"],
   ["Mismatch accepted", "Mospërputhje e pranuar"],
   ["defense", "mbrojtja"],
   ["references", "referencat"]

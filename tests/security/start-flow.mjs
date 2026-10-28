@@ -71,16 +71,17 @@ const salt = randomUUID();
 const hash =
   salt + ":" + pbkdf2Sync(pass, salt, 100000, 32, "sha256").toString("hex");
 const actors = {};
+const students = process.env.CLASSROOM_FOUR === '1' ? ['red','blue','redPeer','bluePeer'] : ['red','blue'];
+const teamOf = key => key.startsWith('red') ? 'red' : 'blue';
 for (const [key, role] of [
   ["owner", "owner"],
   ["admin", "admin"],
   ["finance", "finance"],
-  ["red", "customer"],
-  ["blue", "customer"],
+  ...students.map(key=>[key,'customer']),
 ]) {
   actors[key] = {
     id: randomUUID(),
-    email: key + "@start-flow.example",
+    email: key.toLowerCase() + "@start-flow.example",
     name: "QA " + key,
   };
   const a = actors[key];
@@ -223,7 +224,7 @@ try {
   await pages.admin
     .getByRole("button", { name: "Administration", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     const row = pages.admin
       .locator("details.account-row")
       .filter({ hasText: actors[key].email });
@@ -237,7 +238,7 @@ try {
       true,
     );
   }
-  for (const key of ["owner", "red", "blue", "finance"]) await login(key);
+  for (const key of ['owner',...students,'finance']) await login(key);
   await pages.owner
     .getByRole("button", { name: "Create Level 1 lobby" })
     .click();
@@ -265,23 +266,28 @@ try {
     path: path.join(output, "owner-blocked.png"),
     fullPage: true,
   });
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     const p = pages[key];
     await p
-      .getByRole("button", { name: "Join " + key + " team", exact: true })
+      .getByRole("button", { name: "Join " + teamOf(key) + " team", exact: true })
       .waitFor();
     check(key + " receives the newly created lobby without refresh", true);
     check(
       key + " team join requires training acknowledgement",
       !(await p
-        .getByRole("button", { name: "Join " + key + " team", exact: true })
+        .getByRole("button", { name: "Join " + teamOf(key) + " team", exact: true })
         .isEnabled()),
     );
     await p.getByRole("checkbox").check();
     await p
-      .getByRole("button", { name: "Join " + key + " team", exact: true })
+      .getByRole("button", { name: "Join " + teamOf(key) + " team", exact: true })
       .click();
     await p.getByRole("button", { name: "I am ready", exact: true }).waitFor();
+    if(key.endsWith('Peer')){
+      const denied=await contexts.owner.request.post(origin+'/api/launch/'+round+'/start',{headers:{Origin:origin},data:{}});
+      check('Server blocks launch with newly enrolled unready '+key,denied.status()===409);
+      await pages.owner.waitForFunction(()=>Array.from(document.querySelectorAll('button')).some(b=>b.textContent.includes('Launch Level 1')&&b.disabled),{},{timeout:5000});
+    }
     check(
       "Launch stays blocked before " + key + " marks ready",
       !(await launch.isEnabled()),
@@ -375,7 +381,7 @@ try {
       .prepare(
         "SELECT COUNT(*) AS n FROM launch_players WHERE round_id=? AND ready=1",
       )
-      .get(round).n === 2,
+      .get(round).n === students.length,
   );
   await oldTab.waitForFunction(() => {
     const surface = document.querySelector(".route-surface");
@@ -414,14 +420,14 @@ try {
     .getByRole("dialog")
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     await pages[key]
       .getByRole("status", { name: "Phase 1 is launching" })
       .waitFor({ timeout: 5000 });
     check(key + " automatically receives countdown", true);
   }
   await pages.red.screenshot({ path: path.join(output, "red-countdown.png") });
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     const p = pages[key];
     await p
       .getByRole("button", { name: "Next: responsibility & security" })
@@ -444,7 +450,7 @@ try {
       .getByRole("button", { name: "Open the bank", exact: true })
       .isEnabled()),
   );
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     const p = pages[key];
     await p
       .getByRole("button", { name: "Next: responsibility & security" })
@@ -480,7 +486,7 @@ try {
     .getByRole("dialog")
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     await pages[key]
       .getByText("CURRENT BALANCE / DEMO ALL", { exact: true })
       .waitFor();
@@ -538,7 +544,7 @@ try {
     .getByRole("dialog")
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     const p = pages[key];
     await p
       .getByRole("dialog")
@@ -551,6 +557,7 @@ try {
       .click();
     await p.getByRole("textbox", { name: "Search case evidence" }).waitFor();
     check(key + " investigation button opens searchable records", true);
+    if(key.endsWith('Peer'))continue;
     await p.getByRole('button',{name:'Open the transfers',exact:true}).click();
     check(key+' help opens an actual transfer record',(await p.locator('#evidence-detail .lr-pill').innerText())==='Transactions');
     await p.getByRole('button',{name:'Help: show the code',exact:true}).click();
@@ -675,6 +682,11 @@ try {
       .waitFor();
     check(key + " evidence pins and team note buttons work", true);
   }
+  for(const key of students.filter(k=>k.endsWith('Peer'))){
+    await pages[key].getByRole('button',{name:'Team evidence',exact:true}).click();
+    await pages[key].getByText(teamOf(key)+' private investigation note',{exact:true}).waitFor();
+    check(key+' automatically receives teammate evidence and notes',true);
+  }
   check(
     "Red cannot read Blue notes",
     !(await pages.red
@@ -725,7 +737,7 @@ try {
     .getByRole("dialog")
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     await pages[key]
       .getByText("FROZEN FOR OWNER REVIEW", { exact: true })
       .waitFor();
@@ -756,7 +768,7 @@ try {
     .getByRole("dialog")
     .getByRole("button", { name: "Confirm", exact: true })
     .click();
-  for (const key of ["red", "blue"]) {
+  for (const key of students) {
     await pages[key].getByText("OWNER VERIFIED", { exact: true }).waitFor();
     await pages[key].screenshot({
       path: path.join(output, key + "-debrief.png"),
@@ -773,16 +785,16 @@ try {
       wallets.find((w) => w.user_id === actors.blue.id).balance === 4100000,
   );
   check(
-    "Beneficiary receives exactly 20000 ALL",
-    wallets.find((w) => !w.user_id).balance === 2000000,
+    'Beneficiary receives exactly '+students.length*10000+' ALL',
+    wallets.find((w) => !w.user_id).balance === students.length*1000000,
   );
   check(
     "Round money is conserved",
-    wallets.reduce((n, w) => n + w.balance, 0) === 10000000,
+    wallets.reduce((n, w) => n + w.balance, 0) === students.length*5000000,
   );
   if(process.env.INCLUDE_PHASE_TWO==='1'){
     const {phaseTwoFlow}=await import('./phase-two-flow.mjs');
-    await phaseTwoFlow({pages,contexts,actors,round,db,check,output,origin,sleep,browser,pass,hash});
+    await phaseTwoFlow({pages,contexts,actors,round,db,check,output,origin,sleep,browser,pass,hash,students});
   }
   check("Browser pages have no uncaught errors", errors.length === 0);
 } catch (e) {

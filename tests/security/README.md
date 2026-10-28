@@ -51,6 +51,8 @@ The Playwright API test trusts the generated self-signed loopback certificate on
 
 ### Phase 2 and contextual help
 
+For a single complete four-student classroom rehearsal, set both `CLASSROOM_FOUR=1` and `INCLUDE_PHASE_TWO=1`, then run `node tests/security/start-flow.mjs` after building. Four primary students use separate browser contexts, receive actual administrator approvals, choose two Red/two Blue, complete the contracts, receive the incident, carry forward to Phase 2, and each perform both task types. The test checks shared notes, clean defense-editor synchronization, unsaved-draft conflicts, explicit reload of team rules, report/verdict delivery to all four, and return to a fresh lobby. The supplemental local security fixture also races different defense edits and duplicate submissions to verify atomic persistence and stale-write rejection.
+
 After building, set `INCLUDE_PHASE_TWO=1` and run `node tests/security/start-flow.mjs` for the complete Phase 1 → Phase 2 browser/API/database regression. `phase-two-flow.mjs` exercises the new owner/student controls; `phase-two-security.mjs` adds a separately labelled four-student SQL fixture for concurrency/authorization. Both run on the parent harness's isolated local database. The faster standalone `phase-two-fixture.mjs` uses port 8812 and a **Phase-1-completed SQL precondition**, not a full Phase 1 UI rehearsal. Do not run both harnesses simultaneously or against production. See [../../PHASE_TWO.md](../../PHASE_TWO.md). Artifacts remain ignored.
 
 ### Empty-lobby launch and actual browser controls

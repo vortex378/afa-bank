@@ -552,7 +552,7 @@ export async function phaseTwo(
     strict(
       action === "probe"
         ? ["payment_id", "actor_key", "second_approval", "key"]
-        : ["policy", "key"],
+        : ["policy", "base_policy", "key"],
     );
     const key = string(b.key, 36, 36),
       canonical = JSON.stringify(
@@ -562,7 +562,7 @@ export async function phaseTwo(
               actor_key: b.actor_key,
               second_approval: b.second_approval,
             }
-          : { policy: b.policy },
+          : { policy: readPolicy(b.policy) },
       );
     const previous = await db
       .prepare(
@@ -580,7 +580,9 @@ export async function phaseTwo(
         replayed: true,
       });
     }
-    let response: any, score: number;
+    let response: any,
+      score: number,
+      policyUpdate: D1PreparedStatement | undefined;
     if (action === "probe") {
       if (typeof b.second_approval !== "boolean")
         problem("Check the second-approval field.");
@@ -608,21 +610,32 @@ export async function phaseTwo(
       score = response.unauthorizedApproval ? 30 : 0;
     } else {
       const policy = readPolicy(b.policy);
+      const basePolicy = readPolicy(b.base_policy);
       response = validateDefense(policy);
       score = Math.round((response.passed * 35) / 10);
-      await db
+      policyUpdate = db
         .prepare(
-          "UPDATE phase2_policies SET policy=?,updated_by=?,updated_at=? WHERE round_id=? AND leg=? AND team=?",
+          "UPDATE phase2_policies SET policy=?,updated_by=?,updated_at=? WHERE round_id=? AND leg=? AND team=? AND policy=?",
         )
-        .bind(JSON.stringify(policy), actor.id, now, round, s.leg, team)
-        .run();
+        .bind(
+          JSON.stringify(policy),
+          actor.id,
+          now,
+          round,
+          s.leg,
+          team,
+          JSON.stringify(basePolicy),
+        );
     }
     const id = crypto.randomUUID();
+    let stored: D1Result[];
     try {
-      await db.batch([
+      stored = await db.batch([
+        ...(policyUpdate ? [policyUpdate] : []),
         db
           .prepare(
-            "INSERT INTO phase2_runs(id,round_id,leg,team,kind,actor,request,response,score,request_key,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO phase2_runs(id,round_id,leg,team,kind,actor,request,response,score,request_key,created_at) SELECT ?,?,?,?,?,?,?,?,?,?,?" +
+              (policyUpdate ? " WHERE changes()=1" : ""),
           )
           .bind(
             id,
@@ -654,6 +667,25 @@ export async function phaseTwo(
         score: saved.score,
         replayed: true,
       });
+    }
+    if (policyUpdate && !stored[0].meta.changes) {
+      const replay = await db
+        .prepare(
+          "SELECT id,request,response,score FROM phase2_runs WHERE round_id=? AND actor=? AND request_key=?",
+        )
+        .bind(round, actor.id, key)
+        .first<Row>();
+      if (replay?.request === canonical)
+        return json({
+          id: replay.id,
+          response: JSON.parse(replay.response),
+          score: replay.score,
+          replayed: true,
+        });
+      problem(
+        "The team defense changed. Load the latest team rules before testing.",
+        409,
+      );
     }
     return done({ id, response, score }, 201);
   }

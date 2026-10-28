@@ -29,6 +29,10 @@ export default function LearningHelp({
       setMessage("This control becomes available at the next exercise step.");
       return;
     }
+    if (target.matches(":disabled")) {
+      setMessage("This control is unavailable in the current exercise state.");
+      return;
+    }
     target.scrollIntoView({
       block: "center",
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches

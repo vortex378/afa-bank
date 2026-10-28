@@ -2,6 +2,8 @@
 
 ## Current release — 28 October 2026
 
+The subsequent **four-student, single-campaign** rehearsal passed **383 assertions**, 53 unit tests, typecheck and build, with no uncaught browser errors. It reproduced and corrected a stale teammate defense editor, added draft/conflict protection and atomic stale-write rejection, and made saved-evidence help actionable. See [tests/security/FOUR_STUDENT_REHEARSAL.md](tests/security/FOUR_STUDENT_REHEARSAL.md) for actual results and limits. The 307-assertion pass below is the earlier release rehearsal.
+
 Phase 2 and actionable bilingual help are implemented. The final isolated combined Phase 1 → Phase 2 rehearsal passed **307 browser/API/database assertions**, with **0 failures and 0 uncaught browser errors**. **53 unit tests**, TypeScript and the production build passed. See [tests/security/PHASE_TWO_VERIFICATION.md](tests/security/PHASE_TWO_VERIFICATION.md) for methods, actual evidence and NOT RUN limits. Older release notes below are historical; migration 0009 is the current schema addition.
 
 Deployment: https://afa-bank-next.cobra-public-community.workers.dev

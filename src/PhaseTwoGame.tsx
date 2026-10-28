@@ -191,6 +191,21 @@ export default function PhaseTwoGame({
     preventSelf: false,
     limit: 1000000,
   });
+  const [policyBase, setPolicyBase] = useState(() => JSON.stringify(policy));
+  const savedPolicyText = JSON.stringify(
+    s.policies.find((v: Row) => v.leg === s.leg && v.team === p?.team)
+      ?.policy || policy,
+  );
+  const draftPolicyText = JSON.stringify(policy);
+  const policyDirty = draftPolicyText !== policyBase;
+  const policyConflict =
+    policyDirty &&
+    savedPolicyText !== policyBase &&
+    savedPolicyText !== draftPolicyText;
+  function loadTeamPolicy() {
+    setPolicy(JSON.parse(savedPolicyText));
+    setPolicyBase(savedPolicyText);
+  }
   const [newPayment, setNewPayment] = useState(false);
   const reportRef = useRef<HTMLFormElement>(null);
   const lastStage = useRef(s.stage);
@@ -202,11 +217,22 @@ export default function PhaseTwoGame({
     const stored = s.policies.find(
       (v: Row) => v.leg === s.leg && v.team === p?.team,
     );
-    if (stored) setPolicy(stored.policy);
+    if (stored) {
+      setPolicy(stored.policy);
+      setPolicyBase(JSON.stringify(stored.policy));
+    }
     setSelected("");
     setSelectedRun("");
     setNewPayment(false);
   }, [r.id, s.leg, p?.team]);
+  useEffect(() => {
+    // Adopt a teammate's saved rules only when the editor has no local draft.
+    // A submitted draft matching the saved value becomes the new clean baseline.
+    if (!policyDirty || draftPolicyText === savedPolicyText) {
+      setPolicy(JSON.parse(savedPolicyText));
+      setPolicyBase(savedPolicyText);
+    }
+  }, [savedPolicyText, policyDirty, draftPolicyText]);
   useEffect(() => {
     if (lastStage.current !== s.stage) {
       lastStage.current = s.stage;
@@ -265,6 +291,7 @@ export default function PhaseTwoGame({
       return result;
     } catch (e: any) {
       setError(e.message);
+      await director.refresh();
     } finally {
       setBusy(false);
     }
@@ -900,8 +927,10 @@ export default function PhaseTwoGame({
                   className="p2-card"
                   onSubmit={async (e) => {
                     e.preventDefault();
+                    if (policyConflict) return;
                     const result = await act("defense", {
                       policy,
+                      base_policy: JSON.parse(policyBase),
                       key: crypto.randomUUID(),
                     });
                     if (result) setSelectedRun(result.id);
@@ -909,6 +938,29 @@ export default function PhaseTwoGame({
                 >
                   <span className="p2-kicker">{tr("DEFENSE RULES")}</span>
                   <h2>{tr("Protect it. Then prove it.")}</h2>
+                  <div
+                    className="p2-policy-sync"
+                    role={policyConflict ? "alert" : "status"}
+                  >
+                    <p>
+                      {tr(
+                        policyConflict
+                          ? "A teammate saved different rules. Your unsaved draft is preserved. Load the latest team rules before testing."
+                          : policyDirty
+                            ? "Unsaved changes: run defense tests to share these rules with your team."
+                            : "Using the saved team defense. Teammate updates appear automatically.",
+                      )}
+                    </p>
+                    {policyConflict && (
+                      <button
+                        type="button"
+                        className="p2-button secondary"
+                        onClick={loadTeamPolicy}
+                      >
+                        {tr("Load latest team rules")}
+                      </button>
+                    )}
+                  </div>
                   {(
                     [
                       "requireActive",
@@ -956,7 +1008,7 @@ export default function PhaseTwoGame({
                   <button
                     id="p2-test"
                     className="p2-button"
-                    disabled={busy || !playing}
+                    disabled={busy || !playing || policyConflict}
                   >
                     {tr("Run defense tests")}
                     <ShieldCheck size={19} />
@@ -1068,11 +1120,22 @@ export default function PhaseTwoGame({
                           : "Pin this result",
                       )}
                     </button>
-                    <LearningHelp
-                      title="Keep the evidence"
-                      text="Pin this result to preserve the request and response for your team. Later, cite its reference in the report."
-                      targetId="p2-pin"
-                    />
+                    {teamPins.some(
+                      (pin: Row) => pin.run_id === latestRun.id,
+                    ) ? (
+                      <LearningHelp
+                        title="Evidence saved"
+                        text="This result is already on your team board. Open the notebook to inspect it and explain why it matters."
+                        action="Open team notebook"
+                        onAction={() => navigate("evidence")}
+                      />
+                    ) : (
+                      <LearningHelp
+                        title="Keep the evidence"
+                        text="Pin this result to preserve the request and response for your team. Later, cite its reference in the report."
+                        targetId="p2-pin"
+                      />
+                    )}
                   </>
                 ) : (
                   <div className="p2-empty">

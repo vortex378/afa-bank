@@ -29,6 +29,17 @@ export async function phaseTwoSecurity({contexts,actors,db,check,output,origin,s
   const started=await Promise.all(Array.from({length:10},()=>call('owner','start',{confirm:true})));
   check('Concurrent starts execute one stage transition',started.filter(r=>r.status===200).length===1&&started.every(r=>[200,409].includes(r.status)));
   await sleep(3200);
+  const initialPolicy=(await state('blue')).phase2.policies.find(p=>p.team==='blue'&&p.leg===1).policy;
+  const defenseA={...initialPolicy,requireRole:true,limit:500000},defenseB={...initialPolicy,checkTenant:true,limit:600000};
+  const competing=await Promise.all([call('blue','defense',{policy:defenseA,base_policy:initialPolicy,key:randomUUID()}),call('blue2','defense',{policy:defenseB,base_policy:initialPolicy,key:randomUUID()})]);
+  check('Simultaneous different team edits accept one and reject the stale edit',competing.filter(r=>r.status===201).length===1&&competing.filter(r=>r.status===409).length===1);
+  const storedPolicy=JSON.parse(db.prepare("SELECT policy FROM phase2_policies WHERE round_id=? AND team='blue' AND leg=1").get(round).policy);
+  assert.deepEqual(storedPolicy,competing[0].status===201?defenseA:defenseB);
+  check('Rejected stale defense creates no partial policy/run record',db.prepare("SELECT COUNT(*) n FROM phase2_runs WHERE round_id=? AND kind='defense'").get(round).n===1);
+  const defenseReplay={policy:{requireActive:true,requireRole:true,checkTenant:true,preventSelf:true,limit:500000},base_policy:storedPolicy,key:randomUUID()};
+  const repeated=await Promise.all(Array.from({length:10},()=>call('blue','defense',defenseReplay)));
+  check('Concurrent defense replays persist one matching policy/result',repeated.filter(r=>r.status===201).length===1&&repeated.every(r=>[200,201].includes(r.status))&&new Set(repeated.map(r=>r.body.id)).size===1&&db.prepare('SELECT COUNT(*) n FROM phase2_runs WHERE round_id=? AND request_key=?').get(round,defenseReplay.key).n===1);
+  await expect('blue','defense',{policy:defenseA,key:randomUUID()},400);
   await expect('red','ready',{ready:false},409);
   const s=await state('red'),pay=s.phase2.payments.find(v=>v.amount===200000),fault=JSON.parse(db.prepare('SELECT private_case FROM phase2_sessions WHERE round_id=?').get(round).private_case).fault;
   const request={payment_id:pay.id,actor_key:fault==='role'?'customer-08':'approver-09',second_approval:false,key:randomUUID()};
@@ -50,7 +61,7 @@ export async function phaseTwoSecurity({contexts,actors,db,check,output,origin,s
   await expect('red','note',{body:'x'.repeat(100*1024)},413);
   assert.equal((await call('red','note',{body:'Evidencë 🔐 e\u0308 — مرحبا 漢字'})).status,200);
   check('Same-team students receive shared notes',(await state('red2')).phase2.notes.some(n=>n.body.includes('Evidencë')));
-  const blue=await state('blue2');check('Opposing team receives no private runs, pins or notes',!blue.phase2.runs.length&&!blue.phase2.pins.length&&!blue.phase2.notes.length);
+  const blue=await state('blue2');check('Opposing team receives no private runs, pins or notes',blue.phase2.runs.every(r=>r.team==='blue')&&blue.phase2.pins.every(p=>p.team==='blue')&&!blue.phase2.notes.length);
   const outsider=await state('outsider');check('Unenrolled student receives no lab content',!outsider.player&&!outsider.phase2.runs.length&&!outsider.phase2.payments.length&&!outsider.phase2.notes.length&&outsider.phase2.instructor===null);
   await expect('outsider','note',{body:'not enrolled'},403);
   await expect('red','defense',{policy:{requireActive:true,requireRole:true,checkTenant:true,preventSelf:true,limit:500000},key:randomUUID()},403);
